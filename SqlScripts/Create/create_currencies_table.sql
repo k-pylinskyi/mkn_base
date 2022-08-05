@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS currencies(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(10),
+    value NUMERIC
+);
