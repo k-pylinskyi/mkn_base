@@ -1,7 +1,7 @@
 import ftplib
 
 
-class FTPConnection:
+class FtpConnection:
     def __init__(self, host, username, password):
         self.host = host
         self.username = username
@@ -15,7 +15,7 @@ class FTPConnection:
             self.ftp.storbinary('STOR ' + remote_file, f)
         self.ftp.quit()
 
-    def download_file(self, local_file, remote_file):
+    def download_file(self, remote_file, local_file):
         with open(local_file, "wb") as f:
             self.ftp.retrbinary("RETR " + remote_file, f.write)
         self.ftp.quit()
