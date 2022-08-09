@@ -13,7 +13,7 @@ class DbService:
 
     def initial_create(self):
         context = DbContext()
-        print(self.create_query_list)
+        #Creating db tables loop
         for query in self.create_query_list:
             full_path = os.path.join(self.sql_create_dir, query)
             sql_file = open(full_path)
@@ -27,7 +27,7 @@ class DbService:
             context.cursor.execute(query_string)
             context.db.commit()
         context.db.close()
-
+        #Inserting db tables data loop
         for query in self.insert_query_list:
             print(query)
             self.insert(query)

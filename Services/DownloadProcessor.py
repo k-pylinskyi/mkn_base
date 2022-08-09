@@ -9,10 +9,10 @@ class DownloadProcessor:
         db = DbService()
         self.storage_path = 'D:\\Work\\MNK_PRICES\\DB_FILES'
         self.ftp_download_list = db.select('select_ftp_download.sql')
-        self.archive_files_list = db.select('select_archive_files.sql')
+        self.archive_files_list = db.select('select_archive_extract.sql')
 
     def download(self):
-        self.create_suplier_folder()
+        self.create_supplier_folder()
         for row in self.ftp_download_list:
             ip = row[1]
             login = row[2]
@@ -27,7 +27,7 @@ class DownloadProcessor:
 
         self.extract_files()
 
-    def create_suplier_folder(self):
+    def create_supplier_folder(self):
         for row in self.ftp_download_list:
             local_folder = row[5]
             local_path = os.path.join(self.storage_path, local_folder)
@@ -37,8 +37,9 @@ class DownloadProcessor:
 
     def extract_files(self):
         for row in self.archive_files_list:
-            archive_path = os.path.join(self.storage_path, row[1])
-            out_dir = os.path.join(self.storage_path, row[2])
+            archive_path = os.path.join(self.storage_path, row[1], row[2])
+            out_dir = os.path.join(self.storage_path, row[3])
 
+            print('Extracting {} ...'.format(archive_path))
             Extracter.extract(archive_path, out_dir)
 
