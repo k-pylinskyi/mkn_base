@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS suplier_groups(
+CREATE TABLE IF NOT EXISTS supplier_groups(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(50)
 );

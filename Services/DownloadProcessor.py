@@ -1,6 +1,8 @@
 from Services.DbService import *
 from Services.FtpConection import FtpConnection
 from Services.Extracter import Extracter
+from datetime import datetime
+from datetime import timedelta
 
 class DownloadProcessor:
     def __init__(self):
