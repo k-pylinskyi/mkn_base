@@ -7,4 +7,7 @@ if __name__ == '__main__':
     db.initial_create()
 
     dp = DownloadProcessor()
-    dp.download()
+    dp.download_parallel()
+    dp.extract_parallel()
+    dp.rename_parallel()
+
