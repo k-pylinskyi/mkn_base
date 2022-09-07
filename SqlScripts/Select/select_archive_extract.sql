@@ -1,1 +1,0 @@
-SELECT * FROM archive_extract

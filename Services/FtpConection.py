@@ -14,13 +14,13 @@ class FtpConnection:
         with open(local_file, 'rb') as f:
             self.ftp.storbinary('STOR ' + remote_file, f)
         self.ftp.quit()
-        print('File Uploaded ftp://{}/{} ...'.format(self.host,local_file))
+        print('File Uploaded ftp://{}/{} ...'.format(self.host, local_file))
 
     def download_file(self, remote_file, local_file):
         with open(local_file, "wb") as f:
             self.ftp.retrbinary("RETR " + remote_file, f.write)
         self.ftp.quit()
-        print('File downloaded ftp://{}/{} ...'.format(self.host, remote_file))
+        print('\nFile downloaded ftp://{}/{} ... to {}\n'.format(self.host, remote_file, local_file))
 
     def get_file_list(self):
         self.ftp.dir()

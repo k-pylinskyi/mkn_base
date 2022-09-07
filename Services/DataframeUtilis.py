@@ -1,9 +1,10 @@
 import pandas as pd
 
 class DataframeUtilis:
-    def read_csv(self, path, separator):
+    @staticmethod
+    def read_csv(path):
         try:
-            df = pd.read_csv(path, sep=separator, encoding='latin1')
+            df = pd.read_csv(path, sep=';')
             print(df.dtypes)
             print(df.head())
             return df

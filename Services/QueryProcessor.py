@@ -3,19 +3,30 @@ import pandas as pd
 from Services.DataframeUtilis import DataframeUtilis
 import os
 
-class QueryAutomator:
+class QueryProcessor:
     def __init__(self, folder):
-        self.file_list = os.listdir(folder)
+        fl = os.listdir(folder)
+        self.file_list = []
+        for file in fl:
+            self.file_list.append(os.path.join(folder, file))
 
     def get_dataframe(self, query):
+        data_frames = []
         for file in self.file_list:
             file_name = os.path.splitext(os.path.basename(file))[0]
-            locals()[file_name] = DataframeUtilis.read_csv(file, ';')
+            df = DataframeUtilis.read_csv(file)
+            locals()[file_name] = df
+            data_frames.append(df)
 
-        query = query
+        for frame in data_frames:
+            frame.head()
 
-        queried_data = sqldf(query)
+        print('hart data')
 
-        return queried_data
+        #query = query
+
+        #queried_data = sqldf(query)
+
+        #return queried_data
 
     

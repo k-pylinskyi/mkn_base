@@ -23,9 +23,7 @@ class DownloadProcessor:
         db = DbService()
         self.storage_path = 'D:\\Work\\MNK_PRICES\\DB_FILES'
         self.ftp_download_list = db.select('select_ftp_download.sql')
-        self.archive_files_list = db.select('select_archive_extract.sql')
         self.rename_files_list = db.select('select_rename_files.sql')
-        self.init_supplier_folders()
 
     def download_parallel(self):
         run_parallel(self.download_one, self.ftp_download_list)
@@ -36,30 +34,42 @@ class DownloadProcessor:
             login = data_row[2]
             password = data_row[3]
             remote = data_row[4]
-            local = data_row[5]
+            supplier_folder = data_row[5]
             filename = data_row[6]
+            old_filename = data_row[7]
+            new_filename = data_row[8]
+            local = supplier_folder
+
+            if filename.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
+                local = os.path.join(local, 'archive')
+            else:
+                local = os.path.join(local, 'files')
+
+            local_path = os.path.join(self.storage_path, local, filename)
+            self.create_folder(local)
+
+            if os.path.exists(local_path):
+                os.remove(local_path)
 
             ftp = FtpConnection(ip, login, password)
-            local_file = os.path.join(self.storage_path, local, filename)
-            ftp.download_file(remote, local_file)
+            ftp.download_file(remote, local_path)
+
+            if local_path.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
+                self.extract_one(filename, supplier_folder, old_filename, new_filename)
 
         except Exception as ex:
             print('Downloading file error')
             print(ex)
 
-    def extract_parallel(self):
-        run_parallel(self.extract_one, self.archive_files_list)
-
-    def extract_one(self, data_row):
-        archive_path = os.path.join(self.storage_path, data_row[1], 'archive', data_row[2])
-        out_dir = os.path.join(self.storage_path, data_row[1], data_row[3])
+    def extract_one(self, archive, supplier_folder, old_filename, new_filename):
+        archive_path = os.path.join(self.storage_path, supplier_folder, 'archive', archive)
+        out_dir = os.path.join(self.storage_path, supplier_folder, 'files')
 
         print('Extracting {} ...'.format(archive_path))
         try:
-            Extracter.extract(archive=archive_path, outdir=out_dir)
+            Extracter.extract_one(archive_path, out_dir, old_filename, new_filename)
         except Exception as ex:
-            print('Extracting file error')
-            print(ex)
+            print('Extracting file error\n{}'.format(ex))
 
     def rename_parallel(self):
         run_parallel(self.rename_one, self.rename_files_list)
@@ -72,12 +82,10 @@ class DownloadProcessor:
 
         print('file {}\trenamed to {}'.format(old_file_name, new_file_name))
 
-    def init_supplier_folders(self):
-        shutil.rmtree(self.storage_path)
-        for row in self.ftp_download_list:
-            local_folder = row[5]
-            local_path = os.path.join(self.storage_path, local_folder)
-            if not os.path.exists(local_path):
-                os.makedirs(local_path)
-                print('folder created {}'.format(local_path))
+    def create_folder(self, folder):
+        local_folder = folder
+        folder_path = os.path.join(self.storage_path, local_folder)
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+            print('folder created {}'.format(folder_path))
 
