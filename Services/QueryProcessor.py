@@ -3,6 +3,7 @@ import pandas as pd
 from Services.DataframeUtilis import DataframeUtilis
 import os
 
+
 class QueryProcessor:
     def __init__(self, folder):
         fl = os.listdir(folder)
@@ -23,10 +24,8 @@ class QueryProcessor:
 
         print('hart data')
 
-        #query = query
+        # query = query
 
-        #queried_data = sqldf(query)
+        # queried_data = sqldf(query)
 
-        #return queried_data
-
-    
+        # return queried_data

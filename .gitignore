@@ -154,7 +154,10 @@ cython_debug/
 
 # SQLite Database
 Database/
-SqlScripts/InitialCreate/Insert/
+#SqlScripts/InitialCreate/Insert/
+
+# Storage
+TemporaryStorage/
 
 Services/__pycache__
 .idea
