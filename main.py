@@ -10,7 +10,7 @@ if __name__ == '__main__':
     dp = DownloadProcessor()
     dp.download_parallel()
 
-    # qa = QueryProcessor('D:\\Work\\MNK_PRICES\\DB_FILES\\HART\\files')
+    # qa = QueryProcessor('D:\\Work\\MNK_PRICES\\DB_FILES\\Hart\\files')
     # qa.get_dataframe('')
 
     # fc = FileConverter()
