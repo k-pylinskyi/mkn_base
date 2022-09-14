@@ -21,7 +21,12 @@ def run_parallel(func, data):
 class DownloadProcessor:
     def __init__(self):
         db = DbService()
-        self.storage_path = 'D:\\Work\\MNK_PRICES\\DB_FILES'
+        self.storage_path = './TemporaryStorage'
+        if os.path.exists(self.storage_path):
+            pass
+        else:
+            os.makedirs(self.storage_path)
+            print('The temporary storage directory was created\n')
         self.ftp_download_list = db.select('select_ftp_download.sql')
         self.rename_files_list = db.select('select_rename_files.sql')
 
@@ -88,4 +93,3 @@ class DownloadProcessor:
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
             print('folder created {}'.format(folder_path))
-
