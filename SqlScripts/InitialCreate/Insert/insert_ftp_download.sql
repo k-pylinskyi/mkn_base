@@ -1,11 +1,11 @@
 INSERT OR REPLACE INTO ftp_download (id, ftp_ip, ftp_login, ftp_password, remote_file, supplier_id, local_file_name)
 VALUES
 (1, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/auto-france/OFERTA.TXT', 9, 'autofrance_data.txt'),
-(2, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plAutoEuro/29452_ce.csv', 2, 'autoeuro_data.csv'),
-(3, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plElit/export.csv', 19, 'elit_data.csv'),
-(4, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plinterteam/it92266.zip', 26, 'interteam_data.zip'),
-(5, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plmotogama/19134_01.csv', 40, 'motogama_data.csv'),
-(6, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plMotorol/08525.mnk.cennik.zip', 42, 'motorol_data.zip'),
+(2, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/auto_euro/29452_ce.csv', 2, 'autoeuro_data.csv'),
+(3, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/elit/export.csv', 19, 'elit_data.csv'),
+(4, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/inter_team/it92266.zip', 26, 'interteam_data.zip'),
+(5, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/motogama/19134_01.csv', 40, 'motogama_data.csv'),
+(6, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/motorol/08525.mnk.cennik.zip', 42, 'motorol_data.zip'),
 (7, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/hart/hart.zip', 24, 'hart_price_qty.zip'),
 (8, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/hart/96285_kth.zip', 24, 'hart_data.zip'),
 (9, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/hart/96285_cross.zip', 24, 'hart_cross.zip'),
