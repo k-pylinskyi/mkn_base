@@ -1,5 +1,4 @@
 import threading
-import shutil
 from Services.DbService import *
 from Services.FtpConection import FtpConnection
 from Services.Extracter import Extracter
