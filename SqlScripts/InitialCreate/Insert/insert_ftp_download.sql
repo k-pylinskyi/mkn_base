@@ -1,6 +1,6 @@
 INSERT OR REPLACE INTO ftp_download (id, ftp_ip, ftp_login, ftp_password, remote_file, supplier_id, local_file_name)
 VALUES
-(1, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/autofrance/OFERTA.TXT', 9, 'autofrance_data.txt'),
+(1, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/auto-france/OFERTA.TXT', 9, 'autofrance_data.txt'),
 (2, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plAutoEuro/29452_ce.csv', 2, 'autoeuro_data.csv'),
 (3, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plElit/export.csv', 19, 'elit_data.csv'),
 (4, '88.99.61.178', 'ph6802', 'z7lIh8iv10pLRt', '/plinterteam/it92266.zip', 26, 'interteam_data.zip'),
