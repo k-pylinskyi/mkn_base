@@ -1,13 +1,13 @@
-from Services.DbContext import DbContext
+from services.DbContext import DbContext
 import os
 
 
 class DbService:
 
     def __init__(self):
-        self.sql_create_dir = './SqlScripts/InitialCreate/Create'
-        self.sql_insert_dir = './SqlScripts/InitialCreate/Insert'
-        self.sql_select_dir = './SqlScripts/Select'
+        self.sql_create_dir = './sql/InitialCreate/Create'
+        self.sql_insert_dir = './sql/InitialCreate/Insert'
+        self.sql_select_dir = './sql/Select'
         self.create_query_list = os.listdir(self.sql_create_dir)
         self.insert_query_list = os.listdir(self.sql_insert_dir)
 

@@ -154,12 +154,12 @@ cython_debug/
 
 # SQLite Database
 Database/
-#SqlScripts/InitialCreate/Insert/
+#sql/InitialCreate/Insert/
 
 # Storage
 TemporaryStorage/
 
-Services/__pycache__
+services/__pycache__
 .idea
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

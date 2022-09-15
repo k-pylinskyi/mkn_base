@@ -8,7 +8,7 @@ class FtpConnection:
         self.password = password
         self.ftp = ftplib.FTP(host)
         self.ftp.login(username, password)
-        #self.ftp.dir()
+        # self.ftp.dir()
 
     def upload_file(self, local_file, remote_file):
         with open(local_file, 'rb') as f:
