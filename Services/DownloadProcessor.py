@@ -88,8 +88,8 @@ class DownloadProcessor:
         else:
             os.makedirs(PATHS.TEMP_STORAGE)
             print('The temporary storage directory was created\n')
-        self.ftp_download_list = db.select('select_ftp_download.SqlScripts')
-        self.rename_files_list = db.select('select_rename_files.SqlScripts')
+        self.ftp_download_list = db.select('select_ftp_download.sql')
+        self.rename_files_list = db.select('select_rename_files.sql')
 
     def download_parallel(self):
         run_parallel(download_one, self.ftp_download_list)
