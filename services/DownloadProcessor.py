@@ -25,7 +25,7 @@ def rename_one(data_row):
 
     os.rename(old_file_name, new_file_name)
 
-    print(f'File {old_file_name} renamed to {new_file_name}')
+    print(f'File {old_file_name} renamed to {new_file_name}\n')
 
 
 def create_folder(folder):
@@ -33,14 +33,14 @@ def create_folder(folder):
     folder_path = os.path.join(PATHS.TEMP_STORAGE, local_folder)
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
-        print(f'Created folder {folder_path}')
+        print(f'Created folder {folder_path}\n')
 
 
 def extract_one(archive, supplier_folder, old_filename, new_filename):
     archive_path = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'archive', archive)
     out_dir = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'files')
 
-    print('Extracting {} ...'.format(archive_path))
+    print(f'Extracting {archive_path} ...\n')
     try:
         Extractor.extract_one(archive_path, out_dir, old_filename, new_filename)
     except Exception as ex:
@@ -77,7 +77,7 @@ def download_one(data_row):
             extract_one(filename, supplier_folder, old_filename, new_filename)
 
     except Exception as ex:
-        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.DOWNLOAD_ERROR} {ex}{CONSOLE_COLOR.NC}')
+        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.DOWNLOAD_ERROR} {ex}{CONSOLE_COLOR.NC}\n')
 
 
 class DownloadProcessor:

@@ -25,18 +25,18 @@ class Extractor:
                     for file in files:
                         if file.startswith(old_filename):
                             os.rename(old_filename_path, new_filename_path)
-                            print('File renamed\n{}\n{}'.format(old_filename_path, new_filename_path))
+                            print(f'File renamed {old_filename_path} to {new_filename_path}\n')
 
                 if os.path.exists(old_filename_path):
                     os.remove(old_filename_path)
 
-                print('File extracted\t{}'.format(new_filename_path))
+                print(f'ZIP file extracted {new_filename_path}\n')
 
             elif archive_path.lower().endswith('.gz'):
                 with gzip.open(archive_path, 'rb') as file_in:
                     with open(new_filename_path, 'wb') as file_out:
                         shutil.copyfileobj(file_in, file_out)
-                print('extracted\n{}'.format(new_filename_path))
+                print(f'GZ file extracted {new_filename_path}\n')
 
         except Exception as ex:
-            print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}')
+            print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
