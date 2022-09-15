@@ -1,8 +1,8 @@
 from threading import Thread, active_count
 
-from services.DbService import *
-from services.Extractor import Extractor
-from services.FtpConection import FtpConnection
+from Services.DbService import *
+from Services.Extractor import Extractor
+from Services.FtpConection import FtpConnection
 from utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 
@@ -88,8 +88,8 @@ class DownloadProcessor:
         else:
             os.makedirs(PATHS.TEMP_STORAGE)
             print('The temporary storage directory was created\n')
-        self.ftp_download_list = db.select('select_ftp_download.sql')
-        self.rename_files_list = db.select('select_rename_files.sql')
+        self.ftp_download_list = db.select('select_ftp_download.SqlScripts')
+        self.rename_files_list = db.select('select_rename_files.SqlScripts')
 
     def download_parallel(self):
         run_parallel(download_one, self.ftp_download_list)

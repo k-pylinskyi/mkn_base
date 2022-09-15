@@ -1,7 +1,7 @@
-from services.DbService import DbService
-from services.DownloadProcessor import DownloadProcessor
-from services.QueryProcessor import QueryProcessor
-from services.FileConverter import FileConverter
+from Services.DbService import DbService
+from Services.DownloadProcessor import DownloadProcessor
+from Services.QueryProcessor import QueryProcessor
+from Services.FileConverter import FileConverter
 
 if __name__ == '__main__':
     db = DbService()
