@@ -3,6 +3,8 @@ import os
 import shutil
 import zipfile
 
+from utils.consts import CONSOLE_COLOR, ERRORS
+
 
 class Extractor:
     @staticmethod
@@ -37,4 +39,4 @@ class Extractor:
                 print('extracted\n{}'.format(new_filename_path))
 
         except Exception as ex:
-            print('Error on file\t{}\n{}'.format(new_filename_path, ex))
+            print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}')

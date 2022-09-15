@@ -13,7 +13,8 @@ def run_parallel(func, data):
         thread.start()
         threads.append(thread)
         print(
-            f'\n{CONSOLE_COLOR.GREEN}========== Active download threads {str(active_count())} =========={CONSOLE_COLOR.NC}\n')
+            f'\n{CONSOLE_COLOR.SUCCESS}========== Active download threads {str(active_count())} =========='
+            f'{CONSOLE_COLOR.NC}\n')
     for thread in threads:
         thread.join()
 
@@ -35,6 +36,50 @@ def create_folder(folder):
         print(f'Created folder {folder_path}')
 
 
+def extract_one(archive, supplier_folder, old_filename, new_filename):
+    archive_path = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'archive', archive)
+    out_dir = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'files')
+
+    print('Extracting {} ...'.format(archive_path))
+    try:
+        Extractor.extract_one(archive_path, out_dir, old_filename, new_filename)
+    except Exception as ex:
+        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.EXTRACTION_ERROR} {ex}{CONSOLE_COLOR.NC}')
+
+
+def download_one(data_row):
+    try:
+        ip = data_row[1]
+        login = data_row[2]
+        password = data_row[3]
+        remote = data_row[4]
+        supplier_folder = data_row[5]
+        filename = data_row[6]
+        old_filename = data_row[7]
+        new_filename = data_row[8]
+        local = supplier_folder
+
+        if filename.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
+            local = os.path.join(local, 'archive')
+        else:
+            local = os.path.join(local, 'files')
+
+        local_path = os.path.join(PATHS.TEMP_STORAGE, local, filename)
+        create_folder(local)
+
+        if os.path.exists(local_path):
+            os.remove(local_path)
+
+        ftp = FtpConnection(ip, login, password)
+        ftp.download_file(remote, local_path)
+
+        if local_path.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
+            extract_one(filename, supplier_folder, old_filename, new_filename)
+
+    except Exception as ex:
+        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.DOWNLOAD_ERROR} {ex}{CONSOLE_COLOR.NC}')
+
+
 class DownloadProcessor:
     def __init__(self):
         db = DbService()
@@ -47,49 +92,7 @@ class DownloadProcessor:
         self.rename_files_list = db.select('select_rename_files.sql')
 
     def download_parallel(self):
-        run_parallel(self.download_one, self.ftp_download_list)
-
-    def download_one(self, data_row):
-        try:
-            ip = data_row[1]
-            login = data_row[2]
-            password = data_row[3]
-            remote = data_row[4]
-            supplier_folder = data_row[5]
-            filename = data_row[6]
-            old_filename = data_row[7]
-            new_filename = data_row[8]
-            local = supplier_folder
-
-            if filename.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
-                local = os.path.join(local, 'archive')
-            else:
-                local = os.path.join(local, 'files')
-
-            local_path = os.path.join(PATHS.TEMP_STORAGE, local, filename)
-            create_folder(local)
-
-            if os.path.exists(local_path):
-                os.remove(local_path)
-
-            ftp = FtpConnection(ip, login, password)
-            ftp.download_file(remote, local_path)
-
-            if local_path.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
-                self.extract_one(filename, supplier_folder, old_filename, new_filename)
-
-        except Exception as ex:
-            print(f'{CONSOLE_COLOR.FAIL}{ERRORS.DOWNLOAD_ERROR} {ex}{CONSOLE_COLOR.NC}')
-
-    def extract_one(self, archive, supplier_folder, old_filename, new_filename):
-        archive_path = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'archive', archive)
-        out_dir = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'files')
-
-        print('Extracting {} ...'.format(archive_path))
-        try:
-            Extractor.extract_one(archive_path, out_dir, old_filename, new_filename)
-        except Exception as ex:
-            print(f'{CONSOLE_COLOR.FAIL}{ERRORS.EXTRACTION_ERROR} {ex}{CONSOLE_COLOR.NC}')
+        run_parallel(download_one, self.ftp_download_list)
 
     def rename_parallel(self):
         run_parallel(rename_one, self.rename_files_list)

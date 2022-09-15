@@ -1,13 +1,11 @@
 class CONSOLE_COLOR:
-    HEADER = '\033[95m'
-    BLUE = '\033[94m'
-    CYAN = '\033[96m'
-    GREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
     NC = '\033[0m'
+    HEADER = '\033[95m'
+    SUCCESS = '\033[92m'
+    WARNING = '\033[93m'
+    ERROR = '\033[91m'
+    UNDERLINE = '\033[4m'
+    BOLD = '\033[1m'
 
 
 class PATHS:
@@ -17,3 +15,4 @@ class PATHS:
 class ERRORS:
     DOWNLOAD_ERROR = 'Downloading file error'
     EXTRACTION_ERROR = 'Extracting file error'
+    FILE_ERROR = 'Error on file'
