@@ -6,8 +6,8 @@ class DataframeUtilis:
     def read_csv(path):
         try:
             df = pd.read_csv(path, sep=';')
-            print(df.dtypes)
-            print(df.head())
+            #print(df.dtypes)
+            #print(df.head())
             return df
         except FileNotFoundError as e:
             print(e)
