@@ -1,10 +1,12 @@
 import gzip
-import zipfile
-import shutil
 import os
+import shutil
+import zipfile
+
+from utils.consts import CONSOLE_COLOR, ERRORS
 
 
-class Extracter:
+class Extractor:
     @staticmethod
     def extract_one(archive_path, out_folder, old_filename, new_filename):
         old_filename_path = os.path.join(out_folder, old_filename)
@@ -23,18 +25,18 @@ class Extracter:
                     for file in files:
                         if file.startswith(old_filename):
                             os.rename(old_filename_path, new_filename_path)
-                            print('File renamed\n{}\n{}'.format(old_filename_path, new_filename_path))
+                            print(f'File renamed {old_filename_path} to {new_filename_path}\n')
 
                 if os.path.exists(old_filename_path):
                     os.remove(old_filename_path)
 
-                print('File extracted\t{}'.format(new_filename_path))
+                print(f'ZIP file extracted {new_filename_path}\n')
 
             elif archive_path.lower().endswith('.gz'):
                 with gzip.open(archive_path, 'rb') as file_in:
                     with open(new_filename_path, 'wb') as file_out:
                         shutil.copyfileobj(file_in, file_out)
-                print('extracted\n{}'.format(new_filename_path))
+                print(f'GZ file extracted {new_filename_path}\n')
 
         except Exception as ex:
-            print('Error on file\t{}\n{}'.format(new_filename_path, ex))
+            print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
