@@ -14,11 +14,18 @@ class Extractor:
         new_filename_path = os.path.join(out_folder, new_filename)
 
         if platform.system() == 'Windows':
-            extractor = 'start 7z/windows/7z.exe /B'
-            try:
-                os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
-            except Exception as ex:
-                print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+            extractor = 'start 7z/windows/7z.exe'
+            if DEBUG:
+                with pysnooper.snoop():
+                    try:
+                        os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
+                    except Exception as ex:
+                        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+            else:
+                try:
+                    os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
+                except Exception as ex:
+                    print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
         elif platform.system() == 'Darwin':
             extractor = '7z/darwin/7zz'
             if DEBUG:

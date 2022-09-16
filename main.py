@@ -12,8 +12,8 @@ if __name__ == '__main__':
     dp = DownloadProcessor()
     dp.download_parallel()
 
-    hart = hart()
-    hart.process()
+    # hart = hart()
+    # hart.process()
 
     # qa = QueryProcessor('D:\\Work\\MNK_PRICES\\DB_FILES\\Hart\\files')
     # qa.get_dataframe('')
