@@ -9,7 +9,7 @@ class CONSOLE_COLOR:
 
 
 class PATHS:
-    TEMP_STORAGE = './temp_storage'
+    TEMP_STORAGE = './TemporaryStorage'
 
 
 class ERRORS:
