@@ -1,11 +1,10 @@
-import gzip
 import os
 import platform
-import shutil
 import subprocess
-import zipfile
 
-from utils.consts import CONSOLE_COLOR, ERRORS
+import pysnooper
+
+from utils.consts import CONSOLE_COLOR, ERRORS, DEBUG
 
 
 class Extractor:
@@ -15,16 +14,43 @@ class Extractor:
         new_filename_path = os.path.join(out_folder, new_filename)
 
         if platform.system() == 'Windows':
-            extractor = 'start 7z/windows/7z.exe'
+            extractor = 'start 7z/windows/7z.exe /B'
+            try:
+                os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
+            except Exception as ex:
+                print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
         elif platform.system() == 'Darwin':
             extractor = '7z/darwin/7zz'
+            if DEBUG:
+                with pysnooper.snoop():
+                    try:
+                        subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
+                    except Exception as ex:
+                        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+            else:
+                try:
+                    subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
+                except Exception as ex:
+                    print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
         else:
             extractor = '7z/linux/7zz'
+            try:
+                # TODO add linux extractor support
+                print('Linux is currently unsupported')
+            except Exception as ex:
+                print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
 
-        try:
-            subprocess.run([extractor, archive_path, "-o", out_folder])
-        except Exception as ex:
-            print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+        # if platform.system() == 'Windows':
+        #     extractor = 'start 7z/windows/7z.exe'
+        # elif platform.system() == 'Darwin':
+        #     extractor = '7z/darwin/7zz'
+        # else:
+        #     extractor = '7z/linux/7zz'
+        #
+        # try:
+        #     subprocess.run([extractor, archive_path])
+        # except Exception as ex:
+        #     print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
         #
         # try:
         #     if archive_path.lower().endswith('.zip'):
