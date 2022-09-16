@@ -43,6 +43,7 @@ def extract_one(archive, supplier_folder, old_filename, new_filename):
     print(f'Extracting {archive_path} ...\n')
     try:
         Extractor.extract_one(archive_path, out_dir, old_filename, new_filename)
+        # Extractor.rename_file(archive_path, out_dir, old_filename, new_filename)
     except Exception as ex:
         print(f'{CONSOLE_COLOR.ERROR}{ERRORS.EXTRACTION_ERROR} {ex}{CONSOLE_COLOR.NC}')
 
