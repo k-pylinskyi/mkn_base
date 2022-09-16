@@ -3,7 +3,7 @@ from threading import Thread, active_count
 from Services.DbService import *
 from Services.Extractor import Extractor
 from Services.FtpConection import FtpConnection
-from utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 
 def run_parallel(func, data):

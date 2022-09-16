@@ -3,9 +3,7 @@ import platform
 import subprocess
 import time
 
-import pysnooper
-
-from utils.consts import CONSOLE_COLOR, ERRORS, DEBUG
+from Utils.consts import CONSOLE_COLOR, ERRORS
 
 
 class Extractor:
@@ -30,43 +28,25 @@ class Extractor:
 
         if platform.system() == 'Windows':
             extractor = 'start 7z/windows/7z.exe'
-            if DEBUG:
-                with pysnooper.snoop():
-                    try:
-                        os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
-                        time.sleep(3)
-                        Extractor.rename_file(new_filename_path, out_folder, old_filename, old_filename_path)
-                    except Exception as ex:
-                        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
-            else:
-                try:
-                    os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
-                    time.sleep(3)
-                    Extractor.rename_file(new_filename_path, out_folder, old_filename, old_filename_path)
-
-                except Exception as ex:
-                    print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+            try:
+                os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
+                time.sleep(3)
+                Extractor.rename_file(new_filename_path, out_folder, old_filename, old_filename_path)
+            except Exception as ex:
+                print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
 
         elif platform.system() == 'Darwin':
             extractor = '7z/darwin/7zz'
-            if DEBUG:
-                with pysnooper.snoop():
-                    try:
-                        subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
-                    except Exception as ex:
-                        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
-            else:
-                try:
-                    subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
-                except Exception as ex:
-                    print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
-        elif platform.system() == 'Linux':
-            extractor = '7z/linux/7zz'
             try:
-                # TODO add linux extractor support
+                subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
+            except Exception as ex:
+                print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+        elif platform.system() == 'Linux':
+            # TODO add linux extractor support
+            # extractor = '7z/linux/7zz'
+            try:
                 print('Linux is currently unsupported')
             except Exception as ex:
                 print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
         else:
             print('Unsupported platform')
-
