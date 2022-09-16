@@ -16,3 +16,6 @@ class ERRORS:
     DOWNLOAD_ERROR = 'Downloading file error'
     EXTRACTION_ERROR = 'Extracting file error'
     FILE_ERROR = 'Error on file'
+
+
+DEBUG = True
