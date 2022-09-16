@@ -1,7 +1,5 @@
-from Services.DbService import DbService
-from Services.DownloadProcessor import DownloadProcessor
-from Services.QueryProcessor import QueryProcessor
-from Services.FileConverter import FileConverter
+from Services.Db.DbService import DbService
+from Services.Processors.DownloadProcessor import DownloadProcessor
 from SupplierScripts.Hart.Hart import Hart as hart
 
 

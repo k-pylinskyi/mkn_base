@@ -1,5 +1,5 @@
-from SupplierScripts.DataFrameReader import DataFrameReader as dfreader
-from pandasql import sqldf
+from Services.Processors.DataFrameReader import DataFrameReader as dfreader
+
 
 class Hart:
     def __init__(self):
