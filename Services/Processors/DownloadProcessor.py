@@ -1,8 +1,8 @@
 from threading import Thread, active_count
 
-from Services.DbService import *
-from Services.Extractor import Extractor
-from Services.FtpConection import FtpConnection
+from Services.Db.DbService import *
+from Services.Processors.Extractor import Extractor
+from Services.Ftp.FtpConection import FtpConnection
 from utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 

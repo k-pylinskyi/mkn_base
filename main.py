@@ -1,9 +1,5 @@
-from Services.DbService import DbService
-from Services.DownloadProcessor import DownloadProcessor
-from Services.QueryProcessor import QueryProcessor
-from Services.FileConverter import FileConverter
-from SupplierScripts.Hart.Hart import Hart as hart
-
+from Services.Db.DbService import DbService
+from Services.Processors.DownloadProcessor import DownloadProcessor
 
 if __name__ == '__main__':
     db = DbService()
@@ -12,8 +8,8 @@ if __name__ == '__main__':
     dp = DownloadProcessor()
     dp.download_parallel()
 
-    # hart = hart()
-    # hart.process()
+    #hart = hart()
+    #hart.process()
 
     # qa = QueryProcessor('D:\\Work\\MNK_PRICES\\DB_FILES\\Hart\\files')
     # qa.get_dataframe('')
