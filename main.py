@@ -5,14 +5,12 @@ from Services.FileConverter import FileConverter
 from SupplierScripts.Hart.Hart import Hart as hart
 
 
-
-
 if __name__ == '__main__':
-    #db = DbService()
-    #db.initial_create()
+    db = DbService()
+    db.initial_create()
 
-    #dp = DownloadProcessor()
-    #dp.download_parallel()
+    dp = DownloadProcessor()
+    dp.download_parallel()
 
     hart = hart()
     hart.process()
