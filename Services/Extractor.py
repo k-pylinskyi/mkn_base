@@ -43,10 +43,12 @@ class Extractor:
 
             if os.path.exists(old_filename_path):
                 os.remove(old_filename_path)
-        else:
+        elif platform.system() == 'Linux':
             extractor = '7z/linux/7zz'
             try:
                 # TODO add linux extractor support
                 print('Linux is currently unsupported')
             except Exception as ex:
                 print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
+        else:
+            print('Unsupported platform')
