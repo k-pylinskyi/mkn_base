@@ -1,5 +1,5 @@
-from Services.Db.DbService import DbService
-from Services.Processors.DownloadProcessor import DownloadProcessor
+from api.Services.Db.DbService import DbService
+from api.Services.Processors.DownloadProcessor import DownloadProcessor
 
 if __name__ == '__main__':
     db = DbService()

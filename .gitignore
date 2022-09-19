@@ -158,8 +158,9 @@ Database/
 
 # Storage
 TemporaryStorage/
+node_modules
 
-Services/__pycache__
+api/Services/__pycache__
 .idea
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
@@ -167,3 +168,4 @@ Services/__pycache__
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+.DS_Store

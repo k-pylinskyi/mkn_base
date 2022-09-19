@@ -1,9 +1,9 @@
 from threading import Thread, active_count
 
-from Services.Db.DbService import *
-from Services.Processors.Extractor import Extractor
-from Services.Ftp.FtpConection import FtpConnection
-from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from api.Services.Db.DbService import *
+from api.Services.Processors.Extractor import Extractor
+from api.Services.Ftp.FtpConection import FtpConnection
+from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 
 def run_parallel(func, data):

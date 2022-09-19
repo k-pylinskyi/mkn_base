@@ -1,4 +1,4 @@
-from Services.Processors.DataFrameReader import DataFrameReader as dfreader
+from api.Services.Processors.DataFrameReader import DataFrameReader as dfreader
 from pandasql import sqldf
 import pandas as pd
 
