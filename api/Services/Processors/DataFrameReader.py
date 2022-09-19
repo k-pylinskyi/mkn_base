@@ -1,6 +1,8 @@
-import pandas as pd
 import os
 import re
+
+import pandas as pd
+
 
 class DataFrameReader:
     @staticmethod

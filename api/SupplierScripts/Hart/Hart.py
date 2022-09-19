@@ -1,6 +1,7 @@
-from Services.Processors.DataFrameReader import DataFrameReader
 from pandasql import sqldf
-from Services.Db.DbContext import DbContext
+
+from api.Services.Db.DbContext import DbContext
+from api.Services.Processors.DataFrameReader import DataFrameReader as DataFrameReader
 
 
 class Hart:
@@ -10,7 +11,8 @@ class Hart:
 
     def process(self):
         data = self.dfs_dict.get("hart_data")
-        data.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category', 'unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin']
+        data.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category',
+                        'unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin']
         data['part_number'] = DataFrameReader.format_column(data['part_number'])
 
         quantity = self.dfs_dict.get("96285_Quantity")
@@ -20,7 +22,8 @@ class Hart:
         cn.columns = ['hart_part_number', 'tariff_code', 'weight']
 
         cross = self.dfs_dict.get("hart_cross")
-        cross.columns = ['hart_part_number', 'part_number', 'part_name', 'supplier', 'hart_part_number_cross', 'part_name_cross', 'name_cross', 'supplier_cross']
+        cross.columns = ['hart_part_number', 'part_number', 'part_name', 'supplier', 'hart_part_number_cross',
+                         'part_name_cross', 'name_cross', 'supplier_cross']
 
         deposit = self.dfs_dict.get("hart_deposit")
         deposit.columns = ['hart_part_number', 'tariff_code', 'price']
@@ -29,7 +32,7 @@ class Hart:
         price.columns = ['hart_part_number', 'price']
 
         weight = self.dfs_dict.get("hart_weight")
-        weight.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category', 'unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin', 'weight']
+        weight.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category','unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin', 'weight']
 
         query = """
         SELECT DISTINCT
@@ -62,4 +65,3 @@ class Hart:
         connection = context.db
         df = self.process()
         df.to_sql(table_name, connection, if_exists='replace', index=False)
-

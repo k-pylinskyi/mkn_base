@@ -1,6 +1,6 @@
-from Services.Db.DbService import DbService
-from Services.Processors.DownloadProcessor import DownloadProcessor
-from SupplierScripts.Hart.Hart import Hart
+from api.Services.Db.DbService import DbService
+from api.Services.Processors.DownloadProcessor import DownloadProcessor
+from api.SupplierScripts.Hart.Hart import Hart
 
 if __name__ == '__main__':
     #db = DbService()
