@@ -12,3 +12,4 @@ class DbContext:
 
         self.db = sql.connect(db_path)
         self.cursor = self.db.cursor()
+
