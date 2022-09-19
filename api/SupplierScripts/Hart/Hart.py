@@ -1,4 +1,6 @@
+import pandas as pd
 from pandasql import sqldf
+import os
 
 from api.Services.Db.DbContext import DbContext
 from api.Services.Processors.DataFrameReader import DataFrameReader as DataFrameReader
@@ -6,33 +8,83 @@ from api.Services.Processors.DataFrameReader import DataFrameReader as DataFrame
 
 class Hart:
     def __init__(self):
-        directory = "./TemporaryStorage//Hart//files"
-        self.dfs_dict = DataFrameReader.get_data_frames(directory, ',', 1)
+        directory = "../TemporaryStorage//Hart//files"
+        self.data = pd.read_csv(os.path.join(directory, 'hart_data.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+
 
     def process(self):
-        data = self.dfs_dict.get("hart_data")
-        data.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category',
-                        'unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin']
-        data['part_number'] = DataFrameReader.format_column(data['part_number'])
+        self.data.columns = [
+            'hart_part_number',
+            'tecdoc_number',
+            'supplier',
+            'part_number',
+            'part_name',
+            'category',
+            'unit_measure',
+            'price', 'deposit',
+            'oe_number',
+            'additional_numbers',
+            'ean_codes',
+            'origin'
+        ]
+        self.data['part_number'] = DataFrameReader.format_column(self.data['part_number'])
 
-        quantity = self.dfs_dict.get("96285_Quantity")
-        quantity.columns = ['hart_part_number', 'qty', 'warehouse']
+        self.quantity.columns = [
+            'hart_part_number',
+            'qty',
+            'warehouse'
+        ]
 
-        cn = self.dfs_dict.get("hart_cn")
-        cn.columns = ['hart_part_number', 'tariff_code', 'weight']
+        self.cn.columns = [
+            'hart_part_number',
+            'tariff_code',
+            'weight'
+        ]
 
-        cross = self.dfs_dict.get("hart_cross")
-        cross.columns = ['hart_part_number', 'part_number', 'part_name', 'supplier', 'hart_part_number_cross',
-                         'part_name_cross', 'name_cross', 'supplier_cross']
+        self.cross.columns = [
+            'hart_part_number',
+            'part_number',
+            'part_name',
+            'supplier',
+            'hart_part_number_cross',
+            'part_name_cross',
+            'name_cross',
+            'supplier_cross'
+        ]
 
-        deposit = self.dfs_dict.get("hart_deposit")
-        deposit.columns = ['hart_part_number', 'tariff_code', 'price']
+        self.deposit.columns = [
+            'hart_part_number',
+            'tariff_code',
+            'price'
+        ]
 
-        price = self.dfs_dict.get("hart_prices")
-        price.columns = ['hart_part_number', 'price']
+        self.prices.columns = [
+            'hart_part_number',
+            'price'
+        ]
 
-        weight = self.dfs_dict.get("hart_weight")
-        weight.columns = ['hart_part_number', 'tecdoc_number', 'supplier', 'part_number', 'part_name', 'category','unit_measure', 'price', 'deposit', 'oe_number', 'additional_numbers', 'ean_codes', 'origin', 'weight']
+        self.weight.columns = [
+            'hart_part_number',
+            'tecdoc_number',
+            'supplier',
+            'part_number',
+            'part_name',
+            'category',
+            'unit_measure',
+            'price',
+            'deposit',
+            'oe_number',
+            'additional_numbers',
+            'ean_codes',
+            'origin',
+            'weight'
+        ]
 
         query = """
         SELECT DISTINCT
@@ -42,10 +94,10 @@ class Hart:
         data.supplier as manufacturer,
         data.part_name, 
         REPLACE(quantity.qty, '>', '') as quantity, 
-        IIF(deposit.price is null, price.price, price.price + ROUND(deposit.price, 2)) as mnk_price
+        IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) as mnk_price
         FROM data 
-        INNER JOIN price 
-        ON data.hart_part_number = price.hart_part_number
+        INNER JOIN prices 
+        ON data.hart_part_number = prices.hart_part_number
         INNER JOIN quantity 
         ON data.hart_part_number = quantity.hart_part_number
         LEFT JOIN deposit
@@ -59,9 +111,3 @@ class Hart:
         """
 
         return sqldf(query)
-
-    def to_db(self, table_name):
-        context = DbContext()
-        connection = context.db
-        df = self.process()
-        df.to_sql(table_name, connection, if_exists='replace', index=False)
