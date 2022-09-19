@@ -3,7 +3,7 @@ import platform
 import subprocess
 import time
 
-from Utils.consts import CONSOLE_COLOR, ERRORS
+from api.Utils.consts import CONSOLE_COLOR, ERRORS
 
 
 class Extractor:
