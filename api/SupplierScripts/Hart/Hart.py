@@ -1,5 +1,45 @@
 from api.SupplierScripts import *
 
+
+def get_queried_data():
+    hart = Hart()
+    dataframes = hart.process()
+    data = dataframes[0]
+    cn = dataframes[1]
+    cross = dataframes[2]
+    deposit = dataframes[3]
+    prices = dataframes[4]
+    quantity = dataframes[5]
+    weight = dataframes[6]
+
+    query = '''
+            SELECT DISTINCT
+            24 AS supplier_id,
+            data.hart_part_number, 
+            data.part_number,
+            data.manufacturer,
+            data.part_name, 
+            REPLACE(quantity.qty, '>', '') AS quantity, 
+            IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS final_price,
+            data.unit_measure,
+            weight.weight,
+            data.origin
+            FROM data 
+            INNER JOIN prices 
+            ON data.hart_part_number = prices.hart_part_number
+            INNER JOIN quantity 
+            ON data.hart_part_number = quantity.hart_part_number
+            LEFT JOIN deposit
+            ON data.hart_part_number = deposit.hart_part_number
+            INNER JOIN weight
+            ON data.hart_part_number = weight.hart_part_number
+            WHERE
+            quantity.warehouse in('V', 'S', '1') 
+            '''
+
+    return sqldf(query)
+
+
 class Hart:
     pd.set_option('display.max_columns', 4)
 
@@ -83,42 +123,3 @@ class Hart:
         print(self.cn.head())
 
         return [self.data, self.cn, self.cross, self.deposit, self.prices, self.quantity, self.weight]
-
-
-def get_queried_data():
-    hart = Hart()
-    dataframes = hart.process()
-    data = dataframes[0]
-    cn = dataframes[1]
-    cross = dataframes[2]
-    deposit = dataframes[3]
-    prices = dataframes[4]
-    quantity = dataframes[5]
-    weight = dataframes[6]
-
-    query = '''
-            SELECT DISTINCT
-            24 AS supplier_id,
-            data.hart_part_number, 
-            data.part_number,
-            data.manufacturer,
-            data.part_name, 
-            REPLACE(quantity.qty, '>', '') AS quantity, 
-            IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS final_price,
-            data.unit_measure,
-            weight.weight,
-            data.origin
-            FROM data 
-            INNER JOIN prices 
-            ON data.hart_part_number = prices.hart_part_number
-            INNER JOIN quantity 
-            ON data.hart_part_number = quantity.hart_part_number
-            LEFT JOIN deposit
-            ON data.hart_part_number = deposit.hart_part_number
-            INNER JOIN weight
-            ON data.hart_part_number = weight.hart_part_number
-            WHERE
-            quantity.warehouse in('V', 'S', '1') 
-            '''
-
-    return sqldf(query)

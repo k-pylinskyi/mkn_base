@@ -14,13 +14,14 @@ VALUES
 (12, '138.201.56.185', 'hart', '2Y1r7D0g', '96285_kth+wgh.zip', 24, 'hart_weight.zip'),
 (13, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/STANY54672.zip', 17, 'emoto_data.zip'),
 (14, '138.201.56.185', 'gordon', 'tR1sG6aG7lnW5n', '288090.csv', 22, 'gordon_data.csv'),
-(15, '138.201.56.185', 'intervito', 'iZ5sG6nT2qsZ0e', 'cennik_6090.csv', 27, 'intervito_data.csv'),
-(16, '138.201.56.185', 'moto_hurt', 'gA9mN3mI8rkP1j', 'OFERTA.csv', 58, 'motohurt_data.csv'),
-(17, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', '57765_01.gz', 55, 'rodon_data.csv'),
-(18, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/autolend/156127_w2.zip', 5, 'autoland_data.csv'),
-(19, '138.201.56.185', 'motores', 'iP4cV5bE9ivF8u', 'A9469.XLSX', 41, 'motores_data.csv'),
-(20, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', '29366_ce.gz', 7, 'autopartner_gdansk_data.gz'),
-(21, '138.201.56.185', 'inter_parts', 'pD2jY0dP8heG5p', '65232_ce.gz', 59, 'interparts_data.gz'),
-(22, '138.201.56.185', 'motoprofil', 'hF3uE4pI3fyB2v', 'motoprofilprice.csv', 39, 'motoprofil_data.csv'),
-(23, '138.201.56.185', 'paketo', 'yX5iS0yF2jrO0l', 'CENNIK PAKETO.csv', 48, 'paketo_data.csv');
+(15, '138.201.56.185', 'gordon', 'tR1sG6aG7lnW5n', 'gordon_dict.csv', 22, 'gordon_dict.csv'),
+(16, '138.201.56.185', 'intervito', 'iZ5sG6nT2qsZ0e', 'cennik_6090.csv', 27, 'intervito_data.csv'),
+(17, '138.201.56.185', 'moto_hurt', 'gA9mN3mI8rkP1j', 'OFERTA.csv', 58, 'motohurt_data.csv'),
+(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', '57765_01.gz', 55, 'rodon_data.csv'),
+(19, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/autolend/156127_w2.zip', 5, 'autoland_data.csv'),
+(20, '138.201.56.185', 'motores', 'iP4cV5bE9ivF8u', 'A9469.XLSX', 41, 'motores_data.csv'),
+(21, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', '29366_ce.gz', 7, 'autopartner_gdansk_data.gz'),
+(22, '138.201.56.185', 'inter_parts', 'pD2jY0dP8heG5p', '65232_ce.gz', 59, 'interparts_data.gz'),
+(23, '138.201.56.185', 'motoprofil', 'hF3uE4pI3fyB2v', 'motoprofilprice.csv', 39, 'motoprofil_data.csv'),
+(24, '138.201.56.185', 'paketo', 'yX5iS0yF2jrO0l', 'CENNIK PAKETO.csv', 48, 'paketo_data.csv');
 

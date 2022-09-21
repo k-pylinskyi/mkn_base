@@ -1,17 +1,17 @@
+from api.Services.Db.DbService import DbService
 from api.Services.Processors.DataFrameReader import DataFrameReader
 from api.Services.Processors.DownloadProcessor import DownloadProcessor
-from api.SupplierScripts.Gordon.Gordon import Gordon
-from api.SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import process_autopartner_gdansk
+from api.SupplierScripts.Gordon import Gordon
 
 if __name__ == '__main__':
-    # db = DbService()
-    # db.initial_create()
+    #db = DbService()
+    #db.initial_create()
 
-    # dp = DownloadProcessor()
-    # dp.download_parallel()
+    #dp = DownloadProcessor()
+    #dp.download_parallel()
 
-    DataFrameReader.dataframe_to_db('hart', Hart.get_queried_data())
-    print(Hart.get_queried_data())
+    DataFrameReader.dataframe_to_db('gordon', Gordon.get_queried_data())
+    print(Gordon.get_queried_data())
 
     # Gordon = Gordon()
     # gordon_df = Gordon.process()
