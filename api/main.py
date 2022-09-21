@@ -1,4 +1,5 @@
 from api.Services.Processors.DataFrameReader import DataFrameReader
+from api.SupplierScripts.Emoto.Emoto import process_emoto
 from api.SupplierScripts.Gordon.Gordon import Gordon
 from api.SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import process_autopartner_gdansk
 
@@ -10,7 +11,9 @@ if __name__ == '__main__':
     # dp.download_parallel()
 
     DataFrameReader.dataframe_to_db('autopartner_gdansk', process_autopartner_gdansk())
+    DataFrameReader.dataframe_to_db('emoto', process_emoto())
     print(process_autopartner_gdansk())
+    print(process_emoto())
 
     # Gordon = Gordon()
     # gordon_df = Gordon.process()
