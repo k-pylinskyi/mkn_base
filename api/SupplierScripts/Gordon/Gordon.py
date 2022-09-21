@@ -1,7 +1,4 @@
-import os
-import pandas as pd
-from pandasql import sqldf
-from api.Services.Processors.DataFrameReader import DataFrameReader as DataFrameReader
+from api.SupplierScripts import *
 
 
 class Gordon:

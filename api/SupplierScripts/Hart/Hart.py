@@ -1,8 +1,4 @@
-import pandas as pd
-from pandasql import sqldf
-import os
-from api.Services.Processors.DataFrameReader import DataFrameReader as DataFrameReader
-
+from api.SupplierScripts import *
 
 class Hart:
     def __init__(self):
@@ -17,7 +13,8 @@ class Hart:
 
 
     def process(self):
-        self.data.columns = [
+        data = self.data
+        data.columns = [
             'hart_part_number',
             'tecdoc_number',
             'supplier',
@@ -31,21 +28,24 @@ class Hart:
             'ean_codes',
             'origin'
         ]
-        self.data['part_number'] = DataFrameReader.format_column(self.data['part_number'])
+        data['part_number'] = DataFrameReader.format_column(self.data['part_number'])
 
-        self.quantity.columns = [
+        quantity = self.quantity
+        quantity.columns = [
             'hart_part_number',
             'qty',
             'warehouse'
         ]
 
-        self.cn.columns = [
+        cn = self.cn
+        cn.columns = [
             'hart_part_number',
             'tariff_code',
             'weight'
         ]
 
-        self.cross.columns = [
+        cross = self.cross
+        cross.columns = [
             'hart_part_number',
             'part_number',
             'part_name',
@@ -56,18 +56,21 @@ class Hart:
             'supplier_cross'
         ]
 
-        self.deposit.columns = [
+        deposit = self.deposit
+        deposit.columns = [
             'hart_part_number',
             'tariff_code',
             'price'
         ]
 
-        self.prices.columns = [
+        prices = self.prices
+        prices.columns = [
             'hart_part_number',
             'price'
         ]
 
-        self.weight.columns = [
+        weight = self.weight
+        weight.columns = [
             'hart_part_number',
             'tecdoc_number',
             'supplier',
