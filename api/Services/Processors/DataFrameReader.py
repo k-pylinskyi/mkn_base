@@ -8,7 +8,7 @@ class DataFrameReader:
     @staticmethod
     def format_column(column: pd.Series):
         column = column.str.upper()
-        column = column.str.replace('[\W_]+', '')
+        column = column.str.replace('[\W_]+', '', regex=True)
         return column
 
     @staticmethod

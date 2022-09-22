@@ -1,7 +1,12 @@
 from api.SupplierScripts import *
 
 
-def get_queried_data():
+def hart_to_db():
+    print('Pushing Hart to Data Base')
+    DataFrameReader.dataframe_to_db('hart', get_hart_data())
+
+
+def get_hart_data():
     hart = Hart()
     dataframes = hart.process()
     data = dataframes[0]
@@ -15,12 +20,12 @@ def get_queried_data():
     query = '''
             SELECT DISTINCT
             24 AS supplier_id,
+            data.manufacturer,
             data.hart_part_number, 
             data.part_number,
-            data.manufacturer,
             data.part_name, 
             REPLACE(quantity.qty, '>', '') AS quantity, 
-            IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS final_price,
+            IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS price,
             data.unit_measure,
             weight.weight,
             data.origin
@@ -91,13 +96,13 @@ class Hart:
             'origin',
             'weight'
         ]
-        self.data = pd.read_csv(os.path.join(directory, 'hart_data.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
-        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.csv'), sep=';', skiprows=1, decimal=',', error_bad_lines=False, low_memory=False)
+        self.data = pd.read_csv(os.path.join(directory, 'hart_data.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';', header=None, decimal=',')
+        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.csv'), sep=';', header=None, skiprows=1, decimal=',')
 
     def process(self):
         self.data.columns = self.data_columns

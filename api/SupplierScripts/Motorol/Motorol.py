@@ -1,7 +1,12 @@
 from api.SupplierScripts import *
 
 
-def get_queried_data():
+def motorol_to_db():
+    print('Pushing Motorol to Data Base')
+    DataFrameReader.dataframe_to_db('motorol', get_motorol_data())
+
+
+def get_motorol_data():
     motorol = Motorol()
     dataframes = motorol.process()
     data = dataframes[0]
@@ -14,16 +19,16 @@ def get_queried_data():
         data.supplier_part_number,
         data.part_number,
         data.part_name,
-        IIF(dict.deposit is not null, data.price + dict.deposit, data.price) as final_price,
-        data.qty
+        IIF(dict.deposit is not null, data.price + dict.deposit, data.price) as price,
+        data.qty as quantity
         FROM data
         LEFT JOIN dict
         ON data.supplier_part_number = dict.supplier_part_number
         WHERE
         IIF(dict.deposit is not null, data.price + dict.deposit, data.price) is not null
+        AND
+        data.qty > 0
     '''
-
-    print(sqldf(query).head())
 
     return sqldf(query)
 
@@ -37,10 +42,8 @@ class Motorol:
         self.data_columns = ['supplier_part_number', 'part_number', 'part_name', 'manufacturer', 'qty', 'price']
         self.dict_columns = ['supplier_part_number', 'part_number', 'manufacturer', 'deposit']
 
-        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',', skiprows=1,
-                                error_bad_lines=False, low_memory=False, encoding_errors='ignore')
-        self.dict = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',', skiprows=1,
-                                error_bad_lines=False, low_memory=False, encoding_errors='ignore')
+        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',', header=None, encoding_errors='ignore')
+        self.dict = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',', skiprows=1, encoding_errors='ignore')
 
     def process(self):
         self.data.columns = self.data_columns

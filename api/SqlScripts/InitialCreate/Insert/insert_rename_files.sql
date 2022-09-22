@@ -10,7 +10,7 @@ VALUES
 (8, 7, '96285_PriceList_PLN.csv', 'hart_prices.csv'),
 (9, 7, '96285_Quantity.csv', 'hart_quantity.csv'),
 (10, 21, '65232_ce.csv', 'interparts_data.csv'),
-(11, 4, 'it92266.csv', 'interteam_data.csv'),
+(11, 4, 'it84262.csv', 'interteam_data.csv'),
 (12, 6, '08525.mnk.cennik.csv', 'motorol_data.csv'),
 (13, 27, 'Priceoem1.txt', 'orap_price_oem1.txt'),
 (14, 26, 'Priceoem2.txt', 'orap_price_oem2.txt'),

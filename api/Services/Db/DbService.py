@@ -7,10 +7,22 @@ def connect():
     db.initial_create()
 
 
+def create_views():
+    db = DbService()
+    context = DbContext()
+
+    full_path = os.path.join(db.sql_create_view_dir, 'suppliers_prices.sql')
+    sql_file = open(full_path)
+    query_string = sql_file.read()
+
+    context.cursor.execute(query_string)
+
+
 class DbService:
 
     def __init__(self):
         self.sql_create_dir = './SqlScripts/InitialCreate/Create'
+        self.sql_create_view_dir = './SqlScripts/InitialCreate/CreateView'
         self.sql_insert_dir = './SqlScripts/InitialCreate/Insert'
         self.sql_select_dir = './SqlScripts/Select'
         self.create_query_list = os.listdir(self.sql_create_dir)
@@ -59,3 +71,4 @@ class DbService:
         result = context.cursor.fetchall()
 
         return result
+

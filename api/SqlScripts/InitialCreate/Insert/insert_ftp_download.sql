@@ -3,7 +3,7 @@ VALUES
 (1, '138.201.56.185', 'auto-france', 'kZ6rH0iA3qvC6m', '/suppliers/auto_france/OFERTA.txt', 9, 'autofrance_data.txt'),
 (2, '138.201.56.185', 'auto_euro', 'rR0eX3cN3d', '29452_ce.csv', 2, 'autoeuro_data.csv'),
 (3, '138.201.56.185', 'elit', 'kI9eP6jB1v', 'export.csv', 19, 'elit_data.csv'),
-(4, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/i-t/it92266.zip', 26, 'interteam_data.zip'),
+(4, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/i-t/it84262.zip', 26, 'interteam_data.zip'),
 (5, '138.201.56.185', 'motogama', 'hH1gJ0zK2t', '19134_01.csv', 40, 'motogama_data.csv'),
 (6, '138.201.56.185', 'motorol', 'dE4wO8nG8o', '08525.mnk.cennik.zip', 42, 'motorol_data.zip'),
 (7, '138.201.56.185', 'hart', '2Y1r7D0g', 'hart.zip', 24, 'hart_price_qty.zip'),
@@ -54,5 +54,6 @@ VALUES
 (52, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/NISSAN.zip', 45, 'orap_nissan.zip'),
 (53, '138.201.56.185', 'motorol', 'dE4wO8nG8o', 'motorol_dict.csv', 42, 'motorol_dict.csv'),
 (54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv'),
-(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 55, 'rodon_dict.csv');
+(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 55, 'rodon_dict.csv'),
+(13, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/emoto_dict.csv', 17, 'emoto_dict.csv');
 
