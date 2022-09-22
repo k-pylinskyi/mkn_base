@@ -53,5 +53,6 @@ VALUES
 (51, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/oapnal.zip', 47, 'oapnal.zip'),
 (52, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/NISSAN.zip', 45, 'orap_nissan.zip'),
 (53, '138.201.56.185', 'motorol', 'dE4wO8nG8o', 'motorol_dict.csv', 42, 'motorol_dict.csv'),
-(54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv');
+(54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv'),
+(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 55, 'rodon_dict.csv');
 

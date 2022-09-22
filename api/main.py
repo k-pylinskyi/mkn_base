@@ -5,10 +5,11 @@ from api.SupplierScripts.Emoto.Emoto import process_emoto
 from api.SupplierScripts.Gordon.Gordon import Gordon
 from api.SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import process_autopartner_gdansk
 from api.SupplierScripts.Paketo.Packeto import process_paketo
+from api.SupplierScripts.Motorol.Motorol import get_queried_data
 
 if __name__ == '__main__':
-    DbService.connect()
-    DownloadProcessor.download()
+    #DbService.connect()
+    #DownloadProcessor.download()
 
 
     # DataFrameReader.dataframe_to_db('autopartner_gdansk', process_autopartner_gdansk())
@@ -20,10 +21,12 @@ if __name__ == '__main__':
     # DataFrameReader.dataframe_to_db('gordon', Gordon.get_queried_data())
     # print(Gordon.get_queried_data())
 
-    # Gordon = Gordon()
-    # gordon_df = Gordon.process()
+    DataFrameReader.dataframe_to_db('motorol', get_queried_data())
+
+    #Gordon = Gordon()
+    #gordon_df = Gordon.process()
     # print(gordon_df.head())
-    # DataFrameReader.dataframe_to_db('Gordon', gordon_df)
+    #DataFrameReader.dataframe_to_db('Gordon', gordon_df)
 
     # qa = QueryProcessor('D:\\Work\\MNK_PRICES\\DB_FILES\\Hart\\files')
     # qa.get_dataframe('')
