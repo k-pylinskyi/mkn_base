@@ -62,4 +62,3 @@ VALUES
 (57, 'MNK Zwrot', 'POL', 'PLN', 'MNK_ZWROT'),
 (58, 'M Moto-Hurt S.A.', 'ZIP', 'PLN', 'MOTO_HURT'),
 (59, 'M Inter Parts', 'ZIP', 'EUR', 'INTER_PARTS');
-

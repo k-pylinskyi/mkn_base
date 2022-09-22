@@ -5,9 +5,9 @@ from api.Services.Db.DbContext import DbContext
 class DbService:
 
     def __init__(self):
-        self.sql_create_dir = './SqlScripts/InitialCreate/Create'
-        self.sql_insert_dir = './SqlScripts/InitialCreate/Insert'
-        self.sql_select_dir = './SqlScripts/Select'
+        self.sql_create_dir = './api/SqlScripts/InitialCreate/Create'
+        self.sql_insert_dir = './api/SqlScripts/InitialCreate/Insert'
+        self.sql_select_dir = './api/SqlScripts/Select'
         self.create_query_list = os.listdir(self.sql_create_dir)
         self.insert_query_list = os.listdir(self.sql_insert_dir)
 
