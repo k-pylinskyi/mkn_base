@@ -1,11 +1,14 @@
 from api.SupplierScripts import *
 
+
 class Motorol:
     pd.set_option('display.max_columns', 999)
     def __init__(self):
-        self.data_columns = {0: 'manufacturer', 1: 'part_name', 2: 'part_art', 3: 'qty', 4: 'price', 6: 'part_number'}
-        self.dict_columns = {0: 'part_art', 1: 'part_number', 2: 'manufacturer', 3: 'part_name'}
         directory = "../TemporaryStorage//MOTOROL//files"
+
+        self.data_columns = ['manufacturer', 'part_name', 'part_art', 'qty', 'price', 'part_number']
+        self.dict_columns = ['part_art', 'part_number', 'manufacturer', 'part_name']
+
         self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',', skiprows=0,
                                 error_bad_lines=False, low_memory=False, encoding_errors='ignore')
         self.dictionary = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',', skiprows=1,

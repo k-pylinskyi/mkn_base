@@ -6,6 +6,11 @@ from api.Services.Ftp.FtpConection import FtpConnection
 from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 
+def download():
+    dp = DownloadProcessor()
+    dp.download_parallel()
+
+
 def run_parallel(func, data):
     threads = []
     for data_row in data:

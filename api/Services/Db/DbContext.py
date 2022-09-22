@@ -3,7 +3,7 @@ import sqlite3 as sql
 
 class DbContext:
     def __init__(self):
-        db_folder = './Database'
+        db_folder = '../Database'
         db_file = 'mnk_base.db'
         db_path = os.path.join(db_folder, db_file)
 

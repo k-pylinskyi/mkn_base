@@ -51,5 +51,7 @@ VALUES
 (49, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/Price FIATChrysler_L.zip', 45, 'orap_price_fiat_chrysler_l.zip'),
 (50, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/Price Febi+BluePrint.zip', 45, 'orap_price_febi_blueprint.zip'),
 (51, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/oapnal.zip', 47, 'oapnal.zip'),
-(52, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/NISSAN.zip', 45, 'orap_nissan.zip');
+(52, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/NISSAN.zip', 45, 'orap_nissan.zip'),
+(53, '138.201.56.185', 'motorol', 'dE4wO8nG8o', 'motorol_dict.csv', 42, 'motorol_dict.csv'),
+(54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv');
 

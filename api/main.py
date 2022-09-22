@@ -1,17 +1,15 @@
-from api.Services.Db.DbService import DbService
+from api.Services.Db import DbService
+from api.Services.Processors import DownloadProcessor
 from api.Services.Processors.DataFrameReader import DataFrameReader
 from api.SupplierScripts.Emoto.Emoto import process_emoto
 from api.SupplierScripts.Gordon.Gordon import Gordon
 from api.SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import process_autopartner_gdansk
 from api.SupplierScripts.Paketo.Packeto import process_paketo
-from api.Services.Processors.DownloadProcessor import DownloadProcessor
 
 if __name__ == '__main__':
-    db = DbService()
-    db.initial_create()
+    DbService.connect()
+    DownloadProcessor.download()
 
-    dp = DownloadProcessor()
-    dp.download_parallel()
 
     # DataFrameReader.dataframe_to_db('autopartner_gdansk', process_autopartner_gdansk())
     # DataFrameReader.dataframe_to_db('emoto', process_emoto())

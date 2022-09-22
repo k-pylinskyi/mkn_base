@@ -56,6 +56,5 @@ class Gordon:
         self.dict['part_number'] = DataFrameReader.format_column(self.dict['part_number'])
 
         self.data.columns = self.data_columns
-        #self.data.drop(columns=[[1, 3, 8]], axis=1, inplace=True)
 
         return [self.data, self.dict]
