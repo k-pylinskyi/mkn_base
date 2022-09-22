@@ -36,7 +36,7 @@ class Extractor:
                 print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
 
         elif platform.system() == 'Darwin':
-            extractor = '../7z/darwin/7zz'
+            extractor = './7z/darwin/7zz'
             try:
                 subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
                 time.sleep(3)
