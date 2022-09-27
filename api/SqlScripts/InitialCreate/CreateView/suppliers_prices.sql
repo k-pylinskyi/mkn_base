@@ -66,3 +66,31 @@ paketo.quantity
 FROM suppliers
 INNER JOIN paketo
 ON suppliers.id = paketo.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+hart.manufacturer,
+hart.supplier_part_number,
+hart.part_number,
+hart.price,
+hart.quantity
+FROM suppliers
+INNER JOIN hart
+ON suppliers.id = hart.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+rodon.manufacturer,
+rodon.supplier_part_number,
+rodon.part_number,
+rodon.price,
+rodon.quantity
+FROM suppliers
+INNER JOIN rodon
+ON suppliers.id = rodon.supplier_id

@@ -34,7 +34,6 @@ class Paketo:
         self.data.drop(self.data.columns[[4]], axis=1, inplace=True)
         self.data.rename(columns=self.data_columns, inplace=True)
         self.data['supplier_part_number'] = self.data['part_number']
-        self.data['part_number'] = DataFrameReader.format_column(self.data['part_number'])
         self.data.set_index('part_number', inplace=True)
         self.data.columns = self.data.columns.str.strip()
         return self.data

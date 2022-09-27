@@ -1,4 +1,5 @@
 import ftplib
+import os.path
 
 
 class FtpConnection:
@@ -10,10 +11,16 @@ class FtpConnection:
         self.ftp.login(username, password)
         # self.ftp.dir()
 
-    def upload_file(self, local_file, remote_file):
+    def upload_file(self, local_file, remote_folder):
         print('Uploading file to ftp : {}\n'.format(local_file))
+
+        print(remote_folder)
+        self.ftp.cwd('/maxi_export/')
+        print(self.ftp.nlst())
+        if remote_folder not in self.ftp.nlst():
+            self.ftp.mkd(remote_folder)
         with open(local_file, 'rb') as f:
-            self.ftp.storbinary('STOR ' + remote_file, f)
+            self.ftp.storbinary('STOR ' + '/maxi_export/' + remote_folder + '/export.csv', f)
         self.ftp.quit()
         print('File Uploaded ftp://{}/{} ...'.format(self.host, local_file))
 

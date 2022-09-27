@@ -2,7 +2,7 @@ from api.SupplierScripts import *
 
 
 def emoto_to_db():
-    print('Pushing Emoto Gdansk to Data Base')
+    print('Pushing Emoto to Data Base')
     DataFrameReader.dataframe_to_db('emoto', get_emoto_data())
 
 

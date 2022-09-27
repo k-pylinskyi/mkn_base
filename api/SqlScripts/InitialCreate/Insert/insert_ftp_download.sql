@@ -16,12 +16,12 @@ VALUES
 (14, '138.201.56.185', 'gordon', 'tR1sG6aG7lnW5n', '288090.csv', 22, 'gordon_data.csv'),
 (15, '138.201.56.185', 'gordon', 'tR1sG6aG7lnW5n', 'gordon_dict.csv', 22, 'gordon_dict.csv'),
 (16, '138.201.56.185', 'intervito', 'iZ5sG6nT2qsZ0e', 'cennik_6090.csv', 27, 'intervito_data.csv'),
-(17, '138.201.56.185', 'moto_hurt', 'gA9mN3mI8rkP1j', 'OFERTA.csv', 58, 'motohurt_data.csv'),
-(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', '57765_01.gz', 55, 'rodon_data.csv'),
-(19, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/autolend/156127_w2.zip', 5, 'autoland_data.csv'),
+(17, '138.201.56.185', 'moto_hurt', 'gA9mN3mI8rkP1j', 'OFERTA.csv', 63, 'motohurt_data.csv'),
+(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', '57765_01.gz', 60, 'rodon_data.gz'),
+(19, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/autolend/156127_w2.zip', 5, 'autoland_data.zip'),
 (20, '138.201.56.185', 'motores', 'iP4cV5bE9ivF8u', 'A9469.XLSX', 41, 'motores_data.csv'),
 (21, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', '29366_ce.gz', 7, 'autopartner_gdansk_data.gz'),
-(22, '138.201.56.185', 'inter_parts', 'pD2jY0dP8heG5p', '65232_ce.gz', 59, 'interparts_data.gz'),
+(22, '138.201.56.185', 'inter_parts', 'pD2jY0dP8heG5p', '65232_ce.gz', 64, 'interparts_data.gz'),
 (23, '138.201.56.185', 'motoprofil', 'hF3uE4pI3fyB2v', 'motoprofilprice.csv', 39, 'motoprofil_data.csv'),
 (24, '138.201.56.185', 'paketo', 'yX5iS0yF2jrO0l', 'CENNIK PAKETO.csv', 48, 'paketo_data.csv'),
 (25, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/Priceoem4.zip', 45, 'orap_price_oem4.zip'),
@@ -54,6 +54,6 @@ VALUES
 (52, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/orap1/NISSAN.zip', 45, 'orap_nissan.zip'),
 (53, '138.201.56.185', 'motorol', 'dE4wO8nG8o', 'motorol_dict.csv', 42, 'motorol_dict.csv'),
 (54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv'),
-(18, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 55, 'rodon_dict.csv'),
-(13, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/emoto_dict.csv', 17, 'emoto_dict.csv');
+(55, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 60, 'rodon_dict.csv'),
+(56, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/emoto_dict.csv', 17, 'emoto_dict.csv');
 

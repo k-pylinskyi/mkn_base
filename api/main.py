@@ -4,6 +4,7 @@ from api.Services.Processors import SupplierProcessor
 
 if __name__ == '__main__':
     DbService.connect()
-    #DownloadProcessor.download()
+    DownloadProcessor.download()
 
     SupplierProcessor.suppliers_to_db()
+    SupplierProcessor.suppliers_to_ftp()

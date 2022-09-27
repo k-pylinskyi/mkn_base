@@ -30,7 +30,7 @@ class Extractor:
             extractor = 'start ../7z/windows/7z.exe'
             try:
                 os.system(f'cmd /c {extractor} e {archive_path} -o{out_folder} -y')
-                time.sleep(6)
+                time.sleep(20)
                 Extractor.rename_file(new_filename_path, out_folder, old_filename, old_filename_path)
             except Exception as ex:
                 print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')
@@ -39,7 +39,7 @@ class Extractor:
             extractor = './7z/darwin/7zz'
             try:
                 subprocess.run([extractor, "e", archive_path, f'-o{out_folder}', "-y"])
-                time.sleep(6)
+                time.sleep(20)
                 Extractor.rename_file(new_filename_path, out_folder, old_filename, old_filename_path)
             except Exception as ex:
                 print(f'{CONSOLE_COLOR.ERROR}{ERRORS.FILE_ERROR} {new_filename_path} {ex}{CONSOLE_COLOR.NC}\n')

@@ -3,7 +3,7 @@ from api.SupplierScripts import *
 
 def autopartner_gdansk_to_db():
     print('Pushing Auto Partner Gdansk to Data Base')
-    DataFrameReader.dataframe_to_db('autopartner_gdansk', get_autopartner_gdansk_data())
+    DataFrameReader.dataframe_to_db('auto_partner_gdansk', get_autopartner_gdansk_data())
 
 
 def get_autopartner_gdansk_data():

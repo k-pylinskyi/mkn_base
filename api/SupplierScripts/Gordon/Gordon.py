@@ -36,21 +36,17 @@ def get_gordon_data():
 
 class Gordon:
     def __init__(self):
-        direcotry = '../TemporaryStorage//GORDON//files'
-
         self.dict_columns = {0: 'supplier_part_number', 1: 'sufix', 2: 'part_number', 3: 'manufacturer'}
         self.data_columns = {0: 'supplier_part_number', 1: 'part_name', 2: 'tecdoc_number_1', 3: 'manufacturer',
                                 4: 'price', 5: 'tecdoc_number_2', 6: 'qty1', 7: 'qty2', 8: 'idsafo'}
 
-        self.dict = pd.read_csv(os.path.join(direcotry, 'gordon_dict.csv'), sep='\t', decimal=',', header=None, skiprows=2,
+        self.dict = pd.read_csv('../TemporaryStorage//GORDON//files/gordon_dict.csv', sep='\t', decimal=',', header=None, skiprows=2,
                                 encoding_errors='ignore')
-        self.data = pd.read_csv(os.path.join(direcotry, 'gordon_data.csv'), sep='\t', decimal=',', header=None, skiprows=1,
+        self.data = pd.read_csv('../TemporaryStorage//GORDON//files/gordon_data.csv', sep='\t', decimal=',', header=None, skiprows=1,
                                 encoding_errors='ignore', low_memory=False)
 
     def process(self):
         self.dict.rename(columns=self.dict_columns, inplace=True)
-        self.dict['part_number'] = DataFrameReader.format_column(self.dict['part_number'])
-
         self.data.rename(columns=self.data_columns, inplace=True)
 
         return [self.data, self.dict]

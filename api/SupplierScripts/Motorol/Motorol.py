@@ -34,20 +34,21 @@ def get_motorol_data():
 
 
 class Motorol:
-    pd.set_option('display.max_columns', 999)
 
     def __init__(self):
         directory = "../TemporaryStorage/MOTOROL/files"
 
-        self.data_columns = ['supplier_part_number', 'part_number', 'part_name', 'manufacturer', 'qty', 'price']
-        self.dict_columns = ['supplier_part_number', 'part_number', 'manufacturer', 'deposit']
+        self.data_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'part_name',
+                             3: 'manufacturer', 4: 'qty', 5: 'price'}
+        self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer', 3: 'deposit'}
 
-        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',', header=None, encoding_errors='ignore')
-        self.dict = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',', skiprows=1, encoding_errors='ignore')
+        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',',
+                                header=None, encoding_errors='ignore')
+        self.dict = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',',
+                                header=None, skiprows=1, encoding_errors='ignore')
 
     def process(self):
-        self.data.columns = self.data_columns
-        self.data['part_number'] = DataFrameReader.format_column(self.data['part_number'])
+        self.data.rename(columns=self.data_columns, inplace=True)
+        self.dict.rename(columns=self.dict_columns, inplace=True)
 
-        self.dict.columns = self.dict_columns
         return [self.data, self.dict]
