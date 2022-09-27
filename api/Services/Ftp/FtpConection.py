@@ -13,10 +13,7 @@ class FtpConnection:
 
     def upload_file(self, local_file, remote_folder):
         print('Uploading file to ftp : {}\n'.format(local_file))
-
-        print(remote_folder)
         self.ftp.cwd('/maxi_export/')
-        print(self.ftp.nlst())
         if remote_folder not in self.ftp.nlst():
             self.ftp.mkd(remote_folder)
         with open(local_file, 'rb') as f:

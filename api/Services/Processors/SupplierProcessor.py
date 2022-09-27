@@ -9,6 +9,7 @@ from api.SupplierScripts.Gordon.Gordon import *
 from api.SupplierScripts.Motorol.Motorol import *
 from api.SupplierScripts.Paketo.Paketo import *
 from api.SupplierScripts.Rodon.Rodon import *
+from api.SupplierScripts.Motogama.Motogama import *
 
 
 db = DbService()
@@ -25,6 +26,7 @@ def suppliers_to_db():
     paketo_to_db()
     hart_to_db()
     rodon_to_db()
+    motogama_to_db()
 
     print('Dataframes pushed to Data Base')
 
@@ -41,7 +43,8 @@ def suppliers_to_ftp():
         'motorol',
         'paketo',
         'hart',
-        'rodon'
+        'rodon',
+        'motogama'
     ]
 
     for supplier in suppliers:
