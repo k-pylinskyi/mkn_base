@@ -1,16 +1,19 @@
 from threading import Thread, active_count
-from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
-from Services.Db.DbService import DbService
-from Services.Ftp.FtpConection import FtpConnection
-from SupplierScripts.Hart.Hart import *
-from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import *
-from SupplierScripts.Emoto.Emoto import *
-from SupplierScripts.Gordon.Gordon import *
-from SupplierScripts.Motorol.Motorol import *
-from SupplierScripts.Paketo.Paketo import *
-from SupplierScripts.Rodon.Rodon import *
-from SupplierScripts.Motogama.Motogama import *
-
+from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from api.Services.Db.DbService import DbService
+from api.Services.Ftp.FtpConection import FtpConnection
+from api.SupplierScripts.Hart.Hart import *
+from api.SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import *
+from api.SupplierScripts.Emoto.Emoto import *
+from api.SupplierScripts.Gordon.Gordon import *
+from api.SupplierScripts.Motorol.Motorol import *
+from api.SupplierScripts.Paketo.Paketo import *
+from api.SupplierScripts.Rodon.Rodon import *
+from api.SupplierScripts.Motogama.Motogama import *
+from api.SupplierScripts.Elit.Elit import *
+from api.SupplierScripts.InterTeam.InterTeam import *
+from api.SupplierScripts.AutoLand.AutoLand import *
+from api.SupplierScripts.Motoprofil.Motoprofil import *
 
 db = DbService()
 
@@ -27,6 +30,11 @@ def suppliers_to_db():
     hart_to_db()
     rodon_to_db()
     motogama_to_db()
+    elit_to_db()
+    inter_team_to_db()
+    autoland_to_db()
+    motorol_to_db()
+    motoprofil_to_db()
 
     print('Dataframes pushed to Data Base')
 
@@ -44,7 +52,11 @@ def suppliers_to_ftp():
         'paketo',
         'hart',
         'rodon',
-        'motogama'
+        'motogama',
+        'elit',
+        'inter_team',
+        'autoland',
+        'motoprofil'
     ]
 
     for supplier in suppliers:
