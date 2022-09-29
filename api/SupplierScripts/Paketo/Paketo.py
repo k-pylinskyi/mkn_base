@@ -1,0 +1,42 @@
+import pandas as pd
+from pandasql import sqldf
+from Services.Processors.DataFrameReader import DataFrameReader
+from api.SupplierScripts import *
+
+
+def paketo_to_db():
+    print('Pushing Paketo to Data Base')
+    DataFrameReader.dataframe_to_db('paketo', get_paketo_data())
+
+
+def get_paketo_data():
+    paketo = Paketo()
+    data = paketo.process()
+    query = '''
+        SELECT 
+        48 as supplier_id,
+        "FEBEST" as manufacturer,
+        data.supplier_part_number,
+        data.part_number, 
+        data.price,  
+        CAST(data.qty AS INT) AS quantity
+        FROM data
+        WHERE data.qty NOT LIKE '0.0' AND data.price NOT LIKE '0.0'
+    '''
+    return sqldf(query)
+
+
+class Paketo:
+    def __init__(self):
+        self.data_columns = {0: 'part_number', 1: 'price', 2: 'currency', 3: 'qty'}
+
+        location = '../TemporaryStorage/PAKETO/files/paketo_data.csv'
+        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, skiprows=1)
+
+    def process(self):
+        self.data.drop(self.data.columns[[4]], axis=1, inplace=True)
+        self.data.rename(columns=self.data_columns, inplace=True)
+        self.data['supplier_part_number'] = self.data['part_number']
+        self.data.set_index('part_number', inplace=True)
+        self.data.columns = self.data.columns.str.strip()
+        return self.data

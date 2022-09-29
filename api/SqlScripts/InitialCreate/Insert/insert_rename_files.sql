@@ -1,6 +1,6 @@
 INSERT OR REPLACE INTO rename_files (id, file_id, old_file_name, new_file_name)
 VALUES
-(1, 20, '29366_ce.csv', 'autopartner_gdansk_data.csv'),
+(1, 21, '29366_ce.csv', 'autopartner_gdansk_data.csv'),
 (2, 13, 'STANY54672.csv', 'emoto_data.csv'),
 (3, 11, '96285_CN.csv', 'hart_cn.csv'),
 (4, 9, '96285_cross.csv', 'hart_cross.csv'),
@@ -9,9 +9,9 @@ VALUES
 (7, 10, '96285_kz.csv', 'hart_deposit.csv'),
 (8, 7, '96285_PriceList_PLN.csv', 'hart_prices.csv'),
 (9, 7, '96285_Quantity.csv', 'hart_quantity.csv'),
-(10, 21, '65232_ce.csv', 'interparts_data.csv'),
-(11, 4, 'it92266.csv', 'interteam_data.csv'),
-(12, 6, '08525.mnk.cennik.csv', 'motorol.csv'),
+(10, 22, '65232_ce.csv', 'interparts_data.csv'),
+(11, 4, 'it84262.csv', 'interteam_data.csv'),
+(12, 6, '08525.mnk.cennik.csv', 'motorol_data.csv'),
 (13, 27, 'Priceoem1.txt', 'orap_price_oem1.txt'),
 (14, 26, 'Priceoem2.txt', 'orap_price_oem2.txt'),
 (15, 25, 'Priceoem4.txt', 'orap_price_oem4.txt'),
@@ -39,4 +39,5 @@ VALUES
 (37, 28, 'PriceBMWALL.txt', 'orap_price_bmwall.txt'),
 (38, 31, 'Price_Suzuki.txt', 'orap_price_suzuki.txt'),
 (39, 32, 'Price_Subaru.txt', 'orap_price_subaru.txt'),
-(40, 6, 'oapnal.xlsx', 'orap_oapnal.xlsx');
+(40, 6, 'oapnal.xlsx', 'orap_oapnal.xlsx'),
+(41, 18, '57765_01.csv', 'rodon_data.csv');
