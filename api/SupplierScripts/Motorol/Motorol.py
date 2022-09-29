@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 class Motorol:
     pd.set_option('display.max_columns', 999)

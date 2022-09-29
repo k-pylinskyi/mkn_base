@@ -13,8 +13,8 @@ class Emoto:
         self.part_numbers_columns = {0: 'supplier_part_number', 1: 'part_number'}
 
         location = './TemporaryStorage/EMOTO/files/emoto_data.csv'
-        dictionary = './api/SupplierScripts/Emoto/emoto_dict.csv'
-        self.part_numbers = './api/SupplierScripts/Emoto/emoto_dict.txt'
+        dictionary = './SupplierScripts/Emoto/emoto_dict.csv'
+        self.part_numbers = './SupplierScripts/Emoto/emoto_dict.txt'
 
         self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, skiprows=1)
         self.dict = pd.read_csv(dictionary, sep=';', header=None, skiprows=1)

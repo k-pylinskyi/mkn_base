@@ -1,6 +1,6 @@
 import pandas as pd
 from pandasql import sqldf
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from Services.Processors.DataFrameReader import DataFrameReader
 
 
 class Packeto:
@@ -26,4 +26,5 @@ def process_paketo():
         FROM data
         WHERE data.qty NOT LIKE '0.0' AND data.price NOT LIKE '0.0'
     '''
-    return sqldf(query)
+    df = pd.DataFrame(sqldf(query))
+    return df.head(10).to_json()
