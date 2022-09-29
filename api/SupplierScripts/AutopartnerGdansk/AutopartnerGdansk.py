@@ -11,7 +11,6 @@ def autopartner_gdansk_to_db():
 
 
 def get_autopartner_gdansk_data():
-    print(os.listdir("../"))
     autopartner_gdansk = AutopartnerGdansk()
     dataframes = autopartner_gdansk.process()
     data = dataframes[0]

@@ -44,14 +44,14 @@ class Rodon:
             11: 'pack',
             13: 'deposit'
         }
-        self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer'}
+        self.dict_columns = {0: 'supplier_part_number',
+                             1: 'part_number', 2: 'manufacturer'}
 
-        self.data = pd.read_csv('./TemporaryStorage/RODON/files/rodon_data.csv', sep=';', low_memory=False,
-                           encoding_errors='ignore', header=None, usecols=[0, 2, 3, 4, 5, 7, 11, 13])
+        self.data = pd.read_csv('../TemporaryStorage/RODON/archive/rodon_data.gz', sep=';', low_memory=False,
+                                encoding_errors='ignore', header=None, usecols=[0, 2, 3, 4, 5, 7, 11, 13], compression='gzip')
 
         self.dict = pd.read_csv('../TemporaryStorage/RODON/files/rodon_dict.csv', header=None, low_memory=False,
-                           sep='\t', encoding_errors='ignore')
-
+                                sep='\t', encoding_errors='ignore')
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

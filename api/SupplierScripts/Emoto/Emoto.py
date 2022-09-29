@@ -41,11 +41,11 @@ class Emoto:
         self.dict_columns = {1: 'manufacturer', 2: 'prefix', 3: 'brand'}
         self.part_numbers_columns = {0: 'supplier_part_number', 1: 'part_number'}
 
-        location = './TemporaryStorage/EMOTO/files/emoto_data.csv'
-        dictionary = './TemporaryStorage/EMOTO/files/emoto_dict.csv'
+        location = '../TemporaryStorage/EMOTO/archive/emoto_data.zip'
+        dictionary = '../TemporaryStorage/EMOTO/files/emoto_dict.csv'
         self.part_numbers = 'emoto_dict.txt'
 
-        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', decimal=',', header=None, skiprows=1)
+        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', decimal=',', header=None, skiprows=1, compression='zip')
         self.dict = pd.read_csv(dictionary, sep=';', header=None, skiprows=1)
 
         with open(self.part_numbers, 'w') as fp:
