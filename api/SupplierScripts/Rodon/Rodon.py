@@ -52,7 +52,6 @@ class Rodon:
         self.dict = pd.read_csv('../TemporaryStorage/RODON/files/rodon_dict.csv', header=None, low_memory=False,
                            sep='\t', encoding_errors='ignore')
 
-
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
         self.dict.rename(columns=self.dict_columns, inplace=True)

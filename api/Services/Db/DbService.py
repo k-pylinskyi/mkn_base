@@ -81,7 +81,7 @@ class DbService:
             os.makedirs(path)
 
         table_df = pd.read_sql_query('SELECT manufacturer, supplier_part_number, '
-                                     'part_number, quantity, price FROM {} '
+                                     'part_number, CAST(quantity AS INTEGER) as quantity, price FROM {} '
                                      'WHERE quantity > 0 AND price > 0'.format(table_name),
                                      connection)
         table_df.to_csv(out_file_path, sep=';', index=False)

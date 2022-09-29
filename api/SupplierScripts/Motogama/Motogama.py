@@ -27,7 +27,6 @@ def get_motogama_data():
     return sqldf(query)
 
 
-
 class Motogama:
     def __init__(self):
         self.data_columns = {
