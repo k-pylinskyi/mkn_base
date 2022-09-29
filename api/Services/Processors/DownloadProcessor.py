@@ -1,9 +1,8 @@
 from threading import Thread, active_count
 
-from api.Services.Db.DbService import *
-from api.Services.Processors.Extractor import Extractor
-from api.Services.Ftp.FtpConection import FtpConnection
-from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from Services.Db.DbService import *
+from Services.Ftp.FtpConection import FtpConnection
+from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 
 
 def download():
@@ -41,18 +40,6 @@ def create_folder(folder):
         print(f'Created folder {folder_path}\n')
 
 
-def extract_one(archive, supplier_folder, old_filename, new_filename):
-    archive_path = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'archive', archive)
-    out_dir = os.path.join(PATHS.TEMP_STORAGE, supplier_folder, 'files')
-
-    print(f'Extracting {archive_path} ...\n')
-    try:
-        Extractor.extract_one(archive_path, out_dir, old_filename, new_filename)
-        # Extractor.rename_file(archive_path, out_dir, old_filename, new_filename)
-    except Exception as ex:
-        print(f'{CONSOLE_COLOR.ERROR}{ERRORS.EXTRACTION_ERROR} {ex}{CONSOLE_COLOR.NC}')
-
-
 def download_one(data_row):
     try:
         ip = data_row[1]
@@ -78,9 +65,6 @@ def download_one(data_row):
 
         ftp = FtpConnection(ip, login, password)
         ftp.download_file(remote, local_path)
-
-        if local_path.lower().endswith(('.zip', '.gz', '.rar', '.7z')):
-            extract_one(filename, supplier_folder, old_filename, new_filename)
 
     except Exception as ex:
         print(f'{CONSOLE_COLOR.ERROR}{ERRORS.DOWNLOAD_ERROR} {ex}{CONSOLE_COLOR.NC}\n')

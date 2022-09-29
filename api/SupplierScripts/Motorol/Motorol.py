@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def motorol_to_db():
@@ -36,15 +36,17 @@ def get_motorol_data():
 class Motorol:
 
     def __init__(self):
-        directory = "../TemporaryStorage/MOTOROL/files"
+        directory = "../TemporaryStorage/MOTOROL/archive"
+        dictionary_loc = "../TemporaryStorage/MOTOROL/files/motorol_dict.csv"
 
         self.data_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'part_name',
                              3: 'manufacturer', 4: 'qty', 5: 'price'}
-        self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer', 3: 'deposit'}
+        self.dict_columns = {0: 'supplier_part_number',
+                             1: 'part_number', 2: 'manufacturer', 3: 'deposit'}
 
-        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.csv'), sep='\t', decimal=',',
-                                header=None, encoding_errors='ignore')
-        self.dict = pd.read_csv(os.path.join(directory, 'motorol_dict.csv'), sep='\t', decimal=',',
+        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.zip'), sep='\t',
+                                decimal=',', header=None, encoding_errors='ignore', compression='zip')
+        self.dict = pd.read_csv(dictionary_loc, sep='\t', decimal=',',
                                 header=None, skiprows=1, encoding_errors='ignore')
 
     def process(self):

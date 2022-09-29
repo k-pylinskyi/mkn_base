@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from api.Services.Db.DbContext import DbContext
+from Services.Db.DbContext import DbContext
 
 
 def connect():

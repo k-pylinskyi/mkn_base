@@ -1,4 +1,5 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
+from zipfile import ZipFile
 
 
 def hart_to_db():
@@ -48,9 +49,11 @@ def get_hart_data():
 class Hart:
 
     def __init__(self):
-        directory = "../TemporaryStorage//Hart//files"
+        directory = '../TemporaryStorage//Hart//archive'
+        zip_file = ZipFile(os.path.join(directory, 'hart_price_qty.zip'))
 
-        self.quantity_columns = {0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
+        self.quantity_columns = {
+            0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
         self.cn_columns = {0: 'hart_part_number', 1: 'tariff_code'}
         self.deposit_columns = {0: 'hart_part_number', 2: 'price'}
         self.prices_columns = {0: 'hart_part_number', 1: 'price'}
@@ -63,27 +66,29 @@ class Hart:
             0: 'hart_part_number', 4: 'hart_part_number_cross', 5: 'part_number_cross',
             6: 'part_name_cross', 7: 'manufacturer_cross'
         }
-        self.data = pd.read_csv(os.path.join(directory, 'hart_data.csv'), sep=';',
-                                header=None, skiprows=1, decimal=',', usecols=[0, 1, 2, 3, 4, 6, 11, 12])
-        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.csv'), sep=';',
-                              header=None, skiprows=1, decimal=',', usecols=[0, 1])
-        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.csv'), sep=';',
-                                 header=None, skiprows=1, decimal=',', usecols=[0, 4, 5, 6, 7])
-        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.csv'), sep=';',
-                                   header=None, skiprows=1, decimal=',', usecols=[0, 2])
-        self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';',
-                                  header=None, skiprows=1, decimal=',')
-        self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';',
-                                    header=None, decimal=',')
-        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.csv'), sep=';',
-                                  header=None, skiprows=1, decimal=',', usecols=[0, 13])
+        self.data = pd.read_csv(os.path.join(directory, 'hart_data.zip'), sep=';', header=None,
+                                skiprows=1, decimal=',', usecols=[0, 1, 2, 3, 4, 6, 11, 12], compression='zip')
+        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.zip'), sep=';',
+                              header=None, skiprows=1, decimal=',', usecols=[0, 1], compression='zip')
+        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.zip'), sep=';',
+                                 header=None, skiprows=1, decimal=',', usecols=[0, 4, 5, 6, 7], compression='zip')
+        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.zip'), sep=';',
+                                   header=None, skiprows=1, decimal=',', usecols=[0, 2], compression='zip')
+        # self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';', header=None, skiprows=1, decimal=',', compression='zip')
+        self.prices = pd.read_csv(zip_file.open(
+            '96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        # self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';', header=None, decimal=',', compression='zip')
+        self.quantity = pd.read_csv(zip_file.open(
+            '96285_Quantity.csv'), sep=';', header=None, decimal=',')
+        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.zip'), sep=';',
+                                  header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
         self.cn.rename(columns=self.cn_columns, inplace=True)
         self.cross.rename(columns=self.cross_columns, inplace=True)
         self.deposit.rename(columns=self.deposit_columns, inplace=True)
-        self.prices.rename(columns= self.prices_columns, inplace=True)
+        self.prices.rename(columns=self.prices_columns, inplace=True)
         self.quantity.rename(columns=self.quantity_columns, inplace=True)
         self.weight.rename(columns=self.weight_columns, inplace=True)
 
