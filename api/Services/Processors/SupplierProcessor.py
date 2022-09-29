@@ -12,6 +12,8 @@ from api.SupplierScripts.Rodon.Rodon import *
 from api.SupplierScripts.Motogama.Motogama import *
 from api.SupplierScripts.Elit.Elit import *
 from api.SupplierScripts.InterTeam.InterTeam import *
+from api.SupplierScripts.AutoLand.AutoLand import *
+from api.SupplierScripts.Motoprofil.Motoprofil import *
 
 db = DbService()
 
@@ -30,6 +32,9 @@ def suppliers_to_db():
     motogama_to_db()
     elit_to_db()
     inter_team_to_db()
+    autoland_to_db()
+    motorol_to_db()
+    motoprofil_to_db()
 
     print('Dataframes pushed to Data Base')
 
@@ -49,7 +54,9 @@ def suppliers_to_ftp():
         'rodon',
         'motogama',
         'elit',
-        'inter_team'
+        'inter_team',
+        'autoland',
+        'motoprofil'
     ]
 
     for supplier in suppliers:
