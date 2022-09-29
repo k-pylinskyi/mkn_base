@@ -2,7 +2,7 @@ from api.SupplierScripts import *
 
 
 def elit_to_db():
-    print('Pushing Gordon to Data Base')
+    print('Pushing Elit to Data Base')
     DataFrameReader.dataframe_to_db('elit', get_elit_data())
 
 
@@ -12,7 +12,7 @@ def get_elit_data():
 
     query = '''
         SELECT
-            0 as supplier_id,
+            19 as supplier_id,
             manufacturer,
             supplier_part_number,
             part_number,
@@ -38,7 +38,7 @@ class Elit:
             14: 'tecdoc_supplier_number', 17: 'ean_number'
         }
 
-        self.data = pd.read_csv('D:\Work\MNK_PRICES\DB_SCRIPT\script_main_files\TemporaryStorage\ELIT\\files\elit_data.csv',
+        self.data = pd.read_csv('../TemporaryStorage//ELIT//files/elit_data.csv',
                    header=None, usecols=[0, 1, 2, 3, 5, 6, 7, 8, 9, 13, 14, 17], skiprows=1,
                    sep=';', encoding_errors='ignore', engine='python', error_bad_lines=False)
 
