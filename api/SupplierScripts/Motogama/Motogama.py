@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def motogama_to_db():
@@ -35,7 +35,7 @@ class Motogama:
             3: 'price', 5: 'part_number', 7: 'manufacturer', 8: 'pack'
         }
         self.data = pd.read_csv(
-            '..//TemporaryStorage//MOTOGAMA//files//motogama_data.csv',
+            './/TemporaryStorage//MOTOGAMA//files//motogama_data.csv',
             sep=';',
             header=None, encoding_errors='ignore', usecols=[0, 1, 2, 3, 5, 7, 8])
 

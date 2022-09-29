@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def rodon_to_db():
@@ -46,7 +46,7 @@ class Rodon:
         }
         self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer'}
 
-        self.data = pd.read_csv('../TemporaryStorage/RODON/files/rodon_data.csv', sep=';', low_memory=False,
+        self.data = pd.read_csv('./TemporaryStorage/RODON/files/rodon_data.csv', sep=';', low_memory=False,
                            encoding_errors='ignore', header=None, usecols=[0, 2, 3, 4, 5, 7, 11, 13])
 
         self.dict = pd.read_csv('../TemporaryStorage/RODON/files/rodon_dict.csv', header=None, low_memory=False,

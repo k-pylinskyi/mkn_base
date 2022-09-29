@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 import os
 import pandas as pd
 from pandasql import sqldf
@@ -41,8 +41,8 @@ class Emoto:
         self.dict_columns = {1: 'manufacturer', 2: 'prefix', 3: 'brand'}
         self.part_numbers_columns = {0: 'supplier_part_number', 1: 'part_number'}
 
-        location = '../TemporaryStorage/EMOTO/files/emoto_data.csv'
-        dictionary = '../TemporaryStorage/EMOTO/files/emoto_dict.csv'
+        location = './TemporaryStorage/EMOTO/files/emoto_data.csv'
+        dictionary = './TemporaryStorage/EMOTO/files/emoto_dict.csv'
         self.part_numbers = 'emoto_dict.txt'
 
         self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', decimal=',', header=None, skiprows=1)

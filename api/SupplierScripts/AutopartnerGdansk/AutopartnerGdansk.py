@@ -1,4 +1,6 @@
-from api.SupplierScripts import *
+import os
+
+from SupplierScripts import *
 import pandas as pd
 from pandasql import sqldf
 
@@ -9,6 +11,7 @@ def autopartner_gdansk_to_db():
 
 
 def get_autopartner_gdansk_data():
+    print(os.listdir("../"))
     autopartner_gdansk = AutopartnerGdansk()
     dataframes = autopartner_gdansk.process()
     data = dataframes[0]
@@ -35,10 +38,11 @@ class AutopartnerGdansk:
         self.data_columns = {0: 'manufacturer', 1: 'part_name', 2: 'supplier_part_number', 3: 'qty', 4: 'price',
                              6: 'part_number'}
         self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer', 3: 'part_name'}
-        location = '../TemporaryStorage/AUTO_PARTNER_GDANSK/files/autopartner_gdansk_data.csv'
+        location = '../TemporaryStorage/AUTO_PARTNER_GDANSK/archive/autopartner_gdansk_data.gz'
         dictionary = '../TemporaryStorage/AUTO_PARTNER_GDANSK/files/autopartner_gdansk_dict.csv'
 
-        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, low_memory=False)
+        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, low_memory=False,
+                                compression='gzip')
         self.dict = pd.read_csv(dictionary, encoding_errors='ignore', sep='\t', header=None, skiprows=1)
 
     def process(self):

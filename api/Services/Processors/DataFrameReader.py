@@ -1,4 +1,4 @@
-from api.Services.Db.DbContext import DbContext
+from Services.Db.DbContext import DbContext
 
 import pandas as pd
 
