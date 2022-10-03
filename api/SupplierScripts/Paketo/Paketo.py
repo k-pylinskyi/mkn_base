@@ -30,8 +30,8 @@ class Paketo:
     def __init__(self):
         self.data_columns = {0: 'part_number', 1: 'price', 2: 'currency', 3: 'qty'}
 
-        location = '../TemporaryStorage/PAKETO/files/paketo_data.csv'
-        self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, skiprows=1)
+        data_url = 'ftp://paketo:yX5iS0yF2jrO0l@138.201.56.185/CENNIK PAKETO.csv'
+        self.data = pd.read_csv(data_url, encoding_errors='ignore', sep=';', header=None, skiprows=1)
 
     def process(self):
         self.data.drop(self.data.columns[[4]], axis=1, inplace=True)
