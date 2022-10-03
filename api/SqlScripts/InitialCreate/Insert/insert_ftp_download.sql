@@ -55,5 +55,5 @@ VALUES
 (53, '138.201.56.185', 'motorol', 'dE4wO8nG8o', 'motorol_dict.csv', 42, 'motorol_dict.csv'),
 (54, '138.201.56.185', 'autopartner_gdansk', 'rH4vY3yZ9iwE5a', 'autopartner_gdansk_dict.csv', 7, 'autopartner_gdansk_dict.csv'),
 (55, '138.201.56.185', 'rodon', 'nA1cC3zC8ztV3v', 'rodon_dict.csv', 60, 'rodon_dict.csv'),
-(56, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/emoto_dict.csv', 17, 'emoto_dict.csv');
-
+(56, '138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt', '/e-moto/emoto_dict.csv', 17, 'emoto_dict.csv'),
+(57, 'ftp.autopartner.dev', '3036856', '0cL4X5', '/VIP_PORTAL_3036856_File_2.csv', 6, 'VIP_PORTAL_3036856_File_1.csv');

@@ -10,6 +10,8 @@ from SupplierScripts.Motorol.Motorol import *
 from SupplierScripts.Paketo.Paketo import *
 from SupplierScripts.Rodon.Rodon import *
 from SupplierScripts.Motogama.Motogama import *
+from SupplierScripts.Intervito.Intervito import *
+from SupplierScripts.Autopartner.Autopartner import *
 
 
 db = DbService()
@@ -19,14 +21,16 @@ def suppliers_to_db():
 
     print('Starting pushing to Data Base')
 
-    autopartner_gdansk_to_db()
-    emoto_to_db()
-    gordon_to_db()
-    motorol_to_db()
-    paketo_to_db()
-    hart_to_db()
-    rodon_to_db()
-    motogama_to_db()
+    # autopartner_gdansk_to_db()
+    # emoto_to_db()
+    # gordon_to_db()
+    # motorol_to_db()
+    # paketo_to_db()
+    # hart_to_db()
+    # rodon_to_db()
+    # motogama_to_db()
+    # intervito_to_db()
+    autopartner_to_db()
 
     print('Dataframes pushed to Data Base')
 
@@ -37,14 +41,16 @@ def suppliers_to_db():
 
 def suppliers_to_ftp():
     suppliers = [
-        'auto_partner_gdansk',
-        'emoto',
-        'gordon',
-        'motorol',
-        'paketo',
-        'hart',
-        'rodon',
-        'motogama'
+        # 'auto_partner_gdansk',
+        # 'emoto',
+        # 'gordon',
+        # 'motorol',
+        # 'paketo',
+        # 'hart',
+        # 'rodon',
+        # 'motogama',
+        # 'intervito',
+        'autopartner'
     ]
 
     for supplier in suppliers:

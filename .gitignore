@@ -159,6 +159,7 @@ Database/
 # Storage
 TemporaryStorage/
 node_modules
+api/Utils/backup/
 
 api/Services/__pycache__
 .idea
