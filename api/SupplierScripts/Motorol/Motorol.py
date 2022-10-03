@@ -36,17 +36,16 @@ def get_motorol_data():
 class Motorol:
 
     def __init__(self):
-        directory = "../TemporaryStorage/MOTOROL/archive"
-        dictionary_loc = "../TemporaryStorage/MOTOROL/files/motorol_dict.csv"
-
         self.data_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'part_name',
                              3: 'manufacturer', 4: 'qty', 5: 'price'}
         self.dict_columns = {0: 'supplier_part_number',
                              1: 'part_number', 2: 'manufacturer', 3: 'deposit'}
 
-        self.data = pd.read_csv(os.path.join(directory, 'motorol_data.zip'), sep='\t',
-                                decimal=',', header=None, encoding_errors='ignore', compression='zip')
-        self.dict = pd.read_csv(dictionary_loc, sep='\t', decimal=',',
+        data_url = "ftp://motorol:dE4wO8nG8o@138.201.56.185/08525.mnk.cennik.zip"
+        dict_url = "ftp://motorol:dE4wO8nG8o@138.201.56.185/motorol_dict.csv"
+        self.data = pd.read_csv(data_url, sep='\t', decimal=',',
+                                header=None, encoding_errors='ignore', compression='zip')
+        self.dict = pd.read_csv(dict_url, sep='\t', decimal=',',
                                 header=None, skiprows=1, encoding_errors='ignore')
 
     def process(self):

@@ -1,5 +1,4 @@
 from SupplierScripts import *
-import pandas
 
 
 def intervito_to_db():
@@ -35,10 +34,10 @@ class Intervito:
     def __init__(self):
         self.data_columns = {0: 'manufacturer', 1: 'supplier_part_number',
                              2: 'qty', 3: 'price', 4: 'currency', 5: 'pack', 6: 'delievery'}
-        location = '../TemporaryStorage/INTERVITO/files/intervito_data.csv'
+        data_url = 'ftp://intervito:iZ5sG6nT2qsZ0e@138.201.56.185/cennik_6090.csv'
 
-        self.data = pd.read_csv(
-            location, encoding_errors='ignore', sep=';', header=None, low_memory=False, skiprows=1)
+        self.data = pd.read_csv(data_url, encoding_errors='ignore',
+                                sep=';', header=None, low_memory=False, skiprows=1, decimal=',')
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

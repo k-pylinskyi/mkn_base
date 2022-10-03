@@ -1,6 +1,7 @@
 from SupplierScripts import *
 from zipfile import ZipFile
-
+from requests import get
+from io import BytesIO
 
 def hart_to_db():
     print('Pushing Hart to Data Base')
@@ -20,27 +21,28 @@ def get_hart_data():
 
     query = '''
             SELECT DISTINCT
-            24 AS supplier_id,
-            data.manufacturer,
-            data.hart_part_number as supplier_part_number, 
-            data.part_number,
-            data.part_name, 
-            REPLACE(quantity.qty, '>', '') AS quantity, 
-            IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS price,
-            data.unit_measure,
-            weight.weight,
-            data.origin
-            FROM data 
+                24 AS supplier_id,
+                data.manufacturer,
+                data.hart_part_number as supplier_part_number, 
+                data.part_number,
+                data.part_name, 
+                REPLACE(quantity.qty, '>', '') AS quantity, 
+                IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS price,
+                data.unit_measure,
+                weight.weight,
+                data.origin
+            FROM 
+                data 
             INNER JOIN prices 
-            ON data.hart_part_number = prices.hart_part_number
+                ON data.hart_part_number = prices.hart_part_number
             INNER JOIN quantity 
-            ON data.hart_part_number = quantity.hart_part_number
+                ON data.hart_part_number = quantity.hart_part_number
             LEFT JOIN deposit
-            ON data.hart_part_number = deposit.hart_part_number
+                ON data.hart_part_number = deposit.hart_part_number
             INNER JOIN weight
-            ON data.hart_part_number = weight.hart_part_number
+                ON data.hart_part_number = weight.hart_part_number
             WHERE
-            quantity.warehouse in('V', 'S', '1') 
+                quantity.warehouse in('V', 'S', '1') 
             '''
 
     return sqldf(query)
@@ -49,39 +51,31 @@ def get_hart_data():
 class Hart:
 
     def __init__(self):
-        directory = '../TemporaryStorage//Hart//archive'
-        zip_file = ZipFile(os.path.join(directory, 'hart_price_qty.zip'))
+        data_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kth.zip"
+        cn_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_CN.zip"
+        cross_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_cross.zip"
+        deposit_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kz.zip"
+        price_qty_url = "ftp://hart:2Y1r7D0g@138.201.56.185/hart.zip"
+        weight_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kth+wgh.zip"
 
-        self.quantity_columns = {
-            0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
+        request = get(price_qty_url)
+        price_qty_zip = ZipFile(BytesIO(request.content))
+
+        self.data = pd.read_csv(data_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 1, 2, 3, 4, 6, 11, 12], compression='zip')
+        self.cn = pd.read_csv(cn_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 1], compression='zip')
+        self.cross = pd.read_csv(cross_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 4, 5, 6, 7], compression='zip')
+        self.deposit = pd.read_csv(deposit_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 2], compression='zip')
+        self.prices = pd.read_csv(price_qty_zip.open('96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
+        self.quantity = pd.read_csv(price_qty_zip.open('96285_Quantity.csv'), sep=';', header=None, decimal=',')
+        self.weight = pd.read_csv(weight_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
+
+        self.quantity_columns = {0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
         self.cn_columns = {0: 'hart_part_number', 1: 'tariff_code'}
         self.deposit_columns = {0: 'hart_part_number', 2: 'price'}
         self.prices_columns = {0: 'hart_part_number', 1: 'price'}
         self.weight_columns = {0: 'hart_part_number', 13: 'weight'}
-        self.data_columns = {
-            0: 'hart_part_number', 1: 'tecdoc_number', 2: 'manufacturer', 3: 'part_number',
-            4: 'part_name', 6: 'unit_measure', 11: 'ean_codes', 12: 'origin'
-        }
-        self.cross_columns = {
-            0: 'hart_part_number', 4: 'hart_part_number_cross', 5: 'part_number_cross',
-            6: 'part_name_cross', 7: 'manufacturer_cross'
-        }
-        self.data = pd.read_csv(os.path.join(directory, 'hart_data.zip'), sep=';', header=None,
-                                skiprows=1, decimal=',', usecols=[0, 1, 2, 3, 4, 6, 11, 12], compression='zip')
-        self.cn = pd.read_csv(os.path.join(directory, 'hart_cn.zip'), sep=';',
-                              header=None, skiprows=1, decimal=',', usecols=[0, 1], compression='zip')
-        self.cross = pd.read_csv(os.path.join(directory, 'hart_cross.zip'), sep=';',
-                                 header=None, skiprows=1, decimal=',', usecols=[0, 4, 5, 6, 7], compression='zip')
-        self.deposit = pd.read_csv(os.path.join(directory, 'hart_deposit.zip'), sep=';',
-                                   header=None, skiprows=1, decimal=',', usecols=[0, 2], compression='zip')
-        # self.prices = pd.read_csv(os.path.join(directory, 'hart_prices.csv'), sep=';', header=None, skiprows=1, decimal=',', compression='zip')
-        self.prices = pd.read_csv(zip_file.open(
-            '96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
-        # self.quantity = pd.read_csv(os.path.join(directory, 'hart_quantity.csv'), sep=';', header=None, decimal=',', compression='zip')
-        self.quantity = pd.read_csv(zip_file.open(
-            '96285_Quantity.csv'), sep=';', header=None, decimal=',')
-        self.weight = pd.read_csv(os.path.join(directory, 'hart_weight.zip'), sep=';',
-                                  header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
+        self.data_columns = {0: 'hart_part_number', 1: 'tecdoc_number', 2: 'manufacturer', 3: 'part_number', 4: 'part_name', 6: 'unit_measure', 11: 'ean_codes', 12: 'origin'}
+        self.cross_columns = {0: 'hart_part_number', 4: 'hart_part_number_cross', 5: 'part_number_cross', 6: 'part_name_cross', 7: 'manufacturer_cross'}
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def motoprofil_to_db():
@@ -41,9 +41,9 @@ class Motoprofil:
             10: 'weight',
             11: 'deposit'
         }
-        self.data = pd.read_csv('../TemporaryStorage//MOTOPROFIL//files//motoprofil_data.csv', sep=';',
-                                encoding_errors='ignore', header=None, usecols=[0, 1, 2, 3, 4, 8, 9, 10, 11],
-                                decimal=',', skiprows=1)
+        data_url = "ftp://motoprofil:hF3uE4pI3fyB2v@138.201.56.185/motoprofilprice.csv"
+        self.data = pd.read_csv(data_url, sep=';', encoding_errors='ignore', header=None,
+                                usecols=[0, 1, 2, 3, 4, 8, 9, 10, 11], decimal=',', skiprows=1)
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

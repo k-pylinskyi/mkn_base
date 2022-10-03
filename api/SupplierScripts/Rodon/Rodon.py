@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def rodon_to_db():
@@ -46,10 +46,12 @@ class Rodon:
         }
         self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer'}
 
-        self.data = pd.read_csv('../TemporaryStorage/RODON/files/rodon_data.csv', sep=';', low_memory=False,
+        data_url = "ftp://rodon:nA1cC3zC8ztV3v@138.201.56.185/57765_01.gz"
+        dict_url = "ftp://rodon:nA1cC3zC8ztV3v@138.201.56.185/rodon_dict.csv"
+        self.data = pd.read_csv(data_url, sep=';', low_memory=False, compression='gzip',
                            encoding_errors='ignore', header=None, usecols=[0, 2, 3, 4, 5, 7, 11, 13])
 
-        self.dict = pd.read_csv('../TemporaryStorage/RODON/files/rodon_dict.csv', header=None, low_memory=False,
+        self.dict = pd.read_csv(dict_url, header=None, low_memory=False,
                            sep='\t', encoding_errors='ignore')
 
     def process(self):

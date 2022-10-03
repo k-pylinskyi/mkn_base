@@ -33,8 +33,9 @@ class Motogama:
             0: 'supplier_part_number', 1: 'part_name', 2: 'qty',
             3: 'price', 5: 'part_number', 7: 'manufacturer', 8: 'pack'
         }
-        self.data = pd.read_csv('.//TemporaryStorage//MOTOGAMA//files//motogama_data.csv',
-                                sep=';', header=None, encoding_errors='ignore', usecols=[0, 1, 2, 3, 5, 7, 8])
+        data_url = "ftp://motogama:hH1gJ0zK2t@138.201.56.185/19134_01.csv"
+        self.data = pd.read_csv(data_url, sep=';', header=None,
+                                encoding_errors='ignore', usecols=[0, 1, 2, 3, 5, 7, 8])
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
