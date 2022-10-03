@@ -30,7 +30,7 @@ class Paketo:
     def __init__(self):
         self.data_columns = {0: 'part_number', 1: 'price', 2: 'currency', 3: 'qty'}
 
-        location = './TemporaryStorage/PAKETO/files/paketo_data.csv'
+        location = '../TemporaryStorage/PAKETO/files/paketo_data.csv'
         self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', header=None, skiprows=1)
 
     def process(self):

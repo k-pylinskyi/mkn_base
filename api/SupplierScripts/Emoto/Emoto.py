@@ -43,7 +43,7 @@ class Emoto:
 
         location = '../TemporaryStorage/EMOTO/archive/emoto_data.zip'
         dictionary = '../TemporaryStorage/EMOTO/files/emoto_dict.csv'
-        self.part_numbers = 'emoto_dict.txt'
+        self.part_numbers = '../TemporaryStorage/EMOTO/archive/emoto_dict.txt'
 
         self.data = pd.read_csv(location, encoding_errors='ignore', sep=';', decimal=',', header=None, skiprows=1, compression='zip')
         self.dict = pd.read_csv(dictionary, sep=';', header=None, skiprows=1)

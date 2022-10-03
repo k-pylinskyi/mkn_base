@@ -18,4 +18,6 @@ class ERRORS:
     FILE_ERROR = 'Error on file'
 
 
-DEBUG = True
+class CONFIG:
+    CONFIG_NAME = 'config.yaml'
+    CONFIG_LOCATION = 'Utils/'
