@@ -2,8 +2,9 @@ from api.SupplierScripts import *
 
 
 def autoland_to_db():
-    print('Pushing Auto Land to Data Base')
-    DataFrameReader.dataframe_to_db('autoland', get_autoland_data())
+    table_name = 'autoland'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_autoland_data())
 
 
 def get_autoland_data():

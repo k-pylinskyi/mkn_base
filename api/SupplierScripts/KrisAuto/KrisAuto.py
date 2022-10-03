@@ -2,8 +2,10 @@ from SupplierScripts import *
 
 
 def krisauto_to_db():
-    print('Pushing Kris Auto to Data Base')
-    DataFrameReader.dataframe_to_db('krisauto', get_krisauto_data())
+    table_name = 'krisauto'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_krisauto_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_krisauto_data():

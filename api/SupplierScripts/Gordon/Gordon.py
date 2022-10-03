@@ -2,8 +2,10 @@ from SupplierScripts import *
 
 
 def gordon_to_db():
-    print('Pushing Gordon to Data Base')
-    DataFrameReader.dataframe_to_db('gordon', get_gordon_data())
+    table_name = 'gordon'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_gordon_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_gordon_data():

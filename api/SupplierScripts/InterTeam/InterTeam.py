@@ -2,8 +2,10 @@ from api.SupplierScripts import *
 
 
 def inter_team_to_db():
-    print('Pushing Inter Team to Data Base')
-    DataFrameReader.dataframe_to_db('inter_team', get_inter_team_data())
+    table_name = 'inter_team'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_inter_team_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_inter_team_data():

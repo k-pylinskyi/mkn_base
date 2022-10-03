@@ -2,9 +2,10 @@ from SupplierScripts import *
 
 
 def motorol_to_db():
-    print('Pushing Motorol to Data Base')
-    DataFrameReader.dataframe_to_db('motorol', get_motorol_data())
-
+    table_name = 'motorol'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_motorol_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 def get_motorol_data():
     motorol = Motorol()
