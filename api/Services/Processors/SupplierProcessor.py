@@ -10,6 +10,8 @@ from SupplierScripts.Motorol.Motorol import *
 from SupplierScripts.Paketo.Paketo import *
 from SupplierScripts.Rodon.Rodon import *
 from SupplierScripts.Motogama.Motogama import *
+from SupplierScripts.Intervito.Intervito import *
+from SupplierScripts.Autopartner.Autopartner import *
 from SupplierScripts.Elit.Elit import *
 from SupplierScripts.InterTeam.InterTeam import *
 from SupplierScripts.AutoLand.AutoLand import *
@@ -39,6 +41,7 @@ def suppliers_to_db():
     motoprofil_to_db()
     krisauto_to_db()
     intervito_to_db()
+    autopartner_to_db()
 
     print('Dataframes pushed to Data Base')
 
@@ -62,7 +65,8 @@ def suppliers_to_ftp():
         'autoland',
         'motoprofil',
         'krisauto',
-        'intervito'
+        'intervito',
+        'autopartner'
     ]
     for supplier in suppliers:
         print('Exporting {} to csv'.format(supplier))

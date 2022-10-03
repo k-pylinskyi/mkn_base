@@ -40,4 +40,5 @@ VALUES
 (38, 31, 'Price_Suzuki.txt', 'orap_price_suzuki.txt'),
 (39, 32, 'Price_Subaru.txt', 'orap_price_subaru.txt'),
 (40, 6, 'oapnal.xlsx', 'orap_oapnal.xlsx'),
-(41, 18, '57765_01.csv', 'rodon_data.csv');
+(41, 18, '57765_01.csv', 'rodon_data.csv'),
+(42, 57, 'VIP_PORTAL_3036856_File_1.csv', 'autopartner_data.csv');
