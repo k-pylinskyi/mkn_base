@@ -5,7 +5,7 @@ import os
 
 
 def get_content():
-    mail_con = MailConnection()
+    mail_con = MailConnection('prices.mnk.group@gmail.com', 'hrsvhqkajsdjtyzr')
     mail = mail_con.get_last_email_with_params(sender='bronek@bronowski.pl', subject='Odbiorca 71233712 Oferta towarowa')
     content = mail_con.get_mail_content(mail)
     print(content)
@@ -20,9 +20,9 @@ def get_content():
 
 
 class MailConnection:
-    def __init__(self):
-        username = 'prices.mnk.group@gmail.com'
-        password = 'hrsvhqkajsdjtyzr'
+    def __init__(self, username, password):
+        username =  username # 'prices.mnk.group@gmail.com'
+        password = password # 'hrsvhqkajsdjtyzr'
 
         self.mail = imaplib.IMAP4_SSL('imap.gmail.com')
         self.mail.login(username, password)
