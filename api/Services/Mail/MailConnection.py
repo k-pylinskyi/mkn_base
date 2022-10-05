@@ -4,21 +4,6 @@ from email.header import decode_header
 import os
 
 
-def get_content():
-    mail_con = MailConnection('prices.mnk.group@gmail.com', 'hrsvhqkajsdjtyzr')
-    mail = mail_con.get_last_email_with_params(sender='bronek@bronowski.pl', subject='Odbiorca 71233712 Oferta towarowa')
-    content = mail_con.get_mail_content(mail)
-    print(content)
-
-    mail = mail_con.get_last_email_with_params(sender='margareta.peptenaru@euroestcar.ro', subject='STOCK EEC')
-    content = mail_con.get_mail_content(mail)
-    print(content)
-
-    mail = mail_con.get_last_email_with_params(sender='raporty@vanking.com.pl')
-    content = mail_con.get_mail_content(mail)
-    print(content)
-
-
 class MailConnection:
     def __init__(self, username, password):
         username =  username # 'prices.mnk.group@gmail.com'
@@ -108,15 +93,15 @@ class MailConnection:
                 if '=?utf-8?' in file_name:
                     file_name = decode_header(file_name)[0][0].decode()
 
-                if not os.path.exists('outputdir'):
-                    os.makedirs('outputdir')
+                save_folder = '../TemporaryStorage//mail_attachments/' + mail_id.decode("utf-8")
 
-                file_path = os.path.join('outputdir', file_name)
+                if not os.path.exists(save_folder):
+                    os.makedirs(save_folder)
+
+                file_path = os.path.join(save_folder, file_name)
 
                 fp = open(file_path, 'wb')
                 fp.write(part.get_payload(decode=True))
                 fp.close()
 
         return file_path
-
-get_content()

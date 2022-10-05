@@ -5,7 +5,7 @@ from Services.Db.DbContext import DbContext
 from Services.Db.DbService import DbService
 
 from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
-from Services.Ftp.FtpConection import FtpConnection
+from Services.Ftp.FtpConnection import FtpConnection
 
 def format_column(column: pd.Series):
     column = column.str.upper()
@@ -29,4 +29,4 @@ class DataFrameReader:
         print('Exporting {} to csv'.format(supplier))
         file = db.get_table_csv(supplier)
         ftp = FtpConnection('138.201.56.185', 'ph6802', 'z7lIh8iv10pLRt')
-        ftp.upload_file(file, supplier)
+        ftp.upload_file(file, 'maxi_export', supplier)
