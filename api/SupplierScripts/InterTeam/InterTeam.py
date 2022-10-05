@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def inter_team_to_db():

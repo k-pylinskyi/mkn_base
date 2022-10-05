@@ -1,4 +1,4 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def autoland_to_db():

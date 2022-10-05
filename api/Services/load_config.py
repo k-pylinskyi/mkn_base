@@ -47,12 +47,7 @@ class Config:
 
     def get_app_suppliers(self):
         suppliers_dict = self.config_data.get('suppliers')
-        for supplier in suppliers_dict.items():
-            print(f'''
-            {supplier[0]}:
-                - status: {check_supplier_status(supplier[1]['status'])}
-                - updated: {supplier[1]['updated']}
-            ''')
+        return suppliers_dict
 
     def create_app_suppliers(self):
         backup_path = CONFIG.CONFIG_LOCATION + \
