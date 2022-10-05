@@ -2,33 +2,49 @@
 build: dev
 version: 1.0.0
 suppliers:
+  autoland:
+    status: true
+    updated: 00-00-0000
+    multiple: false
+    files:
+      data:
+        mod_time: null
+        engine: python
+        url: ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip
+        compression: zip
+        sep: ;
+        encoding: false
+        header: false
   autopartner:
     status: true
     updated: 00-00-0000
+    multiple: false
+    files:
+      data:
+        mod_time: null
+        url: ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv
+        encoding: false
+        sep: ;
+        error_bad_lines: false
+        header: false
   autopartner_gdansk:
-    status: false
-    updated: 00-00-0000
-  emoto:
     status: true
     updated: 00-00-0000
-  gordon:
-    status: true
-    updated: 00-00-0000
-  hart:
-    status: true
-    updated: 00-00-0000
-  intervito:
-    status: true
-    updated: 00-00-0000
-  motogama:
-    status: true
-    updated: 00-00-0000
-  motorol:
-    status: true
-    updated: 00-00-0000
-  paketo:
-    status: true
-    updated: 00-00-0000
-  rodon:
-    status: true
-    updated: 00-00-0000
+    multiple: true
+    files: 
+      data: 
+        mod_time: null
+        engine: python
+        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/29366_ce.gz
+        encoding: false
+        sep: ;
+        header: false
+        compression: gzip
+      dict:
+        mod_time: null
+        engine: python
+        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/autopartner_gdansk_dict.csv
+        encoding: false
+        sep: \t
+        header: false
+        skip_rows: 1
