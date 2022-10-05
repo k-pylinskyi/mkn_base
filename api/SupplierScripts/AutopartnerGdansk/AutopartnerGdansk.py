@@ -1,14 +1,12 @@
-import os
-
 from SupplierScripts import *
-import pandas as pd
-from pandasql import sqldf
+
 
 
 def autopartner_gdansk_to_db():
-    print('Pushing Auto Partner Gdansk to Data Base')
-    DataFrameReader.dataframe_to_db('auto_partner_gdansk', get_autopartner_gdansk_data())
-
+    table_name = 'auto_partner_gdansk'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_autopartner_gdansk_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 def get_autopartner_gdansk_data():
     autopartner_gdansk = AutopartnerGdansk()

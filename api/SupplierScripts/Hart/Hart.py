@@ -1,11 +1,16 @@
+import os
+
 from SupplierScripts import *
 from zipfile import ZipFile
-from requests import get
-from io import BytesIO
+import shutil
+import urllib.request
+from contextlib import closing
 
 def hart_to_db():
-    print('Pushing Hart to Data Base')
-    DataFrameReader.dataframe_to_db('hart', get_hart_data())
+    table_name = 'hart'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_hart_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_hart_data():
@@ -58,8 +63,12 @@ class Hart:
         price_qty_url = "ftp://hart:2Y1r7D0g@138.201.56.185/hart.zip"
         weight_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kth+wgh.zip"
 
-        request = get(price_qty_url)
-        price_qty_zip = ZipFile(BytesIO(request.content))
+        price_qty_tmp_path = 'SupplierScripts/Hart/price_qty_data.zip'
+
+        with closing(urllib.request.urlopen(price_qty_url)) as r:
+            with open(price_qty_tmp_path, 'wb') as f:
+                shutil.copyfileobj(r, f)
+        price_qty_zip = ZipFile(price_qty_tmp_path)
 
         self.data = pd.read_csv(data_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 1, 2, 3, 4, 6, 11, 12], compression='zip')
         self.cn = pd.read_csv(cn_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 1], compression='zip')
@@ -68,6 +77,9 @@ class Hart:
         self.prices = pd.read_csv(price_qty_zip.open('96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
         self.quantity = pd.read_csv(price_qty_zip.open('96285_Quantity.csv'), sep=';', header=None, decimal=',')
         self.weight = pd.read_csv(weight_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
+
+        if os.path.exists(price_qty_tmp_path):
+            os.remove(price_qty_tmp_path)
 
         self.quantity_columns = {0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
         self.cn_columns = {0: 'hart_part_number', 1: 'tariff_code'}

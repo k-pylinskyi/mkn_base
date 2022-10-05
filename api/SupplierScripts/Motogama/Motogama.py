@@ -2,8 +2,10 @@ from SupplierScripts import *
 
 
 def motogama_to_db():
-    print('Pushing Motogama to Data Base')
-    DataFrameReader.dataframe_to_db('motogama', get_motogama_data())
+    table_name = 'motogama'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_motogama_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_motogama_data():

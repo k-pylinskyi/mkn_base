@@ -4,8 +4,10 @@ import pandas as pd
 from pandasql import sqldf
 
 def emoto_to_db():
-    print('Pushing Emoto to Data Base')
-    DataFrameReader.dataframe_to_db('emoto', get_emoto_data())
+    table_name = 'emoto'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_emoto_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_emoto_data():

@@ -12,14 +12,14 @@ class FtpConnection:
         # self.ftp.dir()
 
     def upload_file(self, local_file, remote_folder):
-        print('Uploading file to ftp : {}\n'.format(local_file))
+        print('Uploading file to ftp : {}\n'.format(local_file, remote_folder))
         self.ftp.cwd('/maxi_export/')
         if remote_folder not in self.ftp.nlst():
             self.ftp.mkd(remote_folder)
         with open(local_file, 'rb') as f:
             self.ftp.storbinary('STOR ' + '/maxi_export/' + remote_folder + '/export.csv', f)
         self.ftp.quit()
-        print('File Uploaded ftp://{}/{} ...'.format(self.host, local_file))
+        print('File Uploaded ftp://{}/maxi_export/{}/export.csv ...'.format(self.host, local_file))
 
     def download_file(self, remote_file, local_file):
         print('Downloading file from : {}\n'.format(local_file))

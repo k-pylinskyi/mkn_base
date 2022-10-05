@@ -2,8 +2,10 @@ from SupplierScripts import *
 
 
 def rodon_to_db():
-    print('Pushing Rodon to Data Base')
-    DataFrameReader.dataframe_to_db('rodon', get_rodon_data())
+    table_name = 'rodon'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_rodon_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_rodon_data():

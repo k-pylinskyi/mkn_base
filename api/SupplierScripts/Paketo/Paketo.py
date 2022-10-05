@@ -1,12 +1,11 @@
-import pandas as pd
-from pandasql import sqldf
-from Services.Processors.DataFrameReader import DataFrameReader
 from SupplierScripts import *
 
 
 def paketo_to_db():
-    print('Pushing Paketo to Data Base')
-    DataFrameReader.dataframe_to_db('paketo', get_paketo_data())
+    table_name = 'paketo'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_paketo_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_paketo_data():
