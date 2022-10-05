@@ -1,5 +1,5 @@
 from threading import Thread, active_count
-from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 from Services.Db.DbService import DbService
 from Services.Ftp.FtpConection import FtpConnection
 from SupplierScripts.Hart.Hart import *
