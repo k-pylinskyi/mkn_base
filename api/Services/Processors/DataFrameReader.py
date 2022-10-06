@@ -1,11 +1,10 @@
 import pandas as pd
 from threading import Thread, active_count
-
 from Services.Db.DbContext import DbContext
 from Services.Db.DbService import DbService
-
 from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 from Services.Ftp.FtpConnection import FtpConnection
+
 
 def format_column(column: pd.Series):
     column = column.str.upper()

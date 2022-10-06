@@ -2,64 +2,73 @@
 build: dev
 version: 1.0.0
 suppliers:
-  autoland:
-    status: true
-    updated: 00-00-0000
-    multiple: false
-    files:
-      data:
-        mod_time: null
-        engine: python
-        url: ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip
-        compression: zip
-        sep: ;
-        encoding: false
-        header: false
-  autopartner:
-    status: true
-    updated: 00-00-0000
-    multiple: false
-    files:
-      data:
-        mod_time: null
-        url: ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv
-        encoding: false
-        sep: ;
-        error_bad_lines: false
-        header: false
-  autopartner_gdansk:
-    status: true
-    updated: 00-00-0000
-    multiple: true
-    files: 
-      data: 
-        mod_time: null
-        engine: python
-        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/29366_ce.gz
-        encoding: false
-        sep: ;
-        header: false
-        compression: gzip
-      dict:
-        mod_time: null
-        engine: python
-        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/autopartner_gdansk_dict.csv
-        encoding: false
-        sep: \t
-        header: false
-        skip_rows: 1
   bronowski:
+    name: bronowski
+    status: true
+    updated: 00-00-0000
     download_files: true
-    download_type: email
+    download_type: mail
+    download_file_name: bronowski_data.xls
     download_params:
       sender: bronek@bronowski.pl
       subject: Odbiorca 71233712 Oferta towarowa
     multiple: false
     files:
       data:
+        file_type: excel
         mod_time: null
-        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/bronowski/export.XLS
+        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/bronowski/export.xls
+        header: false
+  vanking:
+    name: vanking
+    status: true
+    updated: 00-00-0000
+    download_files: true
+    download_type: mail
+    download_file_name: euroestcar_data.xlsx
+    download_params:
+      sender: raporty@vanking.com.pl
+      subject: null
+    multiple: false
+    files:
+      data:
+        file_type: excel
+        mod_time: null
+        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/vanking/export.xlsx
+        header: false
+  euroestcar:
+    name: euroestcar
+    status: true
+    updated: 00-00-0000
+    download_files: true
+    download_type: mail
+    download_file_name: vanking_data.xlsx
+    download_params:
+      sender: margareta.peptenaru@euroestcar.ro
+      subject: STOCK EEC
+    multiple: false
+    files:
+      data:
+        file_type: excel
+        mod_time: null
+        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/euroestcar/export.xlsx
         type: excel
+        header: false
+  direct24:
+    name: direct_24
+    status: true
+    updated: 00-00-0000
+    download_files: true
+    download_type: url
+    download_file_name: direct_24.zip
+    download_params:
+      url: https://direct24.com.ua/exporter/files/d0553d0b7205c12be91588a0d134574cc364771c
+    multiple: false
+    files:
+      data:
+        file_type: csv
+        mod_time: null
+        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/euroestcar/export.xlsx
         header: false
 
 

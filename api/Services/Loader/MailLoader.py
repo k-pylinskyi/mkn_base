@@ -1,13 +1,12 @@
-import imaplib
 import email
-from email.header import decode_header
+import imaplib
 import os
 
 
-class MailConnection:
+class MailLoader:
     def __init__(self, username, password):
-        username = username # 'prices.mnk.group@gmail.com'
-        password = password # 'hrsvhqkajsdjtyzr'
+        username = username
+        password = password
 
         self.mail = imaplib.IMAP4_SSL('imap.gmail.com')
         self.mail.login(username, password)
@@ -34,32 +33,6 @@ class MailConnection:
             print(f'Searching for last unseen mail')
             typ, messages = self.mail.search(None, 'UNSEEN')
             return messages[0].split()[-1]
-
-    def get_mail_content(self, supplier, mail_id):
-        mail_from = ''
-        mail_subject = ''
-        mail_content = ''
-        mail_attachment_out_path = self.get_mail_attachment(supplier, mail_id)
-        typ, data = self.mail.fetch(mail_id, '(RFC822)')
-
-        for response_part in data:
-            if isinstance(response_part, tuple):
-                message = email.message_from_bytes(response_part[1])
-
-                mail_from = message['from']
-                mail_subject = message['subject']
-
-                if message.is_multipart():
-                    mail_content = ''
-
-                    for part in message.get_payload():
-                        if part.get_content_type() == 'text/plain':
-                            mail_content += part.get_payload()
-
-                else:
-                    mail_content = message.get_payload()
-
-        return [mail_from, mail_subject, mail_content, mail_attachment_out_path]
 
     def get_mail_attachment(self, supplier, mail_id, file_name):
         file_path = ''

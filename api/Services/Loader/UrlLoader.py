@@ -34,7 +34,7 @@ def get_file_from_url(supplier, url, file_name):
     return save_path
 
 
-class UrlConnection:
+class UrlLoader:
     @staticmethod
     def get_file(supplier, url, file_name):
         if url.lower().startswith('ftp://'):
@@ -49,9 +49,3 @@ class UrlConnection:
                 return get_file_from_request(supplier, url, file_name)
             except Exception as ex:
                 print(f'Exception occurred while getting file!\nRequest: {url}\nException: {ex}')
-
-
-UrlConnection.get_file('hart', 'ftp://hart:2Y1r7D0g@138.201.56.185/hart.zip', 'hart.zip')
-UrlConnection.get_file('direct_24',
-                       'https://direct24.com.ua/exporter/files/d0553d0b7205c12be91588a0d134574cc364771c',
-                       'direct_24.zip')
