@@ -11,7 +11,6 @@ class FtpConnection:
 
     def upload_file(self, local_file, remote_folder, remote_sub_folder):
         name, extension = os.path.splitext(local_file)
-        print(self.ftp.nlst())
         self.ftp.cwd(remote_folder)
         if remote_sub_folder not in self.ftp.nlst():
             self.ftp.mkd(remote_sub_folder)

@@ -6,23 +6,11 @@ import os
 
 class MailConnection:
     def __init__(self, username, password):
-        username =  username # 'prices.mnk.group@gmail.com'
+        username = username # 'prices.mnk.group@gmail.com'
         password = password # 'hrsvhqkajsdjtyzr'
 
         self.mail = imaplib.IMAP4_SSL('imap.gmail.com')
         self.mail.login(username, password)
-
-    def get_last_email_from(self, sender):
-        self.mail.select('Inbox', readonly=True)
-        typ, messages = self.mail.search(None, 'FROM', sender)
-
-        return messages[0].split()[-1]
-
-    def get_last_email_with_subj(self, subj):
-        self.mail.select('Inbox', readonly=True)
-        typ, messages = self.mail.search(None, 'SUBJECT "{}"'.format(subj))
-
-        return messages[0].split()[-1]
 
     def get_last_email_with_params(self, sender=None, subject=None):
         self.mail.select('INBOX', readonly=True)
@@ -47,11 +35,11 @@ class MailConnection:
             typ, messages = self.mail.search(None, 'UNSEEN')
             return messages[0].split()[-1]
 
-    def get_mail_content(self, mail_id):
+    def get_mail_content(self, supplier, mail_id):
         mail_from = ''
         mail_subject = ''
         mail_content = ''
-        mail_attachment_out_path = self.get_mail_attachment(mail_id)
+        mail_attachment_out_path = self.get_mail_attachment(supplier, mail_id)
         typ, data = self.mail.fetch(mail_id, '(RFC822)')
 
         for response_part in data:
@@ -73,7 +61,7 @@ class MailConnection:
 
         return [mail_from, mail_subject, mail_content, mail_attachment_out_path]
 
-    def get_mail_attachment(self, mail_id):
+    def get_mail_attachment(self, supplier, mail_id, file_name):
         file_path = ''
         typ, data = self.mail.fetch(mail_id, '(RFC822)')
         if typ != 'OK':
@@ -87,13 +75,10 @@ class MailConnection:
                 continue
             if part.get('Content-Disposition') is None:
                 continue
-            file_name = part.get_filename()
+            attachment_name = part.get_filename()
 
-            if bool(file_name):
-                if '=?utf-8?' in file_name:
-                    file_name = decode_header(file_name)[0][0].decode()
-
-                save_folder = '../TemporaryStorage//mail_attachments/' + mail_id.decode("utf-8")
+            if bool(attachment_name):
+                save_folder = os.path.join('../TemporaryStorage', supplier)
 
                 if not os.path.exists(save_folder):
                     os.makedirs(save_folder)

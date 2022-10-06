@@ -12,5 +12,6 @@ class GenLoader:
         active_suppliers = []
         for supplier in self.suppliers_list.items():
             if supplier[1]['status'] == True:
+
                 active_suppliers.append(supplier)
         return active_suppliers

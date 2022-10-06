@@ -48,3 +48,18 @@ suppliers:
         sep: \t
         header: false
         skip_rows: 1
+  bronowski:
+    download_files: true
+    download_type: email
+    download_params:
+      sender: bronek@bronowski.pl
+      subject: Odbiorca 71233712 Oferta towarowa
+    multiple: false
+    files:
+      data:
+        mod_time: null
+        url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/bronowski/export.XLS
+        type: excel
+        header: false
+
+
