@@ -1,17 +1,17 @@
 import React from "react";
 
 import { StyledFilterWrapper } from "./styledFilter";
-import { StyledButton } from "../../styles/styledButton";
+import { Button } from "@fluentui/react-components";
 
 const Filter = ({ createItem }) => {
   return (
     <StyledFilterWrapper>
-        <StyledButton 
-            color="main"
+        <Button 
+            appearance="primary"
         >
             Filter
-        </StyledButton>
-      {createItem && <StyledButton color="main">Create item</StyledButton>}
+        </Button>
+      {createItem && <Button appearance="primary">Create item</Button>}
     </StyledFilterWrapper>
   );
 };
