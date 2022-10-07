@@ -3,7 +3,7 @@ from Services.ScriptGen.GenLoader import GenLoader
 from Services.ScriptGen.ProcessorBuilder import ProcessorBuilder
 
 if __name__ == '__main__':
-    suppliers_to_db()
+    #suppliers_to_db()
      # config.get_app_info()
     gen_loader = GenLoader()
     proc_builder = ProcessorBuilder()

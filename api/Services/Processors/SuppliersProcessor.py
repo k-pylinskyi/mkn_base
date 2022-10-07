@@ -1,7 +1,7 @@
 from threading import Thread, active_count
 from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
 from Services.Db.DbService import DbService
-from Services.Ftp.FtpConection import FtpConnection
+from Services.Ftp.FtpConnection import FtpConnection
 from SupplierScripts.Hart.Hart import *
 from SupplierScripts.Autopartner.Autopartner import *
 from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import *

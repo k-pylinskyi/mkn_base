@@ -2,7 +2,7 @@ from SupplierScripts import *
 
 
 def intervito_to_db():
-    table_name = 'inter_team'
+    table_name = 'inter_vito'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db(table_name, get_intervito_data())
     DataFrameReader.supplier_to_ftp(table_name)

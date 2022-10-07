@@ -18,7 +18,7 @@ def get_autoland_data():
             supplier_part_number,
             part_number,
             CAST(REPLACE(qty, '>', '') AS INTEGER) as quantity,
-            price,
+            IIF(deposit is null, price, deposit + price) as price,
             pack
         FROM
             data
@@ -40,10 +40,11 @@ class AutoLand:
             4: 'part_number',
             6: 'manufacturer',
             7: 'pack',
+            9: 'deposit'
         }
 
         self.data = pd.read_csv(data_url, compression='zip', sep=';', encoding_errors='ignore', header=None,
-                                low_memory=False, usecols=[0, 1, 2, 3, 4, 6, 7])
+                                low_memory=False, usecols=[0, 1, 2, 3, 4, 6, 7, 9])
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

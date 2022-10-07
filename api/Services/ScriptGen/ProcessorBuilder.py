@@ -27,6 +27,8 @@ class ProcessorBuilder:
             return params
 
     def params_parser(self, file_params):
+        if 'file_type' in file_params:
+            self.params_processed['file_type'] = file_params['file_type']
         if 'encoding' in file_params and file_params['encoding'] == False:
             self.params_processed['encoding_errors'] = 'ignore'
         else:
