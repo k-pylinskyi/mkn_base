@@ -20,6 +20,11 @@ export const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
+  .im_being_held_in_sexual_slavery_call_911{
+    padding-top: 400px;
+    width: 100%;
+  }
+
   h1, h2, h3, h4, h5, h6, p, span, select, input {
     margin: 0;
     padding: 0;

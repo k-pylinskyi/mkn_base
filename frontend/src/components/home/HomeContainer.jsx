@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import {StyledHomeContainer} from "./styledHome";
-
-const HomeContainer = () => {
-    return(
-        <StyledHomeContainer>
-            <h1>
-                Home
-            </h1>
-        </StyledHomeContainer>
-    )
-}
-
-export default HomeContainer;
-=======
 import {
   StyledTable,
   StyledTableBody,
@@ -53,4 +38,3 @@ const HomeContainer = ({ paketo }) => {
 };
 
 export default HomeContainer;
->>>>>>> b1ea73f (added frontend and app; changed Extractor.py)

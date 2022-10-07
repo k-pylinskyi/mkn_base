@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "mkn_base app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "garcondeau",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^21.1.0",
+    "electron-acrylic-window": "^0.5.11"
+  }
+}
