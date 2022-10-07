@@ -1,50 +1,26 @@
----
 build: dev
-version: 1.0.0
 suppliers:
-  autoland:
-    status: true
-    updated: 00-00-0000
-    multiple: false
-    files:
-      data:
-        mod_time: null
-        engine: python
-        url: ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip
-        compression: zip
-        sep: ;
-        encoding: false
-        header: false
-  autopartner:
-    status: true
-    updated: 00-00-0000
-    multiple: false
-    files:
-      data:
-        mod_time: null
-        url: ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv
-        encoding: false
-        sep: ;
-        error_bad_lines: false
-        header: false
-  autopartner_gdansk:
-    status: true
-    updated: 00-00-0000
-    multiple: true
-    files: 
-      data: 
-        mod_time: null
-        engine: python
-        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/29366_ce.gz
-        encoding: false
-        sep: ;
-        header: false
-        compression: gzip
-      dict:
-        mod_time: null
-        engine: python
-        url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/autopartner_gdansk_dict.csv
-        encoding: false
-        sep: \t
-        header: false
-        skip_rows: 1
+- files:
+    data: {compression: zip, encoding: false, engine: python, header: false, mod_time: null,
+      sep: ;, url: 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip'}
+  multiple: false
+  name: autoland
+  status: false
+  updated: 00-00-0000
+- files:
+    data: {encoding: false, error_bad_lines: false, header: false, mod_time: null,
+      sep: ;, url: 'ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv'}
+  multiple: false
+  name: autopartner
+  status: true
+  updated: 00-00-0000
+- files:
+    data: {compression: gzip, encoding: false, engine: python, header: false, mod_time: null,
+      sep: ;, url: 'ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/29366_ce.gz'}
+    dict: {encoding: false, engine: python, header: false, mod_time: null, sep: \t,
+      skip_rows: 1, url: 'ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/autopartner_gdansk_dict.csv'}
+  multiple: true
+  name: autopartner_gdansk
+  status: true
+  updated: 00-00-0000
+version: 1.0.0

@@ -17,6 +17,7 @@ from SupplierScripts.AutoLand.AutoLand import *
 from SupplierScripts.Motoprofil.Motoprofil import *
 from SupplierScripts.Intervito.Intervito import *
 from SupplierScripts.KrisAuto.KrisAuto import *
+from SupplierScripts.Autopartner.Autopartner import *
 
 
 def suppliers_to_db():
@@ -38,5 +39,6 @@ def suppliers_to_db():
     motoprofil_to_db()
     krisauto_to_db()
     intervito_to_db()
+    autopartner_to_db()
 
     print('Dataframes pushed to Data Base')

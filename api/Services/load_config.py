@@ -29,27 +29,13 @@ class Config:
             app_build = self.config_data.get('build')
         else:
             app_build = 'undefined build'
-
-        print(f'''
-        {CONSOLE_COLOR.SUCCESS}
-        {54 * '#'}
-        # {50 * ' '} #
-        # {50 * ' '} #
-        # {20 * '='} MKN BASE {20 * '='} #
-        # {50 * ' '} #
-        # {50 * ' '} #
-        # {CONSOLE_COLOR.NC}version: {app_version}{(42 - len(app_version))*' '}{CONSOLE_COLOR.SUCCESS}#
-        # {CONSOLE_COLOR.NC}build: {app_build}{(44 - len(app_build))*' '}{CONSOLE_COLOR.SUCCESS}#
-        # {50 * ' '} #
-        {54 * '#'}
-        {CONSOLE_COLOR.NC}
-        ''')
+        return [app_build, app_version]
 
     def get_app_suppliers(self):
         suppliers_dict = self.config_data.get('suppliers')
         return suppliers_dict
 
-    def create_app_suppliers(self):
+    def backup_config(self):
         backup_path = CONFIG.CONFIG_LOCATION + \
             f'backup/{datetime.timestamp(datetime.now())}/'
         isExist = os.path.exists(backup_path)

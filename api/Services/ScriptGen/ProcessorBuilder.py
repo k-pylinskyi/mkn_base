@@ -15,6 +15,7 @@ class ProcessorBuilder:
                 file_params[file[0]] = proc_builder.params_parser(file[1])
                 file_proc = FileProcessor()
                 file_proc.process_file(url=file[1]["url"], params=file_params[file[0]])
+            print(len(supplier_raw_params["files"]))
             return file_params
 
         else:

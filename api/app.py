@@ -1,13 +1,35 @@
-from flask import Flask
-from SupplierScripts.Paketo.Packeto import process_paketo
-from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import process_autopartner_gdansk
+from flask import Flask, request
+from SupplierScripts.Paketo.Paketo import paketo_to_db
+from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import autopartner_gdansk_to_db
+from Services.load_config import Config
+from Services.edit_config import change_supplier_activity
+from Utils.consts import CONFIG
+
 
 app = Flask(__name__)
-
+config = Config()
+app.config.update(
+    DEBUG=True,
+    TEMPLATES_AUTO_RELOAD = True
+)
+@app.route('/app-info')
+def get_app_info():
+    return config.get_app_info()
 
 @app.route('/suppliers/<supplier>')
 def supplier_details(supplier):
         if (supplier == 'paketo'):
-            return {'data': process_paketo()}
+            return {'data': paketo_to_db()}
         elif (supplier == 'autopartner_gdansk'):
-            return {'data': process_autopartner_gdansk()}
+            return {'data': autopartner_gdansk_to_db()}
+
+@app.route('/suppliers', methods=['POST', 'GET'])
+def get_suppliers():
+    if request.method == 'POST':
+        data = request.get_json()
+        change_supplier_activity(config=config, edit_supplier=data['supplier'], status=data['status'])
+        return data
+    else:
+        return config.get_app_suppliers()
+
+app.run(extra_files=[f'./Utils\\{CONFIG.CONFIG_NAME}'])
