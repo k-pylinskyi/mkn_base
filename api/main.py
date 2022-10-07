@@ -14,5 +14,4 @@ if __name__ == '__main__':
     # proc_builder = ProcessorBuilder()
     # tmp = gen_loader.suppliers_list_loader()
     # for item in tmp:
-    # proc_builder.supplier_param_builder(supplier=item)
-    
+    #     proc_builder.supplier_param_builder(supplier=item)
