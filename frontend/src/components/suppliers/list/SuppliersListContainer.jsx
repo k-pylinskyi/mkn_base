@@ -22,11 +22,11 @@ const SuppliersListContainer = () => {
   const [status, setStatus] = useState();
   const [editSupplier, setEditSupplier] = useState();
 
-  const handleChange = (value) => {
+  const handleChange = (value, supplier) => {
     setLoading(true);
     setVisible(true);
     setStatus(value.target.checked);
-    setEditSupplier(value.target.supplier);
+    setEditSupplier(supplier);
   };
 
   const fetchSuppliers = () => {
@@ -103,7 +103,7 @@ const SuppliersListContainer = () => {
                       disabled={loading}
                       supplier={supplier}
                       checked={suppliers[supplier]}
-                      onChange={(value) => handleChange(value)}
+                      onChange={(value) => handleChange(value, supplier)}
                     />
                   </SuppliersListCol>
                   <SuppliersListCol className="supplier_name">

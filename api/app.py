@@ -28,6 +28,7 @@ def get_suppliers():
     if request.method == 'POST':
         data = request.get_json()
         change_supplier_activity(config=config, edit_supplier=data['supplier'], status=data['status'])
+        print(data)
         return data
     else:
         return config.get_app_suppliers()
