@@ -17,28 +17,21 @@ from SupplierScripts.AutoLand.AutoLand import *
 from SupplierScripts.Motoprofil.Motoprofil import *
 from SupplierScripts.Intervito.Intervito import *
 from SupplierScripts.KrisAuto.KrisAuto import *
-from SupplierScripts.Autopartner.Autopartner import *
 
 
-def suppliers_to_db():
-    print('Starting pushing to Data Base')
-
-    autopartner_to_db()
-    autopartner_gdansk_to_db()
-    emoto_to_db()
-    gordon_to_db()
-    motorol_to_db()
-    paketo_to_db()
-    hart_to_db()
-    rodon_to_db()
-    motogama_to_db()
-    elit_to_db()
-    inter_team_to_db()
-    autoland_to_db()
-    motorol_to_db()
-    motoprofil_to_db()
-    krisauto_to_db()
-    intervito_to_db()
-    autopartner_to_db()
-
-    print('Dataframes pushed to Data Base')
+#autopartner_to_db()
+autopartner_gdansk_to_db()
+emoto_to_db()
+gordon_to_db()
+motorol_to_db()
+paketo_to_db()
+# hart_to_db()
+rodon_to_db()
+motogama_to_db()
+elit_to_db()
+inter_team_to_db()
+autoland_to_db()
+motorol_to_db()
+motoprofil_to_db()
+krisauto_to_db()
+intervito_to_db()
