@@ -9,8 +9,10 @@ class ParamsBuilder:
             'status': supplier_config['status'],
             'updated': supplier_config['updated'],
             'download_files': supplier_config['download_files'],
-            'files': ParamsBuilder.parse_file_params(supplier_config)
+            'files': ParamsBuilder.parse_file_params(supplier_config),
+            'sql': lambda: supplier_config['sql'] if 'sql' in supplier_config else None
         }
+        params['sql'] = params['sql']()
         return params
 
     @classmethod
@@ -21,18 +23,19 @@ class ParamsBuilder:
             params = {
                 'file_name': lambda: file['file_name'] if 'file_name' in file else None,
                 'file_type': lambda: file['file_type'] if 'file_type' in file else 'csv',
+                'merge_previos': lambda: file['merge_previous'] if 'merge_previous' in file else None,
                 'filepath_or_buffer': lambda: file['url'] if 'url' in file else None,
                 'sep': lambda: file['sep'] if 'sep' in file else ';',
                 'decimal': lambda: file['decimal'] if 'decimal' in file else '.',
-                'skip_rows': lambda: file['skiprows'] if 'skiprows' in file else 0,
+                'skip_rows': lambda: file['skip_rows'] if 'skip_rows' in file else 0,
                 'header': lambda: file['header'] if 'header' in file else 'int',
                 'compression': lambda: file['compression'] if 'compression' in file else 'infer',
                 'low_memory': lambda: file['low_memory'] if 'low_memory' in file else True,
                 'encoding_errors': lambda: file['encoding_errors'] if 'encoding_errors' in file else 'strict',
-                'encoding': lambda: file['encoding'] if 'encoding' in file else None,
-                'engine': lambda: file['engine'] if 'engin' in file else None,
+                'encoding': lambda: file['encoding'] if 'encoding' in file else 'latin-1',
+                'engine': lambda: file['engine'] if 'engin' in file else 'python',
                 'error_bad_lines': lambda: file['error_bad_lines'] if 'error_bad_lines' in file else True,
-                'on_bad_lines': lambda: file['on_bad_lines'] if 'on_bad_lines' in file else None,
+                'on_bad_lines': lambda: file['on_bad_lines'] if 'on_bad_lines' in file else 'skip',
                 'use_cols': lambda: file['use_cols'] if 'use_cols' in file else None,
                 'columns': lambda: file['columns'] if 'columns' in file else {0: 'A'}
             }
@@ -41,29 +44,6 @@ class ParamsBuilder:
             files_params.append(params)
 
         return files_params
-
-    def supplier_param_builder(self, supplier):
-        supplier_raw_params = supplier
-        if supplier_raw_params['multiple']:
-            files = supplier_raw_params['files']
-            params = {}
-            for file in files.items():
-                proc_builder = ProcessorBuilder()
-                params[file[0]] = proc_builder.params_parser(file[1])
-                file_proc = FileProcessor()
-                file_proc.process_file(url=file[1]["url"], params=params[file[0]])
-            print(len(supplier_raw_params["files"]))
-            params['name'] = supplier_raw_params['name']
-            return params
-
-        else:
-            data_params = supplier_raw_params['files']['data']
-            proc_builder = ProcessorBuilder()
-            file_proc = FileProcessor()
-            params = proc_builder.params_parser(file_params=data_params)
-            file_proc.process_file(url=data_params["url"], params=params)
-            params['name'] = supplier_raw_params['name']
-            return params
 
     def params_parser(self, file_params):
         self.params_processed['file_type'] = file_params['file_type']

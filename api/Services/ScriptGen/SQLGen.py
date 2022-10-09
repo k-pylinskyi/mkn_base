@@ -1,23 +1,29 @@
-class SQLGen:
-    def __init__(self):
-        self.new_line = '\n'
-        self.file_join = ''
+from pandasql import sqldf
 
-    def insert_data(self, id, manufacturer, supplier_part_number, part_number, qty, files, price, weight, part_name, foreign_key, inner_key):
-        for file in files:
-            self.file_join += f"INNER JOIN {file['name']} ON {file[foreign_key]} = {inner_key}{self.new_line}"
-        self.sql_template = f'''
-        SELECT
-            {id} as supplier_id,
-            {manufacturer},
-            {supplier_part_number},
-            {part_number},
-            CAST(REPLACE(REPLACE({qty}), '-', '0'), '>', '') AS qty,
-            {price},
-            {weight},
-            {part_name}
-        FROM data
-        {self.file_join}
-        WHERE qty NOT LIKE '0'
-        '''
-        return self.sql_template
+
+class SQLGen:
+    @classmethod
+    def get_query(cls, params):
+        new_line = '\n'
+        print('sql gen get query\nparams')
+        print(params)
+        sql_params = params['sql']
+        sql_select = sql_params['select']
+        sql_select['quantity'] = f'REPLACE(REPLACE({sql_select["quantity"]}, " ", ""), ">", "")'
+
+        query = f'SELECT {", ".join(f"{new_line}{value} AS {key}" for key, value in sql_select.items())}' \
+                f'{new_line}FROM{new_line}dataframe{new_line}'
+
+        if 'where' in sql_params:
+            sql_where = sql_params['where']
+            for value, key in sql_select.items():
+                sql_where = sql_where.replace(value, key)
+            query = f'{query}WHERE{new_line}{sql_where}'
+
+        print(query)
+        return query
+
+    @staticmethod
+    def get_queried_data(dataframe, sql_params):
+        query = SQLGen.get_query(sql_params)
+        return sqldf(query)
