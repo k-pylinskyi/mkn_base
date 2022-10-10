@@ -1,24 +1,33 @@
 import pandas as pd
-from Services.ScriptGen.ParamsBuilder import ParamsBuilder
-from Services.ScriptGen.SQLGen import SQLGen
+from Services.Generators.ParamsBuilder import ParamsBuilder
+from Services.Generators.SqlGenerator import SqlGenerator
 from Services.load_config import Config
 
 
 class DataFrameGenerator:
-    @classmethod
-    def get_supplier_dataframe(cls, params):
+    @staticmethod
+    def get_supplier_dataframe(params):
         supplier_name = params['supplier_name']
         print(f'Getting {supplier_name} data frames')
         files = params['files']
         dfs = []
         for file_params in files:
+            print(file_params)
             df = DataFrameGenerator.get_dataframe(file_params)
             df.set_index('supplier_part_number')
             dfs.append(df)
         pd.set_option('display.max_columns', 100)
         df = pd.concat([df for df in dfs], ignore_index=False, axis=1)
         df = df.loc[:, ~df.columns.duplicated()]
+        df['supplier_part_number'] = DataFrameGenerator.format_column(df['supplier_part_number'])
         return df
+
+    @classmethod
+    def format_column(cls, column: pd.Series):
+        column = column.str.upper()
+        column = column.str.replace('[\W_]+', '', regex=True)
+        column = column.str.strip()
+        return column
 
     @classmethod
     def get_dataframe(cls, params):
@@ -51,16 +60,3 @@ class DataFrameGenerator:
             )
         else:
             return
-
-    @staticmethod
-    def process_suppliers_from_config(config = Config()):
-        suppliers = config.get_app_suppliers()
-        for supplier_params in suppliers:
-            params = ParamsBuilder.get_supplier_params(supplier_params)
-            if params['status']:
-                print(params)
-                df = DataFrameGenerator.get_supplier_dataframe(params)
-                df = SQLGen.get_queried_data(df, params)
-                print(df)
-            else:
-                print(f'Supplier {params["supplier_name"]} is disabled')

@@ -21,19 +21,22 @@ class Config:
             self.config_data = yaml.safe_load(stream)
 
     def get_app_info(self):
-        if 'version' in self.config_data:
-            app_version = self.config_data.get('version')
-        else:
-            app_version = 'undefined version'
-        if 'build' in self.config_data:
-            app_build = self.config_data.get('build')
-        else:
-            app_build = 'undefined build'
+        app_version = self.config_data.get('version', 'undefined version')
+        app_build = self.config_data.get('build', 'undefined build')
         return [app_build, app_version]
 
     def get_app_suppliers(self):
-        suppliers_dict = self.config_data.get('suppliers')
-        return suppliers_dict
+        return list(self.config_data.get('suppliers').keys())
+
+    def get_supplier_params(self, supplier_name):
+        return self.config_data.get('suppliers').get(supplier_name)
+
+    def get_app_service_auth(self, ftp_name, email_name):
+        service_dict = self.config_data.get('services_auth')
+
+        ftp_auth = service_dict.get('ftp').get(ftp_name)
+        email_auth = service_dict.get('email').get(email_name)
+        return [ftp_auth, email_auth]
 
     def backup_config(self):
         backup_path = CONFIG.CONFIG_LOCATION + \
@@ -44,14 +47,5 @@ class Config:
         config_backup = f'{backup_path}/{CONFIG.CONFIG_NAME}'
         shutil.copy(CONFIG.CONFIG_LOCATION+CONFIG.CONFIG_NAME, config_backup)
         print(f'{CONSOLE_COLOR.WARNING}!!! YOUR CONFIG BACKUP WAS CREATED AND IS LOCATED IN {CONSOLE_COLOR.HEADER}{config_backup}{CONSOLE_COLOR.WARNING} !!!{CONSOLE_COLOR.NC}')
-
-    def get_supplier_by_name (self, supplier_name):
-        config = Config()
-        suppliers_list = config.get_app_suppliers()
-        supplier = {}
-        for sup in suppliers_list:
-            if sup['name'] == supplier_name:
-                supplier = sup
-        return supplier
 
 

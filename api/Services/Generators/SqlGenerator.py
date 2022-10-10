@@ -1,7 +1,7 @@
 from pandasql import sqldf
 
 
-class SQLGen:
+class SqlGenerator:
     @classmethod
     def get_query(cls, params):
         new_line = '\n'
@@ -25,5 +25,5 @@ class SQLGen:
 
     @staticmethod
     def get_queried_data(dataframe, sql_params):
-        query = SQLGen.get_query(sql_params)
+        query = SqlGenerator.get_query(sql_params)
         return sqldf(query)

@@ -4,12 +4,12 @@ from Services.Loader.UrlLoader import UrlLoader
 
 
 class LoadController:
-    def __init__(self):
-        mail_box = 'prices.mnk.group@gmail.com'
-        mail_pass = 'hrsvhqkajsdjtyzr'
-        self.ftp_host = '138.201.56.185'
-        self.ftp_user = 'ph6802'
-        self.ftp_pass = 'z7lIh8iv10pLRt'
+    def __init__(self, ftp_auth, email_auth):
+        mail_box = email_auth['address']
+        mail_pass = email_auth['app_password']
+        self.ftp_host = ftp_auth['host']
+        self.ftp_user = ftp_auth['user']
+        self.ftp_pass = ftp_auth['password']
         self.mail_con = MailLoader(mail_box, mail_pass)
 
     def download_from_mail(self, supplier, file_name, sender=None, subject=None):

@@ -1,7 +1,3 @@
-from threading import Thread, active_count
-from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
-from Services.Db.DbService import DbService
-from Services.Ftp.FtpConnection import FtpConnection
 from SupplierScripts.Hart.Hart import *
 from SupplierScripts.Autopartner.Autopartner import *
 from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import *
@@ -19,7 +15,7 @@ from SupplierScripts.Intervito.Intervito import *
 from SupplierScripts.KrisAuto.KrisAuto import *
 
 
-#autopartner_to_db()
+# autopartner_to_db()
 autopartner_gdansk_to_db()
 emoto_to_db()
 gordon_to_db()
