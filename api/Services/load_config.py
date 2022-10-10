@@ -44,3 +44,14 @@ class Config:
         config_backup = f'{backup_path}/{CONFIG.CONFIG_NAME}'
         shutil.copy(CONFIG.CONFIG_LOCATION+CONFIG.CONFIG_NAME, config_backup)
         print(f'{CONSOLE_COLOR.WARNING}!!! YOUR CONFIG BACKUP WAS CREATED AND IS LOCATED IN {CONSOLE_COLOR.HEADER}{config_backup}{CONSOLE_COLOR.WARNING} !!!{CONSOLE_COLOR.NC}')
+
+    def get_supplier_by_name (self, supplier_name):
+        config = Config()
+        suppliers_list = config.get_app_suppliers()
+        supplier = {}
+        for sup in suppliers_list:
+            if sup['name'] == supplier_name:
+                supplier = sup
+        return supplier
+
+

@@ -1,17 +1,17 @@
 import React from "react";
 
 import { StyledFilterWrapper } from "./styledFilter";
-import { Button } from "@fluentui/react-components";
+import { Button } from "@fluentui/react-northstar";
+import { Divider } from "@fluentui/react-components";
 
 const Filter = ({ createItem }) => {
   return (
     <StyledFilterWrapper>
-        <Button 
-            appearance="primary"
-        >
-            Filter
-        </Button>
-      {createItem && <Button appearance="primary">Create item</Button>}
+      <div className="filter-actions">
+        <Button primary>Filter</Button>
+        {createItem && <Button primary>Create item</Button>}
+      </div>
+      <Divider />
     </StyledFilterWrapper>
   );
 };

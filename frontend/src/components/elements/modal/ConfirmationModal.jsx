@@ -1,40 +1,47 @@
 import React from "react";
-import Dialog from "rc-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogBody,
+  DialogTitle,
+  DialogSurface,
+  DialogActions,
+  DialogTrigger,
+} from "@fluentui/react-components/unstable";
 
-import { StyledButton } from "../../styles/styledButton";
+import { Button } from "@fluentui/react-northstar";
 
-const ConfirmationModal = ({ message, handler, visible, setVisible, setLoading }) => {
-
+const ConfirmationModal = ({
+  title,
+  message,
+  handler,
+  visible,
+  setVisible,
+  setLoading,
+}) => {
   return (
-    <Dialog
-      visible={visible}
-      wrapClassName="default-modal-wrapper default-modal-wrapper_confirm"
-      animation="zoom"
-      maskAnimation="fade"
-      title="Confirm"
-      closable={false}
-      forceRender={false}
-      className="default-modal confirm-modal"
-    >
-      <div className="default-modal__content confirm-modal__content">
-        {message}
-      </div>
-      <div className="default-modal__footer">
-        <StyledButton color="danger" onClick={() => {setVisible();setLoading(false)}}>
-          No
-        </StyledButton>
-        <StyledButton
-          color="success" onClick={() => {
-          handler();
-          setVisible(false);
-        }}
-        >
-          Yes
-        </StyledButton>
-      </div>
+    <Dialog open={visible} modalType="alert">
+      <DialogSurface>
+        <DialogBody>
+          <DialogTitle>{title ? title : "Confirmation"}</DialogTitle>
+          <DialogContent>{message}</DialogContent>
+          <DialogActions>
+            <DialogTrigger>
+              <Button
+                onClick={() => (setVisible(false), setLoading(false))}
+                appearance="secondary"
+              >
+                Close
+              </Button>
+            </DialogTrigger>
+            <Button primary onClick={() => (handler(), setVisible(false))}>
+              Submit
+            </Button>
+          </DialogActions>
+        </DialogBody>
+      </DialogSurface>
     </Dialog>
   );
-
 };
 
 export default ConfirmationModal;

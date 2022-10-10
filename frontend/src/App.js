@@ -5,7 +5,7 @@ import Header from "./components/elements/header/Header";
 import { GlobalStyle } from "./components/styles/globalStyles";
 import { BrowserRouter as Router, Redirect, Switch } from "react-router-dom";
 
-import { Spinner } from "@fluentui/react-components";
+import { Loader } from "@fluentui/react-northstar";
 
 import "./App.css";
 import "rc-checkbox/assets/index.css";
@@ -15,17 +15,17 @@ function App() {
   return (
     <Router>
       <Header />
-      <Suspense fallback={<Spinner/>}>
+      <Suspense fallback={<Loader/>}>
         <Switch>
           {routes.map((route, i) => (
             <LoadRoute key={i} {...route} />
           ))}
           <Redirect to="/page-not-found" />
         </Switch>
-        <img
+        {/* <img
           className="im_being_held_in_sexual_slavery_call_911"
           src="https://hips.hearstapps.com/digitalspyuk.cdnds.net/17/28/1499875933-twin-peaks-agent-cooper-coffee.gif?resize=480:*"
-        />
+        /> */}
       </Suspense>
       <GlobalStyle />
     </Router>

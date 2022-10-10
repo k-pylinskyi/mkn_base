@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Filter from "../../elements/filter/FilterContianer";
 import ConfirmationModal from "../../elements/modal/ConfirmationModal";
+import MainTitle from "../../elements/title/MainTitle";
+import { NavLink, useHistory } from "react-router-dom";
 
 import {
   SuppliersListHead,
@@ -11,7 +13,7 @@ import {
   SupplersListRow,
   SuppliersListCol,
 } from "../styledSuppliers";
-import { Button, Checkbox, Tooltip } from "@fluentui/react-components";
+import { Button, Checkbox, Tooltip } from "@fluentui/react-northstar";
 import { TableHeaderCell } from "@fluentui/react-components/unstable";
 import { EditFilled } from "@fluentui/react-icons";
 
@@ -22,10 +24,10 @@ const SuppliersListContainer = () => {
   const [status, setStatus] = useState();
   const [editSupplier, setEditSupplier] = useState();
 
-  const handleChange = (value, supplier) => {
+  const handleChange = (sup_status, supplier) => {
     setLoading(true);
     setVisible(true);
-    setStatus(value.target.checked);
+    setStatus(!sup_status);
     setEditSupplier(supplier);
   };
 
@@ -84,7 +86,7 @@ const SuppliersListContainer = () => {
         handler={() => updateStatus()}
       />
       <StyledSuppliersContainer>
-        <h1>Suppliers list</h1>
+        <MainTitle text="Suppliers list" />
         <Filter createItem />
         <SuppliersList>
           <SuppliersListHead>
@@ -100,10 +102,11 @@ const SuppliersListContainer = () => {
                 <SupplersListRow key={key}>
                   <SuppliersListCol>
                     <Checkbox
+                      toggle
                       disabled={loading}
                       supplier={supplier}
                       checked={suppliers[supplier]}
-                      onChange={(value) => handleChange(value, supplier)}
+                      onChange={() => handleChange(suppliers[supplier], supplier)}
                     />
                   </SuppliersListCol>
                   <SuppliersListCol className="supplier_name">
@@ -114,10 +117,13 @@ const SuppliersListContainer = () => {
                   <SuppliersListCol>
                     <Tooltip content="Edit supplier" relationship="label">
                       <Button
-                        appearance="subtle"
-                        shape="circular"
+                        as={NavLink}
+                        to={`/suppliers/${supplier}`}
+                        tinted
+                        circular
                         icon={<EditFilled />}
                         size="small"
+                        // onClick={}
                       />
                     </Tooltip>
                   </SuppliersListCol>

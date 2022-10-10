@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { StyledContainer } from '../styles/styledContainer';
-import {Table,TableHeader,TableBody,TableRow,TableCell} from "@fluentui/react-components/unstable"
+import {Table,TableRow,TableCell} from "@fluentui/react-northstar"
+import {TableHeader, TableBody} from "@fluentui/react-components/unstable"
 
 
 export const StyledSuppliersContainer = styled(StyledContainer)`
+    padding-top: 60px;
 `
 
 export const SuppliersList = styled(Table)`

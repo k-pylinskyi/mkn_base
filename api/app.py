@@ -10,18 +10,22 @@ app = Flask(__name__)
 config = Config()
 app.config.update(
     DEBUG=True,
-    TEMPLATES_AUTO_RELOAD = True
+    TEMPLATES_AUTO_RELOAD=True
 )
+
+
 @app.route('/app-info')
 def get_app_info():
     return config.get_app_info()
 
+
 @app.route('/suppliers/<supplier>')
 def supplier_details(supplier):
-        if (supplier == 'paketo'):
-            return {'data': paketo_to_db()}
-        elif (supplier == 'autopartner_gdansk'):
-            return {'data': autopartner_gdansk_to_db()}
+    if request.method == 'POST':
+        pass
+    else:
+        config = Config()
+        return config.get_supplier_by_name(supplier)
 
 @app.route('/suppliers', methods=['POST', 'GET'])
 def get_suppliers():

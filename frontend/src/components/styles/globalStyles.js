@@ -1,6 +1,6 @@
 import {createGlobalStyle} from "styled-components";
 
-const mainFont = "Montserrat, sans-serif";
+const mainFont = "Segoe UI, sans-serif";
 const mainFontSize = "14px";
 
 export const GlobalStyle = createGlobalStyle`
