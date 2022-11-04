@@ -18,6 +18,7 @@ def get_autoland_data():
             supplier_part_number,
             part_number,
             CAST(REPLACE(qty, '>', '') AS INTEGER) as quantity,
+            price as supplier_price,
             IIF(deposit is null, price, deposit + price) as price,
             pack
         FROM
@@ -30,7 +31,7 @@ def get_autoland_data():
 
 class AutoLand:
     def __init__(self):
-        data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip"
+        data_url = "ftp://autolend:autolend12@138.201.56.185/156127_w2.zip"
 
         self.data_columns = {
             0: 'supplier_part_number',
