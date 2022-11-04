@@ -1,9 +1,11 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def rodon_to_db():
-    print('Pushing Rodon to Data Base')
-    DataFrameReader.dataframe_to_db('rodon', get_rodon_data())
+    table_name = 'rodon'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_rodon_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_rodon_data():
@@ -46,12 +48,13 @@ class Rodon:
         }
         self.dict_columns = {0: 'supplier_part_number', 1: 'part_number', 2: 'manufacturer'}
 
-        self.data = pd.read_csv('../TemporaryStorage/RODON/files/rodon_data.csv', sep=';', low_memory=False,
+        data_url = "ftp://rodon:nA1cC3zC8ztV3v@138.201.56.185/57765_01.gz"
+        dict_url = "ftp://rodon:nA1cC3zC8ztV3v@138.201.56.185/rodon_dict.csv"
+        self.data = pd.read_csv(data_url, sep=';', low_memory=False, compression='gzip',
                            encoding_errors='ignore', header=None, usecols=[0, 2, 3, 4, 5, 7, 11, 13])
 
-        self.dict = pd.read_csv('../TemporaryStorage/RODON/files/rodon_dict.csv', header=None, low_memory=False,
+        self.dict = pd.read_csv(dict_url, header=None, low_memory=False,
                            sep='\t', encoding_errors='ignore')
-
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

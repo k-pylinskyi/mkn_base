@@ -2,14 +2,14 @@ CREATE VIEW IF NOT EXISTS suppliers_prices AS
 SELECT
 suppliers.name AS supplier_name,
 suppliers.currency,
-autopartner_gdansk.manufacturer,
-autopartner_gdansk.supplier_part_number,
-autopartner_gdansk.part_number,
-autopartner_gdansk.price,
-autopartner_gdansk.quantity
+auto_partner_gdansk.manufacturer,
+auto_partner_gdansk.supplier_part_number,
+auto_partner_gdansk.part_number,
+auto_partner_gdansk.price,
+auto_partner_gdansk.quantity
 FROM suppliers
-INNER JOIN autopartner_gdansk
-ON suppliers.id = autopartner_gdansk.supplier_id
+INNER JOIN auto_partner_gdansk
+ON suppliers.id = auto_partner_gdansk.supplier_id
 
 UNION
 
@@ -94,3 +94,73 @@ rodon.quantity
 FROM suppliers
 INNER JOIN rodon
 ON suppliers.id = rodon.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+motogama.manufacturer,
+motogama.supplier_part_number,
+motogama.part_number,
+motogama.price,
+motogama.quantity
+FROM suppliers
+INNER JOIN motogama
+ON suppliers.id = motogama.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+autoland.manufacturer,
+autoland.supplier_part_number,
+autoland.part_number,
+autoland.price,
+autoland.quantity
+FROM suppliers
+INNER JOIN autoland
+ON suppliers.id = autoland.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+elit.manufacturer,
+elit.supplier_part_number,
+elit.part_number,
+elit.price,
+elit.quantity
+FROM suppliers
+INNER JOIN elit
+ON suppliers.id = elit.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+motoprofil.manufacturer,
+motoprofil.supplier_part_number,
+motoprofil.part_number,
+motoprofil.price,
+motoprofil.quantity
+FROM suppliers
+INNER JOIN motoprofil
+ON suppliers.id = motoprofil.supplier_id
+
+UNION
+
+SELECT
+suppliers.name AS supplier_name,
+suppliers.currency,
+inter_team.manufacturer,
+inter_team.supplier_part_number,
+inter_team.part_number,
+inter_team.price,
+inter_team.quantity
+FROM suppliers
+INNER JOIN inter_team
+ON suppliers.id = inter_team.supplier_id

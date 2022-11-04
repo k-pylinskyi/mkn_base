@@ -1,0 +1,211 @@
+build: dev
+version: 1.0.0
+services_auth:
+  ftp:
+    main:
+      host: 138.201.56.185
+      user: ph6802
+      password: z7lIh8iv10pLRt
+    second:
+      host: 138.201.56.185
+      user: ph6802
+      password: z7lIh8iv10pLRt
+  email:
+    main:
+      address: prices.mnk.group@gmail.com
+      app_password: hrsvhqkajsdjtyzr
+suppliers:
+  elit:
+    status: true
+    updated: 00-00-0000
+    download_files: null
+    files:
+    - filename: data
+      file_type: csv
+      url: ftp://elit:kI9eP6jB1v@138.201.56.185/export.csv
+      sep: ;
+      usecols: [0, 1, 2, 3, 5, 6, 7, 8, 9, 13, 14, 17]
+      columns:
+        0: 'supplier_ad_number'
+        1: 'supplier_part_number'
+        2: 'part_name'
+        3: 'price'
+        5: 'manufacturer'
+        6: 'part_number'
+        7: 'qty_lublin'
+        8: 'qty_cn'
+        9: 'qty_wroclaw'
+        13: 'tecdoc_number'
+        14: 'tecdoc_supplier_number'
+        17: 'ean_number'
+      sql:
+        select:
+          supplier_id: 19
+          manufacturer: manufacturer
+          supplier_part_number: supplier_part_number
+          part_number: part_number
+          price: price
+          quantity: CAST( (REPLACE(qty_lublin, '>', '') + REPLACE(qty_wroclaw, '>', '') + REPLACE(qty_cn, '>', '')) AS INTEGER)
+          tecdoc_number: tecdoc_number
+          tecdoc_supplier_number: tecdoc_supplier_number
+          ean_number: ean_number
+  autoland:
+    status: true
+    updated: 00-00-0000
+    download_files: null
+    sql:
+      select:
+        manufacturer: manufacturer
+        part_name: part_name
+        supplier_part_number: supplier_part_number
+        part_number: part_number
+        price: IIF(deposit is null, price, deposit + price)
+        quantity: quantity
+        pack: pack
+    files:
+    - file_name: data
+      file_type: csv
+      url: 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/autolend/156127_w2.zip'
+      compression: zip
+      sep: ;
+      use_cols: [ 0, 1, 2, 3, 4, 6, 7, 9 ]
+      columns:
+        0: supplier_part_number
+        1: part_name
+        2: quantity
+        3: price
+        4: part_number
+        6: manufacturer
+        7: pack
+        9: deposit
+  autopartner:
+    status: false
+    updated: 00-00-0000
+    download_files: null
+    files:
+    - file_name: data
+      url: 'ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv'
+      file_type: csv
+      sep: ;
+      use_cols: [ 0, 1, 2, 3, 4, 6, 7, 9, 12, 15, 16, 17 ]
+      columns:
+        0: 'supplier_part_number'
+        1: 'part_name'
+        2: 'part_number'
+        3: 'manufacturer'
+        4: 'price'
+        6: 'currency'
+        7: 'weight'
+        9: 'bar_code'
+        12: 'qty1'
+        15: 'qty2'
+        16: 'qty3'
+        17: 'manufacturer_code'
+  auto_partner_gdansk:
+    status: true
+    updated: 00-00-0000
+    download_files: null
+    sql:
+      select:
+        manufacturer: manufacturer
+        part_name: part_name
+        supplier_part_number: supplier_part_number
+        part_number: part_number
+        price: price
+        quantity: quantity
+        pack: 0
+    files:
+    - file_name: data
+      file_type: csv
+      url: 'ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/29366_ce.gz'
+      compression: gzip
+      sep: ;
+      use_cols: [0, 1, 2, 3, 4, 6]
+      columns:
+        0: 'manufacturer'
+        1: 'part_name'
+        2: 'supplier_part_number'
+        3: 'quantity'
+        4: 'price'
+        6: 'part_number'
+    - file_name: dict
+      file_type: csv
+      url: ftp://autopartner_gdansk:rH4vY3yZ9iwE5a@138.201.56.185/autopartner_gdansk_dict.csv
+      merge_previous: inner
+      sep: \t
+      skip_rows: 1
+      use_cols: [ 0, 1, 2, 3]
+      columns:
+        0: 'supplier_part_number'
+        1: 'part_number'
+        2: 'manufacturer'
+        3: 'part_name'
+  bronowski:
+    status: false
+    updated: 00-00-0000
+    download_files:
+    - download_type: mail
+      download_file_name: bronowski_data.xls
+      download_params:
+        sender: bronek@bronowski.pl
+        subject: Odbiorca 71233712 Oferta towarowa
+    files:
+    - file_name: data
+      file_type: excel
+      header: null
+      mod_time: null
+      url: 'ftp://suppliers:zR3uB2aJ3m@138.201.56.185/bronowski/export.xls'
+      skip_rows: 4
+      use_cols: []
+      columns:
+  euroestcar:
+    status: false
+    updated: 00-00-0000
+    download_files:
+    - download_type: mail
+      download_file_name: euroestcar_data.xlsx
+      download_params:
+        sender: raporty@vanking.com.pl
+        subject: null
+    files:
+    - file_name: data
+      mod_time: null
+      url: 'ftp://suppliers:zR3uB2aJ3m@138.201.56.185/euroestcar/export.xlsx'
+      file_type: excel
+  vanking:
+    status: false
+    updated: 00-00-0000
+    download_files:
+    - download_file_name: vanking_data.xlsx
+      download_type: mail
+      download_params:
+        sender: margareta.peptenaru@euroestcar.ro
+        subject: STOCK EEC
+    files:
+    - file_name: data
+      mod_time: null
+      url: ftp://suppliers:zR3uB2aJ3m@138.201.56.185/vanking/export.xlsx
+      file_type: excel
+      skip_rows: 1
+      use_cols: [0, 1, 2, 3, 4]
+      columns:
+        0: part_number
+        1: part_name
+        2: manufacturer
+        3: quantity
+        4: price
+  direct_24:
+    status: false
+    updated: 00-00-0000
+    download_files:
+    - download_file_name: direct_24.zip
+      download_type: url
+      download_params:
+        url: 'https://direct24.com.ua/exporter/files/d0553d0b7205c12be91588a0d134574cc364771c'
+    files:
+    - file_name: data
+      mod_time: null
+      url: 'ftp://suppliers:zR3uB2aJ3m@138.201.56.185/direct_24/export.zip'
+      file_type: csv
+      sep: ;
+      skip_rows: 2

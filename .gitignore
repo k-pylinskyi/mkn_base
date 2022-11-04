@@ -159,6 +159,7 @@ Database/
 # Storage
 TemporaryStorage/
 node_modules
+api/Utils/backup/
 
 api/Services/__pycache__
 .idea
@@ -169,3 +170,4 @@ api/Services/__pycache__
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .DS_Store
+testing_dfs/

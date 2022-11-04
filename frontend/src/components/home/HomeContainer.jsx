@@ -1,13 +1,16 @@
-import {StyledHomeContainer} from "./styledHome";
+import {
+  StyledTable,
+  StyledTableBody,
+  StyledTableCol,
+  StyledTableHead,
+  StyledTableRow,
+  StyledTableHeadCol,
+} from "../styles/styledTable";
 
 const HomeContainer = () => {
-    return(
-        <StyledHomeContainer>
-            <h1>
-                Home
-            </h1>
-        </StyledHomeContainer>
-    )
-}
+  return (
+    <h1>Home page</h1>
+  );
+};
 
 export default HomeContainer;

@@ -1,9 +1,11 @@
-from api.SupplierScripts import *
+from SupplierScripts import *
 
 
 def motogama_to_db():
-    print('Pushing Motogama to Data Base')
-    DataFrameReader.dataframe_to_db('motogama', get_motogama_data())
+    table_name = 'motogama'
+    print('Pushing {} to Data Base'.format(table_name))
+    DataFrameReader.dataframe_to_db(table_name, get_motogama_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_motogama_data():
@@ -27,17 +29,15 @@ def get_motogama_data():
     return sqldf(query)
 
 
-
 class Motogama:
     def __init__(self):
         self.data_columns = {
             0: 'supplier_part_number', 1: 'part_name', 2: 'qty',
             3: 'price', 5: 'part_number', 7: 'manufacturer', 8: 'pack'
         }
-        self.data = pd.read_csv(
-            '..//TemporaryStorage//MOTOGAMA//files//motogama_data.csv',
-            sep=';',
-            header=None, encoding_errors='ignore', usecols=[0, 1, 2, 3, 5, 7, 8])
+        data_url = "ftp://motogama:hH1gJ0zK2t@138.201.56.185/19134_01.csv"
+        self.data = pd.read_csv(data_url, sep=';', header=None,
+                                encoding_errors='ignore', usecols=[0, 1, 2, 3, 5, 7, 8])
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)

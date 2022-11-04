@@ -1,5 +1,5 @@
 import pandas as pd
 import os
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from Services.Processors.DataFrameReader import *
 from pandasql import sqldf
 
