@@ -39,6 +39,7 @@ def get_file():
 
 class EuroEstCar:
     def __init__(self):
+        get_file()
         self.data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/euro_est_car/export.xlsx"
 
         self.data_columns = {
@@ -53,7 +54,6 @@ class EuroEstCar:
         self.sheet_names = self.xl.sheet_names
 
     def process(self):
-        get_file()
         dfs = []
         for name in self.sheet_names:
             df = pd.read_excel(self.data_url, name, skiprows=1, header=None)

@@ -1,5 +1,6 @@
 import ftplib
 import os.path
+import datetime
 
 
 class FtpConnection:
@@ -25,3 +26,12 @@ class FtpConnection:
             self.ftp.retrbinary("RETR " + remote_file, f.write)
         self.ftp.quit()
         print(f'\nFile downloaded ftp://{self.host}/{remote_file} ... to {local_file}\n')
+
+    def upload_backup(self, local_file):
+        today = datetime.datetime.today().strftime('%Y_%m_%d')
+        if 'db_backup' not in self.ftp.nlst():
+            self.ftp.mkd('db_backup')
+        with open(local_file, 'rb') as f:
+            self.ftp.storbinary(f'STOR /db_backup/db_backup_{today}', f)
+        self.ftp.quit()
+        print(f'Backup Uploaded to ftp://{self.host}/db_backup/ ...')

@@ -20,8 +20,10 @@ from SupplierScripts.Vanking.Vanking import vanking_to_db
 from SupplierScripts.EuroEstCar.EuroEstCar import *
 from Services.Loader.LoadController import LoadController
 from Services.load_config import Config
+from Services.Db.DbService import DbService
 
 if __name__ == '__main__':
+    DbService.get_db_backup()
     euroestcar_to_db()
     autoland_to_db()
     vanking_to_db()
