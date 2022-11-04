@@ -38,7 +38,7 @@ class DbService:
                                      ' FROM {} '
                                      ' WHERE quantity > 0 AND price > 0'.format(table_name),
                                      connection)
-        table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
+        table_df = table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
         table_df.to_csv(out_file_path, sep=';', index=False)
 
         return out_file_path
@@ -66,7 +66,7 @@ class DbService:
                                          ' ROUND(price, 2) as price '
                                          ' FROM {} '.format(supplier, table[0]),
                                          connection)
-            table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
+            table_df = table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
             dfs.append(table_df)
         out = pd.concat(dfs, ignore_index=False)
         today = datetime.datetime.today().strftime('%Y_%m_%d')
