@@ -30,11 +30,13 @@ class DbService:
         if not os.path.exists(path):
             os.makedirs(path)
 
-        table_df = pd.read_sql_query('SELECT manufacturer, supplier_part_number, '
-                                     'part_number, CAST(quantity AS INTEGER) as quantity, '
-                                     'ROUND(price, 2) as price FROM {} '
-                                     'WHERE quantity > 0 AND price > 0'.format(table_name),
+        table_df = pd.read_sql_query(' SELECT manufacturer, supplier_part_number, '
+                                     ' part_number, CAST(quantity AS INTEGER) as quantity, '
+                                     ' ROUND(price, 2) as price '
+                                     ' FROM {} '
+                                     ' WHERE quantity > 0 AND price > 0'.format(table_name),
                                      connection)
+        table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
         table_df.to_csv(out_file_path, sep=';', index=False)
 
         return out_file_path

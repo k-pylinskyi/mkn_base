@@ -12,7 +12,7 @@ class SqlGenerator:
         sql_select['quantity'] = f'REPLACE(REPLACE({sql_select["quantity"]}, " ", ""), ">", "")'
 
         query = f'SELECT {", ".join(f"{new_line}{value} AS {key}" for key, value in sql_select.items())}' \
-                f'{new_line}FROM{new_line}dataframe{new_line}'
+                f'{new_line} FROM {new_line} dataframe {new_line}'
 
         if 'where' in sql_params:
             sql_where = sql_params['where']

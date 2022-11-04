@@ -25,7 +25,7 @@ def supplier_details(supplier):
         pass
     else:
         config = Config()
-        return config.get_supplier_by_name(supplier)
+        return config.get_supplier_params(supplier)
 
 @app.route('/suppliers', methods=['POST', 'GET'])
 def get_suppliers():

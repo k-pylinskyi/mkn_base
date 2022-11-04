@@ -5,6 +5,8 @@ from Services.Loader.UrlLoader import UrlLoader
 
 class LoadController:
     def __init__(self, ftp_auth, email_auth):
+        self.ftp_auth = ftp_auth
+        self.email_auth = email_auth
         mail_box = email_auth['address']
         mail_pass = email_auth['app_password']
         self.ftp_host = ftp_auth['host']
@@ -26,7 +28,7 @@ class LoadController:
         ftp_con.upload_file(save_path, 'suppliers', supplier)
 
     def download(self, download_type, supplier, file_name, params):
-        loader = LoadController()
+        loader = LoadController(self.ftp_auth, self.email_auth)
         if download_type == 'mail':
             loader.download_from_mail(supplier, file_name, sender=params['sender'], subject=params['subject'])
         elif download_type == 'url':

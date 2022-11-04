@@ -65,6 +65,9 @@ class Hart:
 
         price_qty_tmp_path = 'SupplierScripts/Hart/price_qty_data.zip'
 
+        if os.path.exists(price_qty_tmp_path):
+            os.remove(price_qty_tmp_path)
+
         with closing(urllib.request.urlopen(price_qty_url)) as r:
             with open(price_qty_tmp_path, 'wb') as f:
                 shutil.copyfileobj(r, f)
@@ -77,9 +80,6 @@ class Hart:
         self.prices = pd.read_csv(price_qty_zip.open('96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
         self.quantity = pd.read_csv(price_qty_zip.open('96285_Quantity.csv'), sep=';', header=None, decimal=',')
         self.weight = pd.read_csv(weight_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
-
-        if os.path.exists(price_qty_tmp_path):
-            os.remove(price_qty_tmp_path)
 
         self.quantity_columns = {0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
         self.cn_columns = {0: 'hart_part_number', 1: 'tariff_code'}

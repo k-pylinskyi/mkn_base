@@ -1,7 +1,4 @@
 import pandas as pd
-from Services.Generators.ParamsBuilder import ParamsBuilder
-from Services.Generators.SqlGenerator import SqlGenerator
-from Services.load_config import Config
 
 
 class DataFrameGenerator:
@@ -45,7 +42,7 @@ class DataFrameGenerator:
                 low_memory=params['low_memory'],
                 encoding_errors=params['encoding_errors'],
                 encoding=params['encoding'],
-                engine=params['engine'],
+                #engine=params['engine'],
                 on_bad_lines=params['on_bad_lines'],
                 usecols=params['use_cols'],
             )
