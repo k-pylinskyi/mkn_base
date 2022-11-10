@@ -1,42 +1,63 @@
+from api.Services.Processors.DataFrameReader import *
+from api.Services.load_config import Config
+from api.Services.Loader.LoadController import LoadController
 import pandas as pd
 from pandasql import sqldf
 
-data_url = "ftp://plichta:zL1lS3cH6o@138.201.56.185/plichta_data.csv"
-dict_url = "ftp://plichta:zL1lS3cH6o@138.201.56.185/plichta_dict.csv"
+from api.Services.Processors.DataFrameReader import DataFrameReader
 
-data = pd.read_csv(data_url, sep='\t', header=None, skiprows=1, encoding_errors='ignore', low_memory=False, usecols=[0, 1, 8], decimal=',')
-dict = pd.read_csv(dict_url, sep=';', header=None, skiprows=1, encoding_errors='ignore', low_memory=False, usecols=[0])
-data_columns = {
-    0: 'part_number',
-    1: 'part_name',
-    8: 'price'
-}
 
-dict_columns = {
-    0: 'part_number'
-}
+def plichta_to_db():
+    table_name = 'plichta'
+    print('Pushing {} to Data Base'.format(table_name))
+    data = get_plichta_data()
+    print(data)
+    DataFrameReader.dataframe_to_db(table_name, data  )
 
-data.rename(columns=data_columns, inplace=True)
-dict.rename(columns=dict_columns, inplace=True)
 
-query = '''
-    SELECT
-        49 as supplier_id,
-        "VAG" as manufacturer,
-        data.part_name,
-        data.part_number as supplier_part_number,
-        data.part_number,
-        data.price,
-        999 as quantity
-    FROM
-        data
-    INNER JOIN
-        dict
-    ON 
-        data.part_number = dict.part_number
-    WHERE
-        data.price is not null
+def get_plichta_data():
+    plichta = Plichta()
+    out, dict = plichta.process()
 
-'''
+    query = '''
+        SELECT
+            'VAG' as manufacturer,
+            out.supplier_part_number as supplier_part_number,
+            dict.part_number as part_number,
+            CAST(quantity AS INTEGER) as quantity,
+            ROUND(out.price, 2) as price
+            FROM out 
+        INNER JOIN dict 
+            ON out.supplier_part_number = dict.part_number'''
 
-sqldf(query).to_csv('D:\Work\export.csv', sep=';')
+    return sqldf(query)
+
+
+class Plichta:
+    def __init__(self):
+        self.data_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/plichta/plichta_data.xlsx'
+        self.dict_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/plichta/plichta_dict.csv'
+
+        self.data_columns = {
+                0: 'supplier_part_number',
+                1: 'part_name',
+                2: 'price_netto',
+                3: 'group',
+                4: 'cn',
+                5: 'quantity',
+                6: 'price'
+            }
+
+        self.xl = pd.ExcelFile(self.data_url)
+        self.sheet_names = self.xl.sheet_names
+
+    def process(self):
+        dfs = []
+        for name in self.sheet_names:
+            df = pd.read_excel(self.data_url, name, skiprows=1, header=None)
+            df.rename(columns=self.data_columns, inplace=True)
+            dfs.append(df)
+        out = pd.concat(dfs, ignore_index=False)
+        dic = pd.read_csv(self.dict_url, sep=';', usecols=[0])
+        dic.columns = ['part_number']
+        return out, dic
