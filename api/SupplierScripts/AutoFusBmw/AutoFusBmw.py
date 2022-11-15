@@ -14,21 +14,23 @@ def get_autofusbmw_data():
     autofusbmw = AutoFusBmw()
     dataframes = autofusbmw.process()
     data = dataframes[0]
-    dict = dataframes[1]
+    discount = dataframes[1]
 
     query = '''
 
         SELECT 
+            "BMW" AS manufacturer,
             data.supplier_part_number,
-            data.part_number,
+            data.supplier_part_number AS part_number,
             data.discount_code,
-            ROUND(data.price*(1-(dict.discount/100.0)), 2) AS price
+            ROUND(data.price*(1-(discount.discount/100)), 2) AS price,
+            999 AS quantity
         FROM 
             data
         INNER JOIN
-            dict
+            discount
         ON 
-            data.discount_code = dict.discount_code
+            data.discount_code = discount.discount_code
     '''
     return sqldf(query)
 
@@ -36,30 +38,30 @@ def get_autofusbmw_data():
 class AutoFusBmw:
 
     def __init__(self):
-        data_url = "ftp://138.201.56.185/suppliers/autofus/bmw/auto_fus_bmw_data.xlsx"
-        dict_url = "ftp://138.201.56.185/suppliers/autofus/bmw/autofus_bmw_rabat.csv"
+        data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/autofus/bmw/auto_fus_bmw_data.xlsx"
+        discount_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/autofus/bmw/autofus_bmw_rabat.csv"
 
         self.data_columns = {
             0: 'supplier_part_number',
-            1: 'part_number',
-            2: 'price',
-            3: 'discount_code'
+            1: 'price',
+            2: 'discount_code'
         }
 
-        self.dict_columns = {
-            1: 'discount_code',
-            2: 'discount'
+        self.discount_columns = {
+            0: 'discount_code',
+            1: 'discount'
         }
 
-        self.data = pd.read_csv(data_url, sep=';', encoding_errors='ignore', header=None,
-                                low_memory=False, usecols=[0, 1, 2, 3])
-
-        self.dict = pd.read_csv(dict_url, sep=';', header=None, skiprows=1, usecols=[1, 2])
+        self.data = pd.read_excel(data_url, header=None)
+        self.discount = pd.read_csv(discount_url, sep='\t', header=None, skiprows=1, decimal=',')
 
 
     def process(self):
-        self.data.rename(columns=self.data_columns, inplace=True)
-        self.dict.rename(columns=self.dict_columns, inplace=True)
 
-        return [self.data, self.dict]
+        self.data.rename(columns=self.data_columns, inplace=True)
+        self.discount.rename(columns=self.discount_columns, inplace=True)
+
+        print(self.discount)
+
+        return [self.data, self.discount]
 
