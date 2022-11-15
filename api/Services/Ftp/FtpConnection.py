@@ -32,6 +32,6 @@ class FtpConnection:
         if 'db_backup' not in self.ftp.nlst():
             self.ftp.mkd('db_backup')
         with open(local_file, 'rb') as f:
-            self.ftp.storbinary(f'STOR /db_backup/db_backup_{today}', f)
+            self.ftp.storbinary(f'STOR /db_backup/db_backup_{today}.zip', f)
         self.ftp.quit()
         print(f'Backup Uploaded to ftp://{self.host}/db_backup/ ...')
