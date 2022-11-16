@@ -23,6 +23,7 @@ def get_autofusbmw_data():
             data.supplier_part_number,
             data.supplier_part_number AS part_number,
             data.discount_code,
+            discount.discount,
             ROUND(data.price*(1-(discount.discount/100)), 2) AS price,
             999 AS quantity
         FROM 
