@@ -22,8 +22,10 @@ from SupplierScripts.EuroEstCar.EuroEstCar import *
 from Services.Loader.LoadController import LoadController
 from Services.load_config import Config
 from Services.Db.DbService import DbService
+from SupplierScripts.Zdunek.Zdunek import *
 
 if __name__ == '__main__':
+    zdunek_to_db()
     autofusbmw_to_db()
     euroestcar_to_db()
     autoland_to_db()

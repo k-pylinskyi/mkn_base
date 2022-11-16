@@ -4,7 +4,7 @@ from pandasql import sqldf
 
 
 def autofusbmw_to_db():
-    table_name = 'autofusbmw'
+    table_name = 'auto_fus_bmw'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db(table_name, get_autofusbmw_data())
     DataFrameReader.supplier_to_ftp(table_name)
@@ -19,13 +19,14 @@ def get_autofusbmw_data():
     query = '''
 
         SELECT 
+            999 AS quantity,
             "BMW" AS manufacturer,
             data.supplier_part_number,
             data.supplier_part_number AS part_number,
             data.discount_code,
             discount.discount,
-            ROUND(data.price*(1-(discount.discount/100)), 2) AS price,
-            999 AS quantity
+            ROUND(data.price*(1-(discount.discount/100)), 2) AS price
+            
         FROM 
             data
         INNER JOIN
@@ -54,15 +55,13 @@ class AutoFusBmw:
         }
 
         self.data = pd.read_excel(data_url, header=None)
-        self.discount = pd.read_csv(discount_url, sep='\t', header=None, skiprows=1, decimal=',')
+        self.discount = pd.read_csv(discount_url, sep='\t', header=None, decimal=',')
 
 
     def process(self):
 
         self.data.rename(columns=self.data_columns, inplace=True)
         self.discount.rename(columns=self.discount_columns, inplace=True)
-
-        print(self.discount)
 
         return [self.data, self.discount]
 
