@@ -16,6 +16,7 @@ def get_intervito_data():
         27 as supplier_id,
         data.manufacturer,
         data.supplier_part_number,
+        1 AS delivery,
         IFNULL(data.part_number, RTRIM(data.supplier_part_number, LENGTH(data.supplier_part_number) - INSTR(data.supplier_part_number," "))) AS part_number,
         REPLACE(data.price, ',', '.') as price,
         data.qty as quantity,

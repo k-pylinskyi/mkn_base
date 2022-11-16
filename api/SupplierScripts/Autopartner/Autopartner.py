@@ -23,6 +23,7 @@ def get_autopartner_data():
         data.part_number, 
         data.part_name, 
         data.price,
+        1 AS delivery,
         ROUND(data.weight, 2) AS weight,
         REPLACE(data.qty1 + data.qty2 + data.qty3, '.0', '') AS quantity
         FROM data

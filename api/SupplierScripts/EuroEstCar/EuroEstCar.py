@@ -20,6 +20,7 @@ def get_euroestcar_data():
             manufacturer,
             supplier_part_number,
             supplier_part_number as part_number,
+            8 AS delivery,
             CAST(REPLACE(quantity, '>', '') AS INTEGER) as quantity,
             price
         FROM

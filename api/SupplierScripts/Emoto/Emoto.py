@@ -22,7 +22,8 @@ def get_emoto_data():
             dict.brand AS manufacturer,
             part_numbers.supplier_part_number,
             data.part_number,
-            data.part_name,  
+            data.part_name,
+            1 AS delivery,  
             data.price, 
             CAST(data.qty AS INTEGER) as quantity
         FROM 

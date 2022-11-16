@@ -20,6 +20,7 @@ def get_gordon_data():
             data.manufacturer,
             dict.supplier_part_number,
             dict.part_number,
+            1 AS delivery,
             data.price,
             CAST(data.qty1 + data.qty2 AS INTEGER) as quantity,
             data.tecdoc_number_1,

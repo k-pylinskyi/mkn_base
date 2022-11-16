@@ -21,6 +21,7 @@ def get_motoprofil_data():
             part_number,
             IIF(deposit is not null, price + deposit, price) as price,
             qty as quantity,
+            1 AS delivery,
             ean_number,
             weight
         FROM

@@ -23,6 +23,7 @@ def get_bronowski_data():
             dict.supplier_part_number,
             data.part_name,
             dict.part_number,
+            1 AS delivery,
             data.price,
             CAST(data.quantity AS INTEGER) as quantity
         FROM

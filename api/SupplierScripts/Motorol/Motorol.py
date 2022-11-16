@@ -20,6 +20,7 @@ def get_motorol_data():
         data.supplier_part_number,
         data.part_number,
         data.part_name,
+        1 AS delivery,
         IIF(dict.deposit is not null, data.price + dict.deposit, data.price) as price,
         data.qty as quantity
         FROM data

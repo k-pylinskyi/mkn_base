@@ -20,6 +20,7 @@ def get_krisauto_data():
             data.manufacturer,
             data.supplier_part_number,
             dict.part_number,
+            1 AS delivery,
             data.price,
             CAST(data.qty_1 + data.qty_2 + data.qty_3 AS INTEGER) as quantity
         FROM

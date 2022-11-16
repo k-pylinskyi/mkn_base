@@ -23,6 +23,7 @@ def get_zdunek_data():
             data.supplier_part_number,
             data.supplier_part_number AS part_number,
             data.comment,
+            7 AS delivery,
             data.price,
             ROUND (data.price,2)
         FROM

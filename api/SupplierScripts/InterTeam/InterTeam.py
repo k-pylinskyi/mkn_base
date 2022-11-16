@@ -18,6 +18,7 @@ def get_inter_team_data():
             manufacturer,
             part_number as supplier_part_number,
             part_number,
+            1 AS delivery,
             price + deposit as price,
             qty_1 + qty_2 as quantity
         FROM 

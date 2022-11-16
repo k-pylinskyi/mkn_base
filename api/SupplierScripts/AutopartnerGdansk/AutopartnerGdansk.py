@@ -20,6 +20,7 @@ def get_autopartner_gdansk_data():
             data.supplier_part_number,
             dict.part_number, 
             data.part_name, 
+            1 AS delivery,
             data.price,
             CAST(REPLACE(REPLACE(data.qty, '-', '0'), '> ', '') AS INTEGER) AS quantity
         FROM 
