@@ -23,6 +23,8 @@ from Services.load_config import Config
 from Services.Db.DbService import DbService
 
 if __name__ == '__main__':
+    #DbService.get_db_backup()
+
     euroestcar_to_db()
     autoland_to_db()
     vanking_to_db()
@@ -43,4 +45,3 @@ if __name__ == '__main__':
     motorol_to_db()
     motoprofil_to_db()
     krisauto_to_db()
-    DbService.get_db_backup()
