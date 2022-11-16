@@ -43,7 +43,7 @@ class Elit:
         }
 
         self.data = pd.read_csv(data_url, header=None, usecols=[0, 1, 2, 3, 5, 6, 7, 8, 9, 13, 14, 17], skiprows=1,
-                                sep=';', encoding_errors='ignore', engine='python', error_bad_lines=False)
+                                sep=';', encoding_errors='ignore', engine='python', on_bad_lines=False)
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
