@@ -23,7 +23,8 @@ def get_zdunek_data():
             data.supplier_part_number,
             data.supplier_part_number AS part_number,
             data.comment,
-            data.price
+            data.price,
+            ROUND (data.price,2)
         FROM
             data
     
@@ -43,7 +44,7 @@ class Zdunek :
             4: 'price'
         }
 
-        self.data = pd.read_excel(data_url, header=None)
+        self.data = pd.read_excel(data_url, header=None, skiprows=1)
 
 
     def process(self):
