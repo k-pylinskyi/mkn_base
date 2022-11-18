@@ -23,6 +23,7 @@ def get_hart_data():
     prices = dataframes[4]
     quantity = dataframes[5]
     weight = dataframes[6]
+    stock = dataframes[7]
 
     query = '''
             SELECT DISTINCT
@@ -31,12 +32,12 @@ def get_hart_data():
                 data.hart_part_number as supplier_part_number, 
                 data.part_number,
                 data.part_name,
-                1 AS delivery, 
                 REPLACE(quantity.qty, '>', '') AS quantity, 
                 IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS price,
                 data.unit_measure,
                 weight.weight,
-                data.origin
+                data.origin,
+                stock.delivery
             FROM 
                 data 
             INNER JOIN prices 
@@ -47,8 +48,8 @@ def get_hart_data():
                 ON data.hart_part_number = deposit.hart_part_number
             INNER JOIN weight
                 ON data.hart_part_number = weight.hart_part_number
-            WHERE
-                quantity.warehouse in('V', 'S', '1') 
+            INNER JOIN stock
+                ON quantity.warehouse = stock.warehouse
             '''
 
     return sqldf(query)
@@ -63,8 +64,12 @@ class Hart:
         deposit_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kz.zip"
         price_qty_url = "ftp://hart:2Y1r7D0g@138.201.56.185/hart.zip"
         weight_url = "ftp://hart:2Y1r7D0g@138.201.56.185/96285_kth+wgh.zip"
+        stock_url = "ftp://hart:2Y1r7D0g@138.201.56.185/stock.txt"
 
-        price_qty_tmp_path = 'SupplierScripts/Hart/price_qty_data.zip'
+        price_qty_folder = '../TemporaryStorage/hart'
+        if not os.path.exists(price_qty_folder):
+            os.makedirs(price_qty_folder)
+        price_qty_tmp_path = os.path.join(price_qty_folder, 'price_qty_data.zip')
 
         if os.path.exists(price_qty_tmp_path):
             os.remove(price_qty_tmp_path)
@@ -81,6 +86,7 @@ class Hart:
         self.prices = pd.read_csv(price_qty_zip.open('96285_PriceList_PLN.csv'), sep=';', header=None, skiprows=1, decimal=',')
         self.quantity = pd.read_csv(price_qty_zip.open('96285_Quantity.csv'), sep=';', header=None, decimal=',')
         self.weight = pd.read_csv(weight_url, sep=';', header=None, skiprows=1, decimal=',', usecols=[0, 13], compression='zip')
+        self.stock = pd.read_csv(stock_url, sep=';', header=None, skiprows=1)
 
         self.quantity_columns = {0: 'hart_part_number', 1: 'qty', 2: 'warehouse'}
         self.cn_columns = {0: 'hart_part_number', 1: 'tariff_code'}
@@ -89,7 +95,7 @@ class Hart:
         self.weight_columns = {0: 'hart_part_number', 13: 'weight'}
         self.data_columns = {0: 'hart_part_number', 1: 'tecdoc_number', 2: 'manufacturer', 3: 'part_number', 4: 'part_name', 6: 'unit_measure', 11: 'ean_codes', 12: 'origin'}
         self.cross_columns = {0: 'hart_part_number', 4: 'hart_part_number_cross', 5: 'part_number_cross', 6: 'part_name_cross', 7: 'manufacturer_cross'}
-
+        self.stock_columns = {0: 'warehouse', 1: 'delivery'}
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
         self.cn.rename(columns=self.cn_columns, inplace=True)
@@ -98,5 +104,6 @@ class Hart:
         self.prices.rename(columns=self.prices_columns, inplace=True)
         self.quantity.rename(columns=self.quantity_columns, inplace=True)
         self.weight.rename(columns=self.weight_columns, inplace=True)
+        self.stock.rename(columns=self.stock_columns, inplace=True)
 
-        return [self.data, self.cn, self.cross, self.deposit, self.prices, self.quantity, self.weight]
+        return [self.data, self.cn, self.cross, self.deposit, self.prices, self.quantity, self.weight, self.stock]

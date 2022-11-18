@@ -1,9 +1,7 @@
 import os
-import patoolib
 import pandas as pd
-import datetime
 from Services.Db.DbContext import DbContext
-from Services.Ftp.FtpConnection import  FtpConnection
+
 
 class DbService:
     @staticmethod
@@ -29,18 +27,18 @@ class DbService:
         connection = context.db
         supplier_folder = table_name.upper()
         path = os.path.join('../TemporaryStorage', supplier_folder, 'export')
-        out_file_path = os.path.join(path, 'export.csv')
+        out_file_path = os.path.join(path, f'export.csv')
         if not os.path.exists(path):
             os.makedirs(path)
 
         table_df = pd.read_sql_query(' SELECT manufacturer, supplier_part_number, '
-                                     ' part_number, CAST(quantity AS INTEGER) as quantity, '
-                                     ' ROUND(price, 2) as price '
-                                     ' FROM {} '
-                                     ' WHERE quantity > 0 AND price > 0'.format(table_name),
-                                     connection)
-        table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
-        table_df.to_csv(out_file_path, sep=';', index=False)
+                                        ' part_number, CAST(quantity AS INTEGER) as quantity, '
+                                        ' ROUND(price, 2) as price, '
+                                        ' IFNULL(delivery, 404) AS delivery '
+                                        f' FROM {table_name} '
+                                        ' WHERE quantity > 0 AND price > 0',
+                                         connection)
+        table_df.to_csv(out_file_path , sep=';', index=False)
 
         return out_file_path
 
@@ -64,10 +62,10 @@ class DbService:
             table_df = pd.read_sql_query(' SELECT "{}" as supplier, ' 
                                          ' manufacturer, supplier_part_number, '
                                          ' part_number, CAST(quantity AS INTEGER) as quantity, '
-                                         ' ROUND(price, 2) as price '
+                                         ' ROUND(price, 2) as price, '
+                                         ' delivery'
                                          ' FROM {} '.format(supplier, table[0]),
                                          connection)
-            table_df.groupby(['manufacturer', 'supplier_part_number', 'part_number', 'price']).sum()
             dfs.append(table_df)
         out = pd.concat(dfs, ignore_index=False)
         out.to_sql(f'db_full', connection, if_exists='replace', index=False)

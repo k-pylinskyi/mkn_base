@@ -19,14 +19,14 @@ def get_autofusbmw_data():
     query = '''
 
         SELECT 
-            999 AS quantity,
             "BMW" AS manufacturer,
             data.supplier_part_number,
             data.supplier_part_number AS part_number,
             data.discount_code,
             discount.discount,
-            ROUND(data.price*(1-(discount.discount/100)), 2) AS price
-            
+            ROUND(data.price*(1-(discount.discount/100)), 2) AS price,
+            999 AS quantity,
+            6 AS delivery     
         FROM 
             data
         INNER JOIN

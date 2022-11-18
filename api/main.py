@@ -25,6 +25,7 @@ from Services.Db.DbService import DbService
 from SupplierScripts.Zdunek.Zdunek import *
 
 if __name__ == '__main__':
+    hart_to_db()
     zdunek_to_db()
     autofusbmw_to_db()
     euroestcar_to_db()
@@ -39,7 +40,6 @@ if __name__ == '__main__':
     gordon_to_db()
     motorol_to_db()
     paketo_to_db()
-    hart_to_db()
     rodon_to_db()
     motogama_to_db()
     elit_to_db()
@@ -47,4 +47,4 @@ if __name__ == '__main__':
     motorol_to_db()
     motoprofil_to_db()
     krisauto_to_db()
-    DbService.get_db_backup()
+    #DbService.get_db_backup()

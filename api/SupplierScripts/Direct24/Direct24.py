@@ -1,3 +1,5 @@
+import os.path
+
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 import requests
@@ -41,7 +43,11 @@ def get_file():
 
         # An authorised request.
         resp = s.get('https://direct24.com.ua/exporter/files/531f50598d684d387912e8e974c5d78965212657/')
-        save_path = 'SupplierScripts/Direct24/direct.zip'
+        save_folder = '../TemporaryStorage/direct24'
+        if not os.path.exists(save_folder):
+            os.makedirs(save_folder)
+        save_path = os.path.join(save_folder, 'direct24.zip')
+
         with open(save_path, 'wb') as f:
             f.write(resp.content)
 
