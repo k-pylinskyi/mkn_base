@@ -23,8 +23,10 @@ from Services.Loader.LoadController import LoadController
 from Services.load_config import Config
 from Services.Db.DbService import DbService
 from SupplierScripts.Zdunek.Zdunek import *
+from SupplierScripts.AutoEuro.AutoEuro import *
 
 if __name__ == '__main__':
+    autoeuro_to_db()
     hart_to_db()
     zdunek_to_db()
     autofusbmw_to_db()

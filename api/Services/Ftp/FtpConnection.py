@@ -16,9 +16,9 @@ class FtpConnection:
         if remote_sub_folder not in self.ftp.nlst():
             self.ftp.mkd(remote_sub_folder)
         with open(local_file, 'rb') as f:
-            self.ftp.storbinary(f'STOR /{remote_folder}/{remote_sub_folder}/{local_file}', f)
+            self.ftp.storbinary(f'STOR /{remote_folder}/{remote_sub_folder}/export{extension}', f)
         self.ftp.quit()
-        print(f'File Uploaded to ftp://{self.host}/{remote_folder}/{remote_sub_folder}/{local_file} ...')
+        print(f'File Uploaded to ftp://{self.host}/{remote_folder}/{remote_sub_folder}/export{extension} ...')
 
     def download_file(self, remote_file, local_file):
         print('Downloading file from : {}\n'.format(local_file))
