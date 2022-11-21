@@ -5,6 +5,7 @@ from SupplierScripts.Autopartner.Autopartner import *
 from SupplierScripts.AutopartnerGdansk.AutopartnerGdansk import *
 from SupplierScripts.Emoto.Emoto import *
 from SupplierScripts.Gordon.Gordon import *
+from SupplierScripts.InterCars.InterCars import *
 from SupplierScripts.Motorol.Motorol import *
 from SupplierScripts.Paketo.Paketo import *
 from SupplierScripts.Rodon.Rodon import *
@@ -26,10 +27,11 @@ from SupplierScripts.Zdunek.Zdunek import *
 from SupplierScripts.AutoEuro.AutoEuro import *
 
 if __name__ == '__main__':
+    #intercars_to_db()
+    autofusbmw_to_db()
     autoeuro_to_db()
     hart_to_db()
     zdunek_to_db()
-    autofusbmw_to_db()
     euroestcar_to_db()
     autoland_to_db()
     vanking_to_db()
