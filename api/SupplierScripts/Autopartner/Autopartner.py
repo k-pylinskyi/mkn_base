@@ -1,5 +1,3 @@
-import os
-
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
@@ -13,8 +11,8 @@ def autopartner_to_db():
 
 def get_autopartner_data():
     autopartner = Autopartner()
-    dataframes = autopartner.process()
-    data = dataframes
+    data = autopartner.process()
+
     query = '''
         SELECT 
         6 as supplier_id,
@@ -23,25 +21,54 @@ def get_autopartner_data():
         data.part_number, 
         data.part_name, 
         data.price,
-        1 AS delivery,
+        data.delivery,
         ROUND(data.weight, 2) AS weight,
-        REPLACE(data.qty1 + data.qty2 + data.qty3, '.0', '') AS quantity
+        REPLACE(data.qty1 + data.qty2 + data.qty3, '.0', '') AS quantity,
+        data.filia
         FROM data
         WHERE quantity NOT LIKE '0'
     '''
+
+    # dat = sqldf(query)
+    # quer = '''SELECT dat.filia, COUNT(*)
+    #                FROM dat
+    #                GROUP BY dat.filia;'''
+    #
+    # print(sqldf(quer))
     return sqldf(query)
 
 
 class Autopartner:
     def __init__(self):
-        data = 'ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv'
+        self.data_url = 'ftp://3036856:0cL4X5@ftp.autopartner.dev/VIP_PORTAL_3036856_File_2.csv'
+        self.delivery_data_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/autopartner/Auto ' \
+                                 'partner_magazyny.txt '
         self.data_columns = {0: 'part_number', 1: 'part_name', 2: 'supplier_part_number', 3: 'manufacturer', 4: 'price',
-                             6: 'currency', 7: 'weight', 9: 'bar_code', 10: 'supplier_part_number', 11: 'part_description',
-                             12: 'qty1', 15: 'qty2', 16: 'qty3', 17: 'manufacturer_code'}
-
-        self.data = pd.read_csv(data, encoding_errors='ignore', sep=';', error_bad_lines=False, header=None, low_memory=False)
+                             6: 'currency', 7: 'weight', 9: 'bar_code', 10: 'supplier_part_number',
+                             11: 'part_description',
+                             12: 'qty1', 13: 'filia', 15: 'qty2', 16: 'qty3', 17: 'manufacturer_code'}
 
     def process(self):
-        self.data.drop(self.data.columns[[5, 8, 13, 14]], axis=1, inplace=True)
-        self.data.rename(columns=self.data_columns, inplace=True)
-        return self.data
+        data = pd.read_csv(self.data_url, encoding_errors='ignore', sep=';', on_bad_lines='skip', header=None,
+                           low_memory=False)
+
+        delivery = pd.read_csv(self.delivery_data_url, encoding_errors='ignore', sep=';', on_bad_lines='skip',
+                               header=None,
+                               low_memory=False)
+
+        delivery = delivery.to_dict(orient='list')
+        print(delivery)
+
+        data.drop(data.columns[[5, 8, 14]], axis=1, inplace=True)
+        data.rename(columns=self.data_columns, inplace=True)
+        data['delivery'] = pd.Series(dtype='int')
+
+        for index, row in data.iterrows():
+            if row['filia'] in delivery[0]:
+                val = delivery[1][delivery[0].index(row['filia'])]
+                data.at[index, 'delivery'] = val
+            r = data.at[index, 'delivery']
+            print(f'delivery  {r}')
+
+        print(data)
+        return data
