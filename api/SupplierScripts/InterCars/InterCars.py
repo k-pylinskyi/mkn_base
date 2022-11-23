@@ -1,6 +1,9 @@
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
+from Services.Loader.APILoader import *
+import datetime
+import os
 
 
 def intercars_to_db():
@@ -11,91 +14,128 @@ def intercars_to_db():
 
 
 def get_intercars_data():
+    print('querying')
     intercars = InterCars()
     dataframes = intercars.process()
     data = dataframes[0]
-    stock = dataframes[1]
-    print(stock)
-    query_stock = '''
-            DELETE FROM stock
-                WHERE stock.ind 
-                LIKE '%CHRYSLER%'
-                OR '%FIAT%'
-                OR '%FORD%'
-                OR '%FORD TRUCKS%'
-                OR '%HONDA%'
-                OR '%HYUNDAI%'
-                OR '%KIA%'
-                OR '%MAZDA%'
-                OR '%MERCEDES%'
-                OR '%MITSUBISHI%'
-                OR '%NISSAN%'
-                OR '%OE CLAAS%'
-                OR '%OE GERMANY%'
-                OR '%OE INDUSTRY%'
-                OR '%OE JCB%'
-                OR '%OE MAZ%'
-                OR '%OEM%'
-                OR '%OPEL%'
-                OR '%PEUGEOT%'
-                OR '%RENAULT%'
-                OR '%SEAT%'
-                OR '%SKODA%'
-                OR '%SUZUKI%'
-                OR '%TOYOTA%'
-                OR '%VOLVO%'
-                OR '%VOLVO PENTA%'
-                OR '%VW%'    
-            '''
-    stock = sqldf(query_stock)
-
-    print(stock)
+    price = dataframes[1]
+    stock = dataframes[2]
+    exclude = dataframes[3]
 
     query = '''
         SELECT
-            data.part_number,
-            stock.ind,
-            data.price
-        FROM
-            data
-        INNER JOIN 
-            stock
-        ON
-            data.part_number = stock.part_number
+            data.manufacturer,
+            data.product_number,
+            data.supplier_part_number,
+            data.supplier_part_number as part_number,
+            data.tec_doc,
+            data.tec_doc_prod,
+            data.article_number,
+            data.short_description,
+            data.description,
+            data.barcode,
+            data.weight,
+            data.length * data.width * data.height as volume,
+            data.custom_code,
+            stock.warehaous,
+            stock.quantity,
+            price.supplier_price,
+            price.deposit,
+            price.price,
+            1 AS delivery
+        FROM data
+        INNER JOIN price
+            ON data.supplier_part_number = price.supplier_part_number
+        INNER JOIN stock
+            ON data.supplier_part_number = stock.supplier_part_number
+        LEFT JOIN exclude
+            ON data.manufacturer = exclude.manufacturer
+        WHERE
+            exclude.manufacturer is null
+        
     '''
     return sqldf(query)
 
 
+def get_files():
+    today = datetime.datetime.today().strftime("%Y-%m-%d")
+    print(today)
+
+    print(f'https://data.webapi.intercars.eu/customer/99FIIU/Stock/Stock_{today}.csv.zip')
+    url_stock = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/Stock/Stock_{today}.csv.zip',
+                 'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
+    url_price = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/WholesalePricing/Wholesale_Pricing_{today}.csv.zip',
+                'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
+    url_data = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/ProductInformation/ProductInformation_{today}.csv.zip',
+                'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
+
+    downloadFileFromAPI(url_stock)
+    os.remove(f'../TemporaryStorage/intercars/Stock_{today}.csv.zip')
+    os.rename(f'../TemporaryStorage/intercars/Stock_{today}.csv', '../TemporaryStorage/intercars/Stock.csv')
+    downloadFileFromAPI(url_price)
+    os.remove(f'../TemporaryStorage/intercars/Wholesale_Pricing_{today}.csv.zip')
+    os.rename(f'../TemporaryStorage/intercars/Wholesale_Pricing_{today}.csv', '../TemporaryStorage/intercars/Wholesale_Pricing.csv')
+    downloadFileFromAPI(url_data)
+    os.remove(f'../TemporaryStorage/intercars/ProductInformation_{today}.csv.zip')
+    os.rename(f'../TemporaryStorage/intercars/ProductInformation_{today}.csv', '../TemporaryStorage/intercars/ProductInformation.csv')
+
+
 class InterCars:
     def __init__(self):
+        get_files()
 
-        data_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/intercars/data.csv'
-        stock_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/intercars/stock.csv'
+        data_path = '../TemporaryStorage/intercars/ProductInformation.csv'
+        price_path = '../TemporaryStorage/intercars/Wholesale_Pricing.csv'
+        stock_path = '../TemporaryStorage/intercars/Stock.csv'
+        exclude_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/intercars/intercars_oe.csv'
 
-        self.data_columns = {
-            0: 'part_number',
-            1: 'ind',
-            2: 'tec_doc',
-            3: 'tec_doc_prod',
+        self.price_columns = {
+            0: 'product_number',
+            1: 'supplier_part_number',
+            2: 'tec_doc_number',
+            3: 'tec_doc_manufacturer',
             4: 'supplier_price',
-            5: 'discounts',
+            5: 'deposit',
             6: 'price'
         }
 
-        self.stock_columns = {
-            0: 'part_number',
-            1: 'ind',
-            2: 'tec_doc_prod',
-            3: 'warehouse',
-            4: 'quantity'
+        self.data_columns = {
+            0: 'product_number',
+            1: 'supplier_part_number',
+            2: 'tec_doc',
+            3: 'tec_doc_prod',
+            4: 'article_number',
+            5: 'manufacturer',
+            6: 'short_description',
+            7: 'description',
+            8: 'barcode',
+            9: 'weight',
+            10: 'length',
+            11: 'width',
+            12: 'height',
+            13: 'custom_code'
         }
 
-        self.data = pd.read_csv(data_url, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
-        self.stock = pd.read_csv(stock_url, sep=';', encoding_errors='ignore', usecols=[0, 1, 4], header=None)
+        self.stock_columns = {
+            0: 'product_number',
+            1: 'supplier_part_number',
+            2: 'tec_doc',
+            3: 'tec_doc_prod',
+            4: 'warehaous',
+            5: 'quantity'
+        }
+
+        self.data = pd.read_csv(data_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
+        self.price = pd.read_csv(price_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
+        self.stock = pd.read_csv(stock_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
+        self.exclude = pd.read_csv(exclude_url, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
 
     def process(self):
+        print('processing')
         self.data.rename(columns=self.data_columns, inplace=True)
+        self.price.rename(columns=self.price_columns, inplace=True)
         self.stock.rename(columns=self.stock_columns, inplace=True)
+        self.exclude.columns = ['manufacturer']
 
-        return [self.data, self.stock]
+        return [self.data, self.price, self.stock, self.exclude]
 

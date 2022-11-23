@@ -27,7 +27,7 @@ from SupplierScripts.Zdunek.Zdunek import *
 from SupplierScripts.AutoEuro.AutoEuro import *
 
 if __name__ == '__main__':
-    #intercars_to_db()
+    intercars_to_db()
     autofusbmw_to_db()
     autoeuro_to_db()
     hart_to_db()
