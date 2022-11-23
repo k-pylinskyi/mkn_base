@@ -1,7 +1,7 @@
-from api.Services.Ftp.FtpConnection import FtpConnection
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
+from Services.Ftp.FtpConnection import FtpConnection
+from Services.Processors.DataFrameReader import *
+from Services.load_config import Config
+from Services.Loader.LoadController import LoadController
 
 import pandas as pd
 from pandasql import sqldf
