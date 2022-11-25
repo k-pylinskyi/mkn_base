@@ -1,3 +1,4 @@
+from SupplierScripts import *
 from ftplib import FTP
 from dateutil.parser import parse
 from urllib import request
@@ -7,7 +8,7 @@ from zipfile import ZipFile
 import pandas as pd
 from pandasql import sqldf
 
-from api.Services.Logger.wrapper import timeit
+
 
 
 def is_date(string, fuzzy=False):
@@ -23,32 +24,31 @@ def is_date(string, fuzzy=False):
         return False
 
 
-@timeit
+#@timeit
 def orap_to_db():
     table_name = 'orap'
     print('Pushing {} to Data Base'.format(table_name))
-    data = get_orap_data()
-    print("=================================")
-    print(data)
-    print("=================================")
-    # DataFrameReader.dataframe_to_db(table_name, data)
+    DataFrameReader.dataframe_to_db(table_name, get_orap_data())
+    DataFrameReader.supplier_to_ftp(table_name)
+
 
 
 def get_orap_data():
     orap = Orap()
-    data = orap.process()
-    print(data)
-    print("=================================")
-    print(data.columns)
+    dataframes = orap.process()
+    data = dataframes
+    #print(data)
+    #print("=================================")
+    #print(data.columns)
     query = '''
                 SELECT
-                    data.Brand as manufacturer,
-                    data.Code as supplier_part_number,
-                    data.Code as part_number,
-                    data.Quantity as quantity,
-                    ROUND(data.Price, 2) as price
-                    FROM data
-                    LIMIT 100;
+                    data.brand as manufacturer,
+                    data.code as supplier_part_number,
+                    data.code as part_number,
+                    data.quantity as quantity,
+                    ROUND(data.price, 2) as price
+                FROM
+                    data
                 '''
 
     return sqldf(query)
@@ -122,16 +122,16 @@ class Orap:
     def __init__(self):
         self.folder_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/orap/"
         self.data_columns = {
-            0: 'Brand',
-            1: 'Code',
-            2: 'Quantity',
-            3: 'Price',
-            4: 'Delivery_time',
-            5: 'Minimum_lot',
-            6: 'Deposit',
-            7: 'Name',
-            8: 'Weight',
-            9: 'OE'
+            0: 'brand',
+            1: 'code',
+            2: 'quantity',
+            3: 'price',
+            4: 'delivery_time',
+            5: 'minimum_lot',
+            6: 'deposit',
+            7: 'name',
+            8: 'weight',
+            9: 'oe'
         }
         self.file_names, self.files = get_files(self.folder_url, self.data_columns)
 
