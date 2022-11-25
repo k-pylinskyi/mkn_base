@@ -1,17 +1,13 @@
-import zipfile
 from ftplib import FTP
 from dateutil.parser import parse
 from urllib import request
 import io
 from zipfile import ZipFile
 
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
 import pandas as pd
 from pandasql import sqldf
 
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from api.Services.Logger.wrapper import timeit
 
 
 def is_date(string, fuzzy=False):
@@ -27,6 +23,7 @@ def is_date(string, fuzzy=False):
         return False
 
 
+@timeit
 def orap_to_db():
     table_name = 'orap'
     print('Pushing {} to Data Base'.format(table_name))
@@ -95,13 +92,13 @@ def get_files(folder_url, data_columns):
     for el in file_names.items():
         if 'oapnal' not in el[1] and "Porsche" not in el[1] and "Toyota" not in el[1]:
             df = pd.read_csv(f'{folder_url}{el[0]}', compression='zip', sep='\t',
-                                       encoding_errors='ignore',skiprows=1, header=None, low_memory=False,
-                                       on_bad_lines='skip', lineterminator='\n')
+                             encoding_errors='ignore', skiprows=1, header=None, low_memory=False,
+                             on_bad_lines='skip', lineterminator='\n')
             df.rename(columns=data_columns, inplace=True)
         elif "Porsche" in el[1] and "Toyota" in el[1]:
             df = pd.read_csv(f'{folder_url}{el[0]}', compression='zip', sep=';',
-                                       encoding_errors='ignore', skiprows=1, header=None, low_memory=False,
-                                       on_bad_lines='skip', lineterminator='\n')
+                             encoding_errors='ignore', skiprows=1, header=None, low_memory=False,
+                             on_bad_lines='skip', lineterminator='\n')
             df.rename(columns=data_columns, inplace=True)
         elif 'oapnal' in el[1]:
             FTPconn = request.urlopen(f'{folder_url}{el[0]}')
@@ -112,7 +109,8 @@ def get_files(folder_url, data_columns):
         files[el[1]] = df
     sum_rows = 0
     for el in files:
-        # print(f'{el} | rows: {len(files[el])}, columns: {len(files[el].columns)}  | col_num: {len(files[el].columns)}')
+        # print(f'{el} | rows: {len(files[el])}, columns: {len(files[el].columns)}'
+        # f'| col_num: {len(files[el].columns)}')
         # print(files[el].columns)
         sum_rows += len(files[el])
 

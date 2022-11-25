@@ -2,7 +2,7 @@ from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
 from Services.Loader.APILoader import *
-import datetime
+from datetime import datetime
 import os
 
 
@@ -58,26 +58,17 @@ def get_intercars_data():
 
 
 def get_files():
-    today = datetime.datetime.today().strftime("%Y-%m-%d")
-    print(today)
+    files = {'Stock': 'Stock', 'WholesalePricing': 'Wholesale_Pricing', 'ProductInformation': 'ProductInformation'}
 
-    print(f'https://data.webapi.intercars.eu/customer/99FIIU/Stock/Stock_{today}.csv.zip')
-    url_stock = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/Stock/Stock_{today}.csv.zip',
-                 'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
-    url_price = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/WholesalePricing/Wholesale_Pricing_{today}.csv.zip',
-                'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
-    url_data = {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/ProductInformation/ProductInformation_{today}.csv.zip',
-                'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
+    lastOverallDate = overallDateParser(files)
 
-    downloadFileFromAPI(url_stock)
-    os.remove(f'../TemporaryStorage/intercars/Stock_{today}.csv.zip')
-    os.rename(f'../TemporaryStorage/intercars/Stock_{today}.csv', '../TemporaryStorage/intercars/Stock.csv')
-    downloadFileFromAPI(url_price)
-    os.remove(f'../TemporaryStorage/intercars/Wholesale_Pricing_{today}.csv.zip')
-    os.rename(f'../TemporaryStorage/intercars/Wholesale_Pricing_{today}.csv', '../TemporaryStorage/intercars/Wholesale_Pricing.csv')
-    downloadFileFromAPI(url_data)
-    os.remove(f'../TemporaryStorage/intercars/ProductInformation_{today}.csv.zip')
-    os.rename(f'../TemporaryStorage/intercars/ProductInformation_{today}.csv', '../TemporaryStorage/intercars/ProductInformation.csv')
+    for key in files.keys():
+        remove_old_csv(f'../TemporaryStorage/intercars/{files[key]}.csv')
+        url_dict = {
+            'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/{key}/{files[key]}_{lastOverallDate}.csv.zip',
+            'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True}
+        downloadFileFromAPI(url_dict)
+        optimize_filenames(files, key, lastOverallDate)
 
 
 class InterCars:
@@ -125,10 +116,14 @@ class InterCars:
             5: 'quantity'
         }
 
-        self.data = pd.read_csv(data_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
-        self.price = pd.read_csv(price_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
-        self.stock = pd.read_csv(stock_path, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
-        self.exclude = pd.read_csv(exclude_url, sep=';', encoding_errors='ignore', header=None, low_memory=False, decimal=',')
+        self.data = pd.read_csv(data_path, sep=';', encoding_errors='ignore', header=None, low_memory=False,
+                                decimal=',')
+        self.price = pd.read_csv(price_path, sep=';', encoding_errors='ignore', header=None, low_memory=False,
+                                 decimal=',')
+        self.stock = pd.read_csv(stock_path, sep=';', encoding_errors='ignore', header=None, low_memory=False,
+                                 decimal=',')
+        self.exclude = pd.read_csv(exclude_url, sep=';', encoding_errors='ignore', header=None, low_memory=False,
+                                   decimal=',')
 
     def process(self):
         print('processing')
@@ -139,3 +134,30 @@ class InterCars:
 
         return [self.data, self.price, self.stock, self.exclude]
 
+
+def overallDateParser(files):
+    lastOverallDate = datetime.today().strftime("%Y-%m-%d")
+    filesDates = {}
+    for key in files.keys():
+        print(f'Files in directory /{key}')
+        dates = fileDate(url_dict=
+                 {'baseurl': f'https://data.webapi.intercars.eu/customer/99FIIU/{key}',
+                  'supplier_name': 'intercars', 'payload': ('FjAqKSFg7j6NwSf8', '99FIIU'), 'zip': True})
+        filesDates[key] = dates
+    keys = [filesDates[key].values() for key in filesDates]
+
+    intersection = set.intersection(*map(set, keys))
+    lastOverallDate = max([datetime.strptime(el, '%Y-%m-%d') for el in intersection])
+    print('Last intersection day: ' + lastOverallDate.strftime('%Y-%m-%d'))
+    return lastOverallDate.strftime('%Y-%m-%d')
+
+
+def remove_old_csv(path):
+    if os.path.exists(path):
+        os.remove(path)
+
+
+def optimize_filenames(dir, key, date_):
+    os.remove(f'../TemporaryStorage/intercars/{dir[key]}_{date_}.csv.zip')
+    os.rename(f'../TemporaryStorage/intercars/{dir[key]}_{date_}.csv',
+              f'../TemporaryStorage/intercars/{dir[key]}.csv')
