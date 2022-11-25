@@ -1,12 +1,11 @@
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
 import pandas as pd
 from pandasql import sqldf
 
 from api.Services.Processors.DataFrameReader import DataFrameReader
+from api.Services.Logger.wrapper import timeit
 
 
+@timeit
 def plichta_to_db():
     table_name = 'plichta'
     print('Pushing {} to Data Base'.format(table_name))

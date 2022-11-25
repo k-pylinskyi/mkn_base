@@ -1,14 +1,17 @@
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
+from api.Services.Logger.wrapper import timeit
 
 
+@timeit
 def autopartner_to_db():
     table_name = 'autopartner'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db(table_name, get_autopartner_data())
 
 
+@timeit
 def get_autopartner_data():
     autopartner = Autopartner()
     data = autopartner.process()
@@ -49,6 +52,7 @@ class Autopartner:
                              12: 'qty1', 13: 'filia', 15: 'qty2', 16: 'qty3', 17: 'manufacturer_code'}
 
     def process(self):
+
         data = pd.read_csv(self.data_url, encoding_errors='ignore', sep=';', on_bad_lines='skip', header=None,
                            low_memory=False)
 
@@ -57,18 +61,13 @@ class Autopartner:
                                low_memory=False)
 
         delivery = delivery.to_dict(orient='list')
-        print(delivery)
 
         data.drop(data.columns[[5, 8, 14]], axis=1, inplace=True)
         data.rename(columns=self.data_columns, inplace=True)
         data['delivery'] = pd.Series(dtype='int')
 
-        for index, row in data.iterrows():
-            if row['filia'] in delivery[0]:
-                val = delivery[1][delivery[0].index(row['filia'])]
-                data.at[index, 'delivery'] = val
-            r = data.at[index, 'delivery']
-            print(f'delivery  {r}')
-
-        print(data)
+        for i, row in enumerate(data.itertuples(), 1):
+            if row[12] in delivery[0]:
+                val = delivery[1][delivery[0].index(row[12])]
+                data.at[i, 'delivery'] = val
         return data
