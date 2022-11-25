@@ -39,7 +39,7 @@ def get_VoyagerGroup_data():
 class VoyagerGroup:
     def __init__(self):
         self.data_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/voyager_group/voyager_data.CSV'
-
+        self.day3_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/voyager_group/voyager_3_day.csv'
         self.data_columns = {
             0: 'date',
             1: 'supplier_part_number',
@@ -47,6 +47,17 @@ class VoyagerGroup:
             3: 'price',
             4: 'discount',
         }
+
+        self.day3_columns = {
+
+            0: 'supplier_part_number',
+            1: 'local',
+            2: 'part_name',
+            3: 'jednostka',
+            4: 'quantity',
+            5: 'price'
+        }
+        self.data = pd.read_csv
 
     def process(self):
         data = pd.read_csv(self.data_url, sep=';', header=None,
