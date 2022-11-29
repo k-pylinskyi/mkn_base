@@ -1,23 +1,24 @@
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
+from Services.Processors.DataFrameReader import *
+from Services.load_config import Config
+from Services.Loader.LoadController import LoadController
 import pandas as pd
 from pandasql import sqldf
 
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from Services.Processors.DataFrameReader import DataFrameReader
 
 
-def voyagerGroup_to_db():
+def VoyagerGroup_to_db():
     table_name = 'voyager_group'
     print('Pushing {} to Data Base'.format(table_name))
-    data = get_VoyagerGroup_data()
-    print(data)
-    DataFrameReader.dataframe_to_db(table_name, data)
+    DataFrameReader.dataframe_to_db(table_name, get_VoyagerGroup_data())
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_VoyagerGroup_data():
     voyagerGroup = VoyagerGroup()
-    data = voyagerGroup.process()
+    dataframes = voyagerGroup.process()
+    data = dataframes[0]
+    day3 = dataframes[1]
 
     query = '''
         SELECT
@@ -31,6 +32,17 @@ def get_VoyagerGroup_data():
             5 as delivery
         FROM
             data
+        UNION
+            SELECT
+                'MAZDA' as manufacturer,
+                day3.supplier_part_number as supplier_part_number,
+                day3.supplier_part_number as part_number,
+                ROUND(day3.quantity, -1),
+                ROUND(day3.price, 2),
+                3 as delivery
+            FROM
+                day3
+                
         '''
 
     return sqldf(query)
@@ -51,16 +63,20 @@ class VoyagerGroup:
         self.day3_columns = {
 
             0: 'supplier_part_number',
-            1: 'local',
+            1: 'location',
             2: 'part_name',
-            3: 'jednostka',
+            3: 'unit',
             4: 'quantity',
             5: 'price'
         }
-        self.data = pd.read_csv
+        data = pd.read_csv(self.data_url, sep=';', header=None,
+                           skiprows=1, on_bad_lines='skip', encoding='latin1', low_memory=False)
+        day3 = pd.read_csv(self.day3_url, sep=';', header=None,
+                           skiprows=1, on_bad_lines='skip', low_memory=False)
 
     def process(self):
-        data = pd.read_csv(self.data_url, sep=';', header=None,
-                          skiprows=1, on_bad_lines='skip', encoding='latin1')
-        data.rename(columns=self.data_columns, inplace=True)
-        return data
+
+        self.data.rename(columns=self.data_columns, inplace=True)
+        self.day3.rename(columns=self.day3_columns, inplace=True)
+
+        return [self.data, self.day3]
