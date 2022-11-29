@@ -33,7 +33,8 @@ def get_euroestcar_data():
 def get_file():
     config = Config()
     auth = config.get_app_service_auth('main', 'main')
-    loader = LoadController(auth[0], auth[1])
+    loader = LoadController({'host': '138.201.56.185', 'user': 'ph6802', 'password': 'z7lIh8iv10pLRt'},
+                            {'address': 'prices.mnk.group@gmail.com', 'app_password': 'hrsvhqkajsdjtyzr'})
     loader.download('mail', 'euro_est_car', 'euro_est_car.xlsx',
                     params={'sender': 'margareta.peptenaru@euroestcar.ro', 'subject': 'STOCK EEC'})
 

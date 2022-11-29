@@ -2,6 +2,7 @@ import os.path
 
 from Services.Processors.DataFrameReader import *
 import pandas as pd
+from pandasql import sqldf
 import requests
 
 
@@ -25,7 +26,20 @@ def get_direct24_data():
 
     data = data.dropna()
 
-    return data
+    query = '''
+        SELECT 
+            manufacturer
+            supplier_part_number,
+            part_number,
+            part_name,
+            quantity,
+            price,
+            CAST(day2 + 2 AS INTEGER) as delivery
+        FROM
+            data 
+    '''
+
+    return sqldf(query)
 
 
 def get_file():

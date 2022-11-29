@@ -20,6 +20,7 @@ def get_autoland_data():
             1 AS delivery,
             CAST(REPLACE(qty, '>', '') AS INTEGER) as quantity,
             price as supplier_price,
+            deposit,
             IIF(deposit is null, price, deposit + price) as price,
             pack
         FROM

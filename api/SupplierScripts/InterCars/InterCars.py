@@ -39,9 +39,9 @@ def get_intercars_data():
             data.custom_code,
             stock.warehaous,
             stock.quantity,
-            price.supplier_price,
-            price.deposit,
-            price.price,
+            REPLACE(price.supplier_price, ",", ".") as supplier_price,
+            REPLACE(price.deposit, ",", ".") as deposit,
+            REPLACE(price.price, ",", ".") as price,
             1 AS delivery
         FROM data
         INNER JOIN price
