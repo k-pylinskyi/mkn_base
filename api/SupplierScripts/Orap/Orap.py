@@ -1,12 +1,15 @@
+import os
+import io
+import pandas as pd
+
 from SupplierScripts import *
 from ftplib import FTP
 from dateutil.parser import parse
 from urllib import request
-import io
-from zipfile import ZipFile
-
-import pandas as pd
 from pandasql import sqldf
+from zipfile import ZipFile
+from Services.Logger.wrapper import timeit
+from Services.Processors.DataFrameReader import *
 
 
 
@@ -24,34 +27,39 @@ def is_date(string, fuzzy=False):
         return False
 
 
-#@timeit
+@timeit
 def orap_to_db():
     table_name = 'orap'
     print('Pushing {} to Data Base'.format(table_name))
-    DataFrameReader.dataframe_to_db(table_name, get_orap_data())
-    DataFrameReader.supplier_to_ftp(table_name)
-
+    DataFrameReader.dataframe_to_db_big(table_name, get_orap_data())
+    # DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_orap_data():
     orap = Orap()
     dataframes = orap.process()
     data = dataframes
-    #print(data)
-    #print("=================================")
-    #print(data.columns)
-    query = '''
-                SELECT
-                    data.brand as manufacturer,
-                    data.code as supplier_part_number,
-                    data.code as part_number,
-                    data.quantity as quantity,
-                    ROUND(data.price, 2) as price
-                FROM
-                    data
-                '''
-
-    return sqldf(query)
+    dat = pd.DataFrame()
+    dat['manufacturer'] = data['brand']
+    dat['supplier_part_number'] = data['code']
+    dat['part_number'] = data['code']
+    dat['delivery'] = data['delivery_time']
+    dat['quantity'] = data['quantity']
+    dat['price'] = (data['price']).str.replace(',', '').astype(float).round(decimals = 2)
+    # query = '''
+    #             SELECT
+    #                 data.brand as manufacturer,
+    #                 data.code as supplier_part_number,
+    #                 data.code as part_number,
+    #                 data.quantity as quantity,
+    #                 ROUND(data.price, 2) as price
+    #             FROM
+    #                 data
+    #             '''
+    print(dat)
+    print(dat.shape[0])
+    return dat
+    # return sqldf(query)
 
 
 def get_files(folder_url, data_columns):

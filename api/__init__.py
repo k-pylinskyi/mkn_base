@@ -1,4 +1,3 @@
-from Services.Loader.APILoader import downloadFileFromAPI
 from SupplierScripts.Direct24.Direct24 import direct24_to_db
 from SupplierScripts.InterCars.InterCars import intercars_to_db
 from SupplierScripts.Orap.Orap import orap_to_db
@@ -27,3 +26,8 @@ from SupplierScripts.Rodon.Rodon import rodon_to_db
 from SupplierScripts.Vanking.Vanking import vanking_to_db
 from SupplierScripts.Zdunek.Zdunek import zdunek_to_db
 from SupplierScripts.Materom.Materom import materom_to_db
+from SupplierScripts.Arher.Arher import arher_to_db
+
+
+from Services.Logger.wrapper import timeit
+from Services.Loader.APILoader import downloadFileFromAPI
