@@ -30,7 +30,7 @@ def get_autofrance_data():
         FROM
             data
     '''
-    print(sqldf(query))
+
     return sqldf(query)
 
 
