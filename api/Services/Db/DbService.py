@@ -36,7 +36,7 @@ class DbService:
         table_df = pd.read_sql_query(' SELECT manufacturer, supplier_part_number, '
                                         ' part_number, CAST(quantity AS INTEGER) as quantity, '
                                         ' ROUND(price, 2) as price, '
-                                        ' IFNULL(delivery, 404) AS delivery '
+                                        ' CAST(IFNULL(delivery, 404) AS INTEGER) AS delivery '
                                         f' FROM {table_name} '
                                         ' WHERE quantity > 0 AND price > 0',
                                          connection)
