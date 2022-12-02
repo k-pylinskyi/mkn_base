@@ -1,3 +1,4 @@
+import numpy as np
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
@@ -52,7 +53,6 @@ class Autopartner:
                              12: 'qty1', 13: 'filia', 15: 'qty2', 16: 'qty3', 17: 'manufacturer_code'}
 
     def process(self):
-
         data = pd.read_csv(self.data_url, encoding_errors='ignore', sep=';', on_bad_lines='skip', header=None,
                            low_memory=False)
 
@@ -66,8 +66,16 @@ class Autopartner:
         data.rename(columns=self.data_columns, inplace=True)
         data['delivery'] = pd.Series(dtype='int')
 
-        for i, row in enumerate(data.itertuples(), 1):
-            if row[12] in delivery[0]:
-                val = delivery[1][delivery[0].index(row[12])]
-                data.at[i, 'delivery'] = val
+        data['delivery'] = np.where(data['filia'] == '72 Filia', '1',
+                                    np.where(data['filia'] == '01 Filia', '1',
+                                             np.where(data['filia'] == '03 Filia', '3', 'None')))
+
+        # print('Overall rows before dropna:' + str(data.shape[0]))
+        # print('Overall na: ' + str(data['delivery'].isin(['None']).sum()))
+        data = data[~data['delivery'].isin(['None'])]
+
+        # print(data['delivery'].value_counts())
+        # print(data['filia'].value_counts())
+        #
+        # print('Overall rows after drop na:' + str(data.shape[0]))
         return data
