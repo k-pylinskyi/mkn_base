@@ -1,6 +1,12 @@
 from __init__ import *
+from Services.Email.EmailSender import EmailSender
+from SupplierScripts.Ronax.Ronax import *
 
 if __name__ == '__main__':
+    ronax_to_db()
+    #sender = EmailSender()
+    #sender.send("k.pylinskyi@gmail.com", 'Subject: SubSub\n\n<h1>Huy huy regina</h1>')
+    #sender.send("polinap5411@gmail.com", 'Subject: SubSub\n\n<h1>Huy huy regina</h1>')
     autopartner_to_db()
     voyagerGroup_to_db()
     autoland_to_db()
