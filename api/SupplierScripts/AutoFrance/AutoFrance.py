@@ -1,4 +1,3 @@
-
 from SupplierScripts import *
 import pandas as pd
 from pandasql import sqldf
@@ -31,13 +30,13 @@ def get_autofrance_data():
         FROM
             data
     '''
-    print(sqldf(query))
+
     return sqldf(query)
 
 
 class AutoFrance:
 
-    def __init__(self):
+    def init(self):
         data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/auto_france/OFERTA.txt"
 
         self.data_columns = {
