@@ -44,6 +44,5 @@ class Intervito:
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
-        print(self.data.head())
 
         return (self.data)
