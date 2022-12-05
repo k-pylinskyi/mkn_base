@@ -26,6 +26,7 @@ def get_tww_data():
                         'Toyota' as manufacturer,
                         CAST(out.part_number AS VARCHAR) as part_number,
                         CAST(out.part_number AS VARCHAR) as supplier_part_number,
+                        "PLN" AS currency,
                         CAST(out.price as FLOAT)/100 as supplier_price,
                         CAST(out.discount as FLOAT)/100 as supplier_discount,
                         (case when CAST(out.discount as FLOAT)/100 >= 25 then CAST(0.8 as FLOAT)
@@ -76,7 +77,11 @@ class Toyota_warszawa_wola:
         with zipfile.ZipFile(absolute_path + r'\CENY.zip', 'r') as zip_ref:
             zip_ref.extractall(absolute_path, pwd=passw.encode())
 
-        if os.path.isdir(absolute_path + r'\cennik.txt'):
+        if os.path.exists(absolute_path + r'\cennik.toy'):
+            if os.path.exists(absolute_path + r'\cennik.txt'):
+                os.remove(absolute_path + r'\cennik.txt')
+            else:
+                pass
             os.rename(absolute_path + r'\cennik.toy', absolute_path + r'\cennik.txt')
 
         indices = [0, 27, 39, 74, 109, 114, 124, 133, 136, 141, 150, 160]
@@ -90,9 +95,6 @@ class Toyota_warszawa_wola:
         df.rename(columns=self.data_columns, inplace=True)
         df = df.drop(['g2', 'g3', 'g4', 'g5', 'g6'], axis=1)
         # df['part_number'] = df['part_number'].str.replace('[\W]+', '', regex=True)
-
-        print(df.head(5))
-
         return df
 
 
