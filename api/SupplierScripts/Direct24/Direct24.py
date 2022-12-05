@@ -28,13 +28,13 @@ def get_direct24_data():
 
     query = '''
         SELECT 
-            manufacturer,
+            manufacturer
             supplier_part_number,
             part_number,
             part_name,
             quantity,
             price,
-            CAST(day_2 + 2 AS INTEGER) as delivery
+            CAST(day2 + 2 AS INTEGER) as delivery
         FROM
             data 
     '''

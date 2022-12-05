@@ -17,7 +17,7 @@ def get_gordon_data():
     query = '''
         SELECT 
             22 as supplier_id,
-            data.manufacturer,
+            dict.manufacturer,
             dict.supplier_part_number,
             dict.part_number,
             1 AS delivery,
@@ -49,7 +49,7 @@ class Gordon:
         self.data_columns = {0: 'supplier_part_number', 1: 'part_name', 2: 'tecdoc_number_1', 3: 'manufacturer', 4: 'price', 5: 'tecdoc_number_2', 6: 'qty1', 7: 'qty2', 8: 'idsafo'}
 
         self.dict = pd.read_csv(dict_url, sep='\t', decimal=',', header=None, skiprows=2, encoding_errors='ignore', low_memory=False)
-        self.data = pd.read_csv(data_url, sep='\t', decimal=',', header=None, skiprows=1, encoding_errors='ignore', low_memory=False)
+        self.data = pd.read_csv(data_url, sep='\t', decimal=',', header=None, skiprows=1, encoding_errors='ignore', low_memory=False, lineterminator='\n')
 
     def process(self):
         self.dict.rename(columns=self.dict_columns, inplace=True)
