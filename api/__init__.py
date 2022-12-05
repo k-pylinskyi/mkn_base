@@ -26,8 +26,4 @@ from api.SupplierScripts.Paketo.Paketo import paketo_to_db
 from api.SupplierScripts.Rodon.Rodon import rodon_to_db
 from api.SupplierScripts.Vanking.Vanking import vanking_to_db
 from api.SupplierScripts.Zdunek.Zdunek import zdunek_to_db
-from Services.Email.EmailSender import EmailSender
-from SupplierScripts.Ronax.Ronax import ronax_to_db
 from api.SupplierScripts.VoyagerGroup.VoyagerGroup import voyagerGroup_to_db
-from Services.Db.DbService import DbService
-from SupplierScripts.AutoFrance.AutoFrance import autofrance_to_db

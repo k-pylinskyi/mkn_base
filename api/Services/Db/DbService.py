@@ -1,4 +1,6 @@
 import os
+
+import numpy as np
 import pandas as pd
 from Services.Db.DbContext import DbContext
 
@@ -42,7 +44,29 @@ class DbService:
 
         return out_file_path
 
+    @staticmethod
+    def get_table_csv_big(table_name, table):
+        context = DbContext()
+        connection = context.db
+        supplier_folder = table_name.upper()
+        path = os.path.join('../TemporaryStorage', supplier_folder, 'export')
+        out_file_path = os.path.join(path, f'export.csv')
+        if not os.path.exists(path):
+            os.makedirs(path)
 
+        table_df = pd.DataFrame()
+        table_df['manufacturer'] = table['manufacturer']
+        table_df['supplier_part_number'] = table['supplier_part_number']
+        table_df['part_number'] = table['part_number']
+        table_df['quantity'] = table['quantity'].astype(int)
+        table_df['price'] = \
+            table['price'].astype(str).str.replace(',', '').astype(float).round(decimals=2)
+        # table_df['delivery'] = table['delivery']
+        table_df['delivery'] = np.where(table['delivery'].isnull(), 404, table['delivery'])
+
+        table_df.to_csv(out_file_path, sep=';', index=False)
+
+        return out_file_path
 
     @staticmethod
     def get_db_backup():

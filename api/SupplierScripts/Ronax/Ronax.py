@@ -33,17 +33,20 @@ class Ronax:
         vag.rename(columns=self.columns, inplace=True)
         vag['manufacturer'] = 'VAG'
         vag['delivery'] = 10
+        vag['currency'] = 'EUR'
         vag.supplier_part_number = vag.supplier_part_number.str.replace('=', '')
         vag.supplier_part_number = vag.supplier_part_number.str.replace('"', "")
         toyota = pd.read_csv(self.toyota_url, sep=';', header=None, skiprows=2, usecols=[0, 1], decimal=',')
         toyota.rename(columns=self.columns, inplace=True)
         toyota['manufacturer'] = 'TOYOTA'
         toyota['delivery'] = 9
+        toyota['currency'] = 'EUR'
         toyota.supplier_part_number = toyota.supplier_part_number.str.replace('=', '')
         toyota.supplier_part_number = toyota.supplier_part_number.str.replace('"', "")
         bmw = pd.read_csv(self.bmw_url, sep=';', header=None, skiprows=2, usecols=[0, 1], decimal=',')
         bmw.rename(columns=self.columns, inplace=True)
         bmw['manufacturer'] = 'BMW'
+        bmw['currency'] = 'EUR'
         bmw['delivery'] = 14
         bmw.supplier_part_number = bmw.supplier_part_number.str.replace('=', '')
         bmw.supplier_part_number = bmw.supplier_part_number.str.replace('"', "")
@@ -51,6 +54,7 @@ class Ronax:
         renault.rename(columns=self.columns, inplace=True)
         renault['manufacturer'] = 'RENAULT'
         renault['delivery'] = 9
+        renault['delivery'] = 'EUR'
         renault.supplier_part_number = renault.supplier_part_number.str.replace('=', '')
         renault.supplier_part_number = renault.supplier_part_number.str.replace('"', "")
 

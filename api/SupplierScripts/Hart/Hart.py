@@ -32,6 +32,7 @@ def get_hart_data():
                 data.hart_part_number as supplier_part_number, 
                 data.part_number,
                 data.part_name,
+                "PLN" AS currency,
                 REPLACE(quantity.qty, '>', '') AS quantity, 
                 IIF(deposit.price is null, prices.price, prices.price + ROUND(deposit.price, 2)) AS price,
                 data.unit_measure,

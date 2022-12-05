@@ -26,6 +26,7 @@ def get_materom_data():
                 out.part_number as part_number,
                 out.quantity as quantity,
                 (out.price + out.deposit) as price,
+                "EUR" AS currency,
                 out.price as supplier_price,
                 out.deposit as deposit,
                 3 as delivery

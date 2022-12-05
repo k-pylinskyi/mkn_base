@@ -24,6 +24,7 @@ def get_plichta_data():
             out.supplier_part_number as supplier_part_number,
             dict.part_number as part_number,
             16 AS delivery,
+            "PLN" AS currency,
             CAST(quantity AS INTEGER) as quantity,
             ROUND(out.price, 2) as price
             FROM out 

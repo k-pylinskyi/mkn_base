@@ -3,12 +3,11 @@ from Services.Email.EmailSender import EmailSender
 import datetime
 
 funcs = [
-        autofrance_to_db,
-        ronax_to_db,
-        autopartner_to_db,
-        voyagerGroup_to_db,
+        # autoland_to_db(), autofus
+        # orap_to_db, moterom
+        # autopartner_to_db,
+        #voyagerGroup_to_db,
         autoland_to_db,
-        intercars_to_db,
         autofusbmw_to_db,
         autoeuro_to_db,
         hart_to_db,
@@ -30,6 +29,7 @@ funcs = [
         motorol_to_db,
         motoprofil_to_db,
         krisauto_to_db,
+        intercars_to_db,
         # DbService.get_db_backup
     ]
 

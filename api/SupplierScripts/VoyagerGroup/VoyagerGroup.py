@@ -1,10 +1,10 @@
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
+from Services.Processors.DataFrameReader import *
+from Services.load_config import Config
+from Services.Loader.LoadController import LoadController
 import pandas as pd
 from pandasql import sqldf
 
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from Services.Processors.DataFrameReader import DataFrameReader
 
 
 def voyagerGroup_to_db():
@@ -30,6 +30,7 @@ def get_VoyagerGroup_data():
             data_5_days.discount,
             CAST(data_5_days.price as NUMERIC) - data_5_days.price*CAST(REPLACE(discount, '%', '') as NUMERIC)/100 as price,
             '999' as quantity,
+            "PLN" AS currency,
             5 as delivery,
             'szt.' as measure,
             '5_days_stock' as localization
