@@ -41,6 +41,7 @@ def get_orap_data():
     data = dataframes
     dat = pd.DataFrame()
     dat['manufacturer'] = data['brand']
+    dat['currency'] = 'EUR'
     dat['supplier_part_number'] = data['code']
     dat['part_number'] = data['code']
     dat['delivery'] = data['delivery_time']
