@@ -23,7 +23,8 @@ def get_emoto_data():
             part_numbers.supplier_part_number,
             data.part_number,
             data.part_name,
-            1 AS delivery,  
+            1 AS delivery,
+            "PLN" AS currency,  
             data.price, 
             CAST(data.qty AS INTEGER) as quantity
         FROM 

@@ -19,6 +19,7 @@ def get_elit_data():
             supplier_part_number,
             part_number,
             2 AS delivery,
+            "PLN" AS currency,
             price,
             CAST( (REPLACE(qty_lublin, '>', '') + REPLACE(qty_wroclaw, '>', '') + 
             REPLACE(qty_cn, '>', '')) AS INTEGER) as quantity,

@@ -27,6 +27,7 @@ def get_autoeuro_data():
             1 AS delivery,
             data.cn_number,
             data.comment,
+            "PLN" AS currency,
             data.part_group_id
         FROM 
             data

@@ -27,6 +27,7 @@ def get_tww_data():
                         'Toyota' as manufacturer,
                         CAST(out.part_number AS VARCHAR) as part_number,
                         CAST(out.part_number AS VARCHAR) as supplier_part_number,
+                        "PLN" AS currency,
                         CAST(out.price as FLOAT)/100 as supplier_price,
                         CAST(out.discount as FLOAT)/100 as supplier_discount,
                         (case when CAST(out.discount as FLOAT)/100 >= 25 then CAST(0.8 as FLOAT)

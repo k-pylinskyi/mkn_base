@@ -24,6 +24,7 @@ def get_arher_data():
             data.part_number AS part_number,
             7 AS delivery,
             999 AS quantity,
+            "PLN" AS currency,
             (CAST(data.netto_price AS REAL) - CAST(data.netto_price AS REAL)*0.16) AS price
         FROM 
             data

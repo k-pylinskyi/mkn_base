@@ -18,6 +18,7 @@ def get_motogama_data():
             supplier_part_number,
             part_number,
             1 AS delivery,
+            "EUR" AS currency,
             price,
             CAST(REPLACE(qty, '> ', '') AS INTEGER) as quantity,
             pack,
