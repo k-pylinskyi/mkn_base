@@ -17,7 +17,8 @@ def get_paketo_data():
         "FEBEST" as manufacturer,
         data.supplier_part_number,
         data.part_number,
-        5 AS delivery, 
+        5 AS delivery,
+        "EUR" AS currency, 
         data.price,  
         CAST(data.qty AS INT) AS quantity
         FROM data

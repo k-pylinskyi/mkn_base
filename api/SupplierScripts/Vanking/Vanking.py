@@ -23,6 +23,7 @@ def get_vanking_data():
             part_name1,
             part_name2,
             part_number,
+            "PLN" AS currency,
             1 AS delivery,
             price,
             CAST(quantity AS INTEGER) as quantity

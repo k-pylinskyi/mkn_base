@@ -34,6 +34,7 @@ def get_direct24_data():
             part_name,
             quantity,
             price,
+            "EUR" AS currency,
             CAST(day2 + 2 AS INTEGER) as delivery
         FROM
             data 

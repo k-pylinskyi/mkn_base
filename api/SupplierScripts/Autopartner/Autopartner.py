@@ -26,6 +26,7 @@ def get_autopartner_data():
         data.part_name, 
         data.price,
         data.delivery,
+        "PLN" AS currency,
         ROUND(data.weight, 2) AS weight,
         REPLACE(data.qty1 + data.qty2 + data.qty3, '.0', '') AS quantity,
         data.filia

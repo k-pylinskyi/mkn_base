@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 from SupplierScripts import *
 import pandas as pd
 from pandasql import sqldf
@@ -30,27 +27,19 @@ def get_autofrance_data():
             data.comment,
             CAST(TRIM(data.price) AS REAL) as price,
             data.currency,
+            "PLN" AS currency,
             CAST(TRIM(data.quantity) AS INTEGER) as quantity
         FROM
             data
     '''
-<<<<<<< HEAD
     print(sqldf(query))
-=======
-
->>>>>>> master
     return sqldf(query)
 
 
 class AutoFrance:
-<<<<<<< HEAD
 
     def __init__(self):
         data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/auto_france/OFERTA.txt"
-=======
-    def __init__(self):
-        self.data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/auto_france/OFERTA.txt"
->>>>>>> master
 
         self.data_columns = {
             0: 'part_number',
@@ -62,7 +51,6 @@ class AutoFrance:
             6: 'quantity'
         }
 
-<<<<<<< HEAD
         self.data = pd.read_csv(data_url, sep='\t', header=None, on_bad_lines='skip', encoding_errors='ignore', decimal=',', skiprows=1)
 
 
@@ -71,12 +59,3 @@ class AutoFrance:
         self.data.rename(columns=self.data_columns, inplace=True)
 
         return self.data
-=======
-
-    def process(self):
-        data = pd.read_csv(self.data_url, sep='\t', header=None, on_bad_lines='skip', encoding_errors='ignore',
-                                decimal=',', skiprows=1)
-        data.rename(columns=self.data_columns, inplace=True)
-
-        return data
->>>>>>> master
