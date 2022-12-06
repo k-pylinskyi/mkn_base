@@ -3,11 +3,16 @@ from Services.Email.EmailSender import EmailSender
 import datetime
 
 funcs = [
-        # autoland_to_db(), autofus
-        # orap_to_db, moterom
-        # autopartner_to_db,
-        #voyagerGroup_to_db,
+        euro_kas_to_db,
+        arher_to_db,
+        materom_to_db,
+        plichta_to_db,
+        autofrance_to_db,
+        ronax_to_db,
+        autopartner_to_db,
+        voyagerGroup_to_db,
         autoland_to_db,
+        intercars_to_db,
         autofusbmw_to_db,
         autoeuro_to_db,
         hart_to_db,
@@ -29,8 +34,8 @@ funcs = [
         motorol_to_db,
         motoprofil_to_db,
         krisauto_to_db,
-        intercars_to_db,
-        # DbService.get_db_backup
+        toyota_warszawa_wola_to_db,
+        orap_to_db,
     ]
 
 class Runner:
@@ -107,6 +112,7 @@ class Runner:
                 html = f'{html}<tr>\n'
                 html = f'{html}<td>{func.__name__.replace("_to_db", "").upper()}</td>\n'
                 html = f'{html}<td>Error occurred</td>\n'
+                html = f'{html}<td>0</td>\n'
                 html = f'{html}<td>0</td>\n'
                 html = f'{html}</tr>\n'
         end_total = datetime.datetime.now()

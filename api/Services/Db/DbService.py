@@ -86,8 +86,7 @@ class DbService:
             table_df = pd.read_sql_query(' SELECT "{}" as supplier, ' 
                                          ' manufacturer, supplier_part_number, '
                                          ' part_number, CAST(quantity AS INTEGER) as quantity, '
-                                         ' ROUND(price, 2) as price, '
-                                         ' delivery'
+                                         ' ROUND(price, 2) as price '
                                          ' FROM {} '.format(supplier, table[0]),
                                          connection)
             dfs.append(table_df)
