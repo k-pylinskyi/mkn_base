@@ -9,7 +9,7 @@ class EmailSender:
         self.login = "prices.mnk.group@gmail.com"
         self.password = "hrsvhqkajsdjtyzr"
         self.addresses = [
-            #'k.pylinskyi@gmail.com',
+            'k.pylinskyi@gmail.com',
             'polinap5411@gmail.com',
             #'mykyta.karant@gmail.com'
         ]

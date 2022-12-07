@@ -14,33 +14,18 @@ def direct24_to_db():
 
 def get_direct24_data():
     direct = Direct24()
-    dataframes = direct.process()
-    data = dataframes
+    data = direct.process()
     data[['day_1', 'day_2']] = data['delivery'].str.split('-', expand=True)
     data['day_1'] = pd.to_numeric(data['day_1'])
     data['day_2'] = pd.to_numeric(data['day_2'])
     data['quantity'] = data['quantity'].str.replace('>', '')
     data['part_number'] = data['supplier_part_number']
 
-    data = data[data['day_2'] <= 8]
+    data = data[data['day_2'] <= 8].dropna()
 
-    data = data.dropna()
+    data['delivery'] = data['day_2'] + 2
 
-    query = '''
-        SELECT 
-            manufacturer
-            supplier_part_number,
-            part_number,
-            part_name,
-            quantity,
-            price,
-            "EUR" AS currency,
-            CAST(day2 + 2 AS INTEGER) as delivery
-        FROM
-            data 
-    '''
-
-    return sqldf(query)
+    return data
 
 
 def get_file():
@@ -71,7 +56,7 @@ def get_file():
 
 class Direct24:
     def __init__(self):
-        data = get_file()
+        self.data_url = get_file()
         self.data_columns = {
             0: 'manufacturer',
             1: 'supplier_part_number',
@@ -81,10 +66,10 @@ class Direct24:
             5: 'delivery'
         }
 
-        self.data = pd.read_csv(data, encoding_errors='ignore', usecols=[0, 1, 2, 3, 4, 5], header=None,
-                                sep=';', on_bad_lines='skip', skiprows=2, low_memory=False, decimal=',')
-
     def process(self):
-        self.data.rename(columns=self.data_columns, inplace=True)
-        return self.data
+        data = pd.read_csv(self.data_url, encoding_errors='ignore', usecols=[0, 1, 2, 3, 4, 5], header=None,
+                           sep=';', on_bad_lines='skip', skiprows=2, low_memory=False, decimal=',')
+        data.rename(columns=self.data_columns, inplace=True)
+        print(data)
+        return data
 
