@@ -24,6 +24,7 @@ def get_zdunek_data():
             data.supplier_part_number AS part_number,
             data.comment,
             7 AS delivery,
+            "PLN" AS currency,
             data.price,
             ROUND (data.price,2)
         FROM

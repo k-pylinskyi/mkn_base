@@ -31,3 +31,9 @@ from SupplierScripts.Ronax.Ronax import ronax_to_db
 from api.SupplierScripts.VoyagerGroup.VoyagerGroup import voyagerGroup_to_db
 from Services.Db.DbService import DbService
 from SupplierScripts.AutoFrance.AutoFrance import autofrance_to_db
+from SupplierScripts.Orap.Orap import *
+from SupplierScripts.Toyota_Warszawa_Wola.Toyota_Warszawa_Wola import *
+from SupplierScripts.Arher.Arher import *
+from SupplierScripts.Materom.Materom import *
+from SupplierScripts.Plichta.Plichta import *
+from SupplierScripts.EuroKas.EuroKas import *

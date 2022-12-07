@@ -11,7 +11,7 @@ class EmailSender:
         self.addresses = [
             'k.pylinskyi@gmail.com',
             'polinap5411@gmail.com',
-            'mykyta.karant@gmail.com'
+            #'mykyta.karant@gmail.com'
         ]
 
     def send(self, html_message):

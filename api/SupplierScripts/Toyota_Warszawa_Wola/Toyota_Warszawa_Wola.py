@@ -2,10 +2,10 @@ import os
 import zipfile
 from ftplib import FTP
 
-from api.Services.Ftp.FtpConnection import FtpConnection
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
+from Services.Ftp.FtpConnection import FtpConnection
+from Services.Processors.DataFrameReader import *
+from Services.load_config import Config
+from Services.Loader.LoadController import LoadController
 
 import pandas as pd
 from pandasql import sqldf
@@ -15,6 +15,7 @@ def toyota_warszawa_wola_to_db():
     table_name = 'toyota_warszawa_wola'
     print('Pushing {} to Data Base'.format(table_name))
     data = get_tww_data()
+    print(data)
     DataFrameReader.dataframe_to_db(table_name, data)
 
 
@@ -25,14 +26,15 @@ def get_tww_data():
                     SELECT
                         'Toyota' as manufacturer,
                         CAST(out.part_number AS VARCHAR) as part_number,
-                        CAST(out.part_number AS VARCHAR) as supplier_part_number,
+                        CAST(IIF(out.part_number LIKE 'A*', SUBSTR(out.part_number, -1), out.part_number) AS VARCHAR) as supplier_part_number,
+                        "PLN" AS currency,
                         CAST(out.price as FLOAT)/100 as supplier_price,
                         CAST(out.discount as FLOAT)/100 as supplier_discount,
                         (case when CAST(out.discount as FLOAT)/100 >= 25 then CAST(0.8 as FLOAT)
                               when CAST(out.discount as FLOAT)/100 >= 21 then CAST(0.85 as FLOAT)
                               when CAST(out.discount as FLOAT)/100 >= 16 then CAST(0.9 as FLOAT)
                               when CAST(out.discount as FLOAT)/100 >= 11 then CAST(0.95 as FLOAT)
-                              else CAST(out.price as FLOAT)/100 end) as discount,
+                              else CAST(0 as FLOAT)/100 end) as discount,
                         (case when CAST(out.discount as FLOAT)/100 >= 25 then ROUND(CAST(out.price as FLOAT)/100*0.8, 2)
                               when CAST(out.discount as FLOAT)/100 >= 21 then ROUND(CAST(out.price as FLOAT)/100*0.85, 2)
                               when CAST(out.discount as FLOAT)/100 >= 16 then ROUND(CAST(out.price as FLOAT)/100*0.9, 2)
@@ -76,9 +78,12 @@ class Toyota_warszawa_wola:
         with zipfile.ZipFile(absolute_path + r'\CENY.zip', 'r') as zip_ref:
             zip_ref.extractall(absolute_path, pwd=passw.encode())
 
-        if os.path.isdir(absolute_path + r'\cennik.txt'):
+        if os.path.exists(absolute_path + r'\cennik.toy'):
+            if os.path.exists(absolute_path + r'\cennik.txt'):
+                os.remove(absolute_path + r'\cennik.txt')
+            else:
+                pass
             os.rename(absolute_path + r'\cennik.toy', absolute_path + r'\cennik.txt')
-
         indices = [0, 27, 39, 74, 109, 114, 124, 133, 136, 141, 150, 160]
         with open(absolute_path + r'\cennik.txt') as file:
             lines = [[line[i:j] for i, j in zip(indices, indices[1:] + [None])] for line in file]
@@ -90,9 +95,6 @@ class Toyota_warszawa_wola:
         df.rename(columns=self.data_columns, inplace=True)
         df = df.drop(['g2', 'g3', 'g4', 'g5', 'g6'], axis=1)
         # df['part_number'] = df['part_number'].str.replace('[\W]+', '', regex=True)
-
-        print(df.head(5))
-
         return df
 
 

@@ -26,6 +26,7 @@ def get_autofusbmw_data():
             discount.discount,
             ROUND(data.price*(1-(discount.discount/100)), 2) AS price,
             999 AS quantity,
+            "PLN" AS currency,
             6 AS delivery     
         FROM 
             data

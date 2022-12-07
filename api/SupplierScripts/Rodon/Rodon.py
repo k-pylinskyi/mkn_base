@@ -22,6 +22,7 @@ def get_rodon_data():
            dict.part_number,
            data.part_name,
            2 AS delivery,
+           "PLN" AS currency,
            CAST(data.qty AS INTEGER) as quantity,
            IIF(data.deposit is not null, data.price + data.deposit, data.price) as price
            FROM data

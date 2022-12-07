@@ -24,6 +24,7 @@ def get_bronowski_data():
             data.part_name,
             dict.part_number,
             1 AS delivery,
+            "PLN" AS currency,
             data.price,
             CAST(data.quantity AS INTEGER) as quantity
         FROM

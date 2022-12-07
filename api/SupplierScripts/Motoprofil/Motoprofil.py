@@ -22,6 +22,7 @@ def get_motoprofil_data():
             IIF(deposit is not null, price + deposit, price) as price,
             qty as quantity,
             1 AS delivery,
+            "PLN" AS currency,
             ean_number,
             weight
         FROM

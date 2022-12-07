@@ -22,6 +22,7 @@ def get_gordon_data():
             dict.part_number,
             1 AS delivery,
             data.price,
+            "PLN" AS currency,
             CAST(data.qty1 + data.qty2 AS INTEGER) as quantity,
             data.tecdoc_number_1,
             data.tecdoc_number_2

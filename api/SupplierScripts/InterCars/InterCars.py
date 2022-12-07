@@ -38,6 +38,7 @@ def get_intercars_data():
             data.length * data.width * data.height as volume,
             data.custom_code,
             stock.warehaous,
+            "PLN" AS currency,
             stock.quantity,
             REPLACE(price.supplier_price, ",", ".") as supplier_price,
             REPLACE(price.deposit, ",", ".") as deposit,
