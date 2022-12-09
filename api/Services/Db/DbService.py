@@ -34,7 +34,8 @@ class DbService:
             os.makedirs(path)
 
         table_df = pd.read_sql_query(' SELECT manufacturer, supplier_part_number, '
-                                        ' part_number, CAST(quantity AS INTEGER) as quantity, '
+                                        ' IFNULL(part_number, supplier_part_number) as part_number, '
+                                        ' CAST(quantity AS INTEGER) as quantity, '
                                         ' ROUND(price, 2) as price, '
                                         ' CAST(IFNULL(delivery, 404) AS INTEGER) AS delivery '
                                         f' FROM {table_name} '

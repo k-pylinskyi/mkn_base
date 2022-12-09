@@ -19,7 +19,7 @@ def get_intervito_data():
         1 AS delivery,
         "PLN" AS currency,
         IFNULL(data.part_number, RTRIM(data.supplier_part_number, LENGTH(data.supplier_part_number) - INSTR(data.supplier_part_number," "))) AS part_number,
-        REPLACE(data.price, ',', '.') as price,
+        CAST(REPLACE(REPLACE(data.price, ' ', ''), ',', '.') AS REAL) as price,
         data.qty as quantity,
         data.pack
         FROM data
