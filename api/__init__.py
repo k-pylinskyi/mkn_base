@@ -37,3 +37,4 @@ from SupplierScripts.Arher.Arher import *
 from SupplierScripts.Materom.Materom import *
 from SupplierScripts.Plichta.Plichta import *
 from SupplierScripts.EuroKas.EuroKas import *
+from SupplierScripts.Emex.Emex import *
