@@ -15,7 +15,6 @@ def toyota_warszawa_wola_to_db():
     table_name = 'toyota_warszawa_wola'
     print('Pushing {} to Data Base'.format(table_name))
     data = get_tww_data()
-    print(data)
     DataFrameReader.dataframe_to_db(table_name, data)
 
 
@@ -85,7 +84,7 @@ class Toyota_warszawa_wola:
                 pass
             os.rename(absolute_path + r'\cennik.toy', absolute_path + r'\cennik.txt')
         indices = [0, 27, 39, 74, 109, 114, 124, 133, 136, 141, 150, 160]
-        with open(absolute_path + r'\cennik.txt') as file:
+        with open(absolute_path + r'\cennik.txt', encoding="latin1") as file:
             lines = [[line[i:j] for i, j in zip(indices, indices[1:] + [None])] for line in file]
             ### ONLY IN THIS FILE ###
             lines = lines[: -1]
