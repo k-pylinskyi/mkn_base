@@ -11,7 +11,7 @@ def plichta_to_db():
     print('Pushing {} to Data Base'.format(table_name))
     data = get_plichta_data()
     print(data)
-    DataFrameReader.dataframe_to_db(table_name, data  )
+    DataFrameReader.dataframe_to_db(table_name, data)
 
 
 def get_plichta_data():
@@ -24,7 +24,7 @@ def get_plichta_data():
             out.supplier_part_number as supplier_part_number,
             dict.part_number as part_number,
             16 AS delivery,
-            "PLN" AS currency,
+            'PLN' AS currency,
             CAST(quantity AS INTEGER) as quantity,
             ROUND(out.price, 2) as price
             FROM out 
@@ -55,10 +55,10 @@ class Plichta:
     def process(self):
         dfs = []
         for name in self.sheet_names:
-            df = pd.read_excel(self.data_url, name, skiprows=1, header=None)
+            df = pd.read_excel(self.xl, name, skiprows=1, header=None)
             df.rename(columns=self.data_columns, inplace=True)
             dfs.append(df)
         out = pd.concat(dfs, ignore_index=False)
-        dic = pd.read_csv(self.dict_url, sep=';', usecols=[0])
+        dic = pd.read_csv(self.dict_url, sep=';', usecols=[0], encoding='latin1', lineterminator='\n')
         dic.columns = ['part_number']
         return out, dic

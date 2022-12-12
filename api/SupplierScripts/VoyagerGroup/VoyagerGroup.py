@@ -30,7 +30,7 @@ def get_VoyagerGroup_data():
             data_5_days.discount,
             CAST(data_5_days.price as NUMERIC) - data_5_days.price*CAST(REPLACE(discount, '%', '') as NUMERIC)/100 as price,
             '999' as quantity,
-            "PLN" AS currency,
+            'PLN' AS currency,
             5 as delivery,
             'szt.' as measure,
             '5_days_stock' as localization
@@ -45,6 +45,7 @@ def get_VoyagerGroup_data():
             0 as discount,
             data_3_days.price as price,
             data_3_days.quantity,
+            'PLN' AS currency,
             3 as delivery,
             data_3_days.measure,
             data_3_days.localization
@@ -79,10 +80,10 @@ class VoyagerGroup:
 
     def process(self):
         data_5_days = pd.read_csv(self.data_5_days_url, sep=';', header=None, decimal=',',
-                          skiprows=1, on_bad_lines='skip', encoding='latin1')
+                                  skiprows=1, on_bad_lines='skip', encoding='latin1', low_memory=False)
         data_5_days.rename(columns=self.data_5_days_columns, inplace=True)
 
         data_3_days = pd.read_csv(self.data_3_days_url, sep=';', header=None, decimal=',',
-                          skiprows=1, on_bad_lines='skip', encoding='latin1')
+                                  skiprows=1, on_bad_lines='skip', encoding='latin1')
         data_3_days.rename(columns=self.data_3_days_columns, inplace=True)
         return [data_5_days, data_3_days]
