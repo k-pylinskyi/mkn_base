@@ -15,6 +15,7 @@ def toyota_warszawa_wola_to_db():
     table_name = 'toyota_warszawa_wola'
     print('Pushing {} to Data Base'.format(table_name))
     data = get_tww_data()
+    print(data.head(5))
     DataFrameReader.dataframe_to_db(table_name, data)
 
 
@@ -24,9 +25,9 @@ def get_tww_data():
     query = '''
                     SELECT
                         'Toyota' as manufacturer,
-                        CAST(out.part_number AS VARCHAR) as part_number,
-                        CAST(IIF(out.part_number LIKE 'A*', SUBSTR(out.part_number, -1), out.part_number) AS VARCHAR) as supplier_part_number,
-                        "PLN" AS currency,
+                        out.part_number,
+                        out.supplier_part_number,
+                        'PLN' AS currency,
                         CAST(out.price as FLOAT)/100 as supplier_price,
                         CAST(out.discount as FLOAT)/100 as supplier_discount,
                         (case when CAST(out.discount as FLOAT)/100 >= 25 then CAST(0.8 as FLOAT)
@@ -93,6 +94,8 @@ class Toyota_warszawa_wola:
         df = df.drop(columns=[10, 11])
         df.rename(columns=self.data_columns, inplace=True)
         df = df.drop(['g2', 'g3', 'g4', 'g5', 'g6'], axis=1)
+        df['supplier_part_number'] = df['part_number']
+        df['part_number'] = [row[1:] if row[0] == "A" or "a" else row for row in df['part_number']]
         # df['part_number'] = df['part_number'].str.replace('[\W]+', '', regex=True)
         return df
 
