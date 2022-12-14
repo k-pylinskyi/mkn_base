@@ -47,8 +47,8 @@ class Emoto:
     pd.set_option('display.max_columns', 999)
 
     def __init__(self):
-        data_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/e-moto/STANY54672.zip'
-        dict_url = 'ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/e-moto/emoto_dict.csv'
+        data_url = 'ftp://e-moto:1W4z2T8f@138.201.56.185/STANY54672.zip'
+        dict_url = 'ftp://e-moto:1W4z2T8f@138.201.56.185//emoto_dict.csv'
 
         self.data_columns = {0: 'part_number', 1: 'part_name', 2: 'price', 3: 'qty', 4: 'part_desc', 5: 'manufacturer'}
         self.dict_columns = {1: 'manufacturer', 2: 'prefix', 3: 'brand'}
