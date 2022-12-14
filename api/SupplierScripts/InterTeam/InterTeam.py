@@ -40,7 +40,7 @@ class InterTeam:
             5: 'manufacturer',
             6: 'deposit'
         }
-        data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/i-t/it84262.zip"
+        data_url = "ftp://inter-team:inter-team1@138.201.56.185/it84262.zip"
         self.data = pd.read_csv(data_url, sep=';', encoding_errors='ignore', compression='zip',
                                 header=None, skiprows=1, usecols=[0, 1, 2, 3, 4, 5, 6])
 
