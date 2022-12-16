@@ -99,7 +99,9 @@ def get_files(folder_url, data_columns):
                     file_names[el_zip] = el_txt
 
     for el in file_names.items():
-        if 'oapnal' not in el[1] and "Porsche" not in el[1] and "Toyota" not in el[1]:
+        if 'Land_Rover' in el[1]:
+            df = pd.DataFrame(columns = data_columns)
+        elif 'Volvo' in el[1]:
             df = pd.read_csv(f'{folder_url}{el[0]}', compression='zip', sep='\t',
                              encoding_errors='ignore', skiprows=1, header=None, low_memory=False,
                              on_bad_lines='skip', lineterminator='\n')
@@ -115,6 +117,12 @@ def get_files(folder_url, data_columns):
             with ZipFile(file, 'r') as zip:
                 df = pd.read_excel(zip.open('oapnal.xlsx'), skiprows=1, header=None)
                 df.rename(columns=data_columns, inplace=True)
+        elif 'oapnal' not in el[1] and "Porsche" not in el[1] and "Toyota" not in el[1]:
+            df = pd.read_csv(f'{folder_url}{el[0]}', compression='zip', sep='\t',
+                             encoding_errors='ignore', skiprows=1, header=None, low_memory=False,
+                             on_bad_lines='skip', lineterminator='\n')
+            df.rename(columns=data_columns, inplace=True)
+
         files[el[1]] = df
     sum_rows = 0
     for el in files:
