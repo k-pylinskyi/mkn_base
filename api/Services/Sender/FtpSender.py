@@ -1,5 +1,5 @@
-from Services.Ftp.FtpConnection import FtpConnection
-from Services.Db.DbService import DbService
+from api.Services.Ftp.FtpConnection import FtpConnection
+from api.Services.Db.DbService import DbService
 
 class FtpSender:
     @staticmethod

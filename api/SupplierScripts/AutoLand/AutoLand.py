@@ -1,4 +1,4 @@
-from SupplierScripts import *
+from api.SupplierScripts import *
 
 
 def autoland_to_db():
@@ -31,6 +31,7 @@ def get_autoland_data():
     '''
 
     return sqldf(query)
+
 
 class AutoLand:
     def __init__(self):

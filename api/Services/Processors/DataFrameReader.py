@@ -1,9 +1,9 @@
 import pandas as pd
 from threading import Thread, active_count
-from Services.Db.DbContext import DbContext
-from Services.Db.DbService import DbService
-from Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
-from Services.Ftp.FtpConnection import FtpConnection
+from api.Services.Db.DbContext import DbContext
+from api.Services.Db.DbService import DbService
+from api.Utils.consts import CONSOLE_COLOR, PATHS, ERRORS
+from api.Services.Ftp.FtpConnection import FtpConnection
 import datetime
 
 

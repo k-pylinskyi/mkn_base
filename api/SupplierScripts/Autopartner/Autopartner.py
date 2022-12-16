@@ -1,8 +1,8 @@
 import numpy as np
-from Services.Processors.DataFrameReader import *
+from api.Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
-from Services.Logger.wrapper import timeit
+from api.Services.Logger.wrapper import timeit
 
 
 @timeit

@@ -1,7 +1,7 @@
-from Services.Processors.DataFrameReader import *
+from api.Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
-from Services.Loader.APILoader import *
+from api.Services.Loader.APILoader import *
 from datetime import datetime
 import os
 

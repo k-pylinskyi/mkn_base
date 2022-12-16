@@ -1,4 +1,4 @@
-from SupplierScripts import *
+from api.SupplierScripts import *
 import pandas as pd
 from pandasql import sqldf
 
