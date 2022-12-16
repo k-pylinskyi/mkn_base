@@ -20,7 +20,7 @@ def get_plichta_data():
 
     query = '''
         SELECT
-            'VAG' as manufacturer,
+            "VAG" as manufacturer,
             out.supplier_part_number as supplier_part_number,
             dict.part_number as part_number,
             16 AS delivery,
@@ -29,7 +29,8 @@ def get_plichta_data():
             ROUND(out.price, 2) as price
             FROM out 
         INNER JOIN dict 
-            ON out.supplier_part_number = dict.part_number'''
+            ON out.supplier_part_number = dict.part_number
+            '''
 
     return sqldf(query)
 

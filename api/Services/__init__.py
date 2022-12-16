@@ -1,1 +1,1 @@
-from Utils.consts import CONFIG
+from api.Utils.consts import CONFIG

@@ -37,4 +37,5 @@ from SupplierScripts.Arher.Arher import *
 from SupplierScripts.Materom.Materom import *
 from SupplierScripts.Plichta.Plichta import *
 from SupplierScripts.EuroKas.EuroKas import *
+from api.SupplierScripts.Caffaro.Caffaro import caffaro_to_db
 from SupplierScripts.Emex.Emex import *

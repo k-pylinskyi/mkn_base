@@ -23,7 +23,7 @@ def get_VoyagerGroup_data():
 
     query = '''
         SELECT
-            'MAZDA' as manufacturer,
+            "MAZDA" as manufacturer,
             data_5_days.supplier_part_number as supplier_part_number,
             data_5_days.supplier_part_number as part_number,
             data_5_days.price as supplier_price,

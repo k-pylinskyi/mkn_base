@@ -3,7 +3,9 @@ import os
 from urllib.request import urlopen
 import shutil
 from contextlib import closing
-from Utils.consts import *
+from api.Utils.consts import *
+
+from api.Utils.consts import PATHS
 
 
 def get_file_from_request(supplier, url, file_name):
@@ -24,6 +26,7 @@ def get_file_from_request(supplier, url, file_name):
 
 def get_file_from_url(supplier, url, file_name):
     save_folder = os.path.join(PATHS.TEMP_STORAGE, supplier)
+    print(save_folder)
     if not os.path.exists(save_folder):
         os.makedirs(save_folder)
     save_path = os.path.join(save_folder, file_name)

@@ -4,6 +4,7 @@ from pandasql import sqldf
 
 from api.Services.Processors.DataFrameReader import DataFrameReader
 
+
 def caffaro_to_db():
     table_name = 'caffaro'
     print('Pushing {} to Data Base'.format(table_name))
