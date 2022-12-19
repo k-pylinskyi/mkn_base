@@ -1,5 +1,6 @@
 from SupplierScripts import *
 
+
 def intervito_to_db():
     table_name = 'inter_vito'
     print('Pushing {} to Data Base'.format(table_name))
@@ -27,7 +28,7 @@ def get_intervito_data():
         AND
         data.manufacturer is not null
     '''
-    
+
     return sqldf(query)
 
 
@@ -39,10 +40,10 @@ class Intervito:
         data_url = 'ftp://intervito:iZ5sG6nT2qsZ0e@138.201.56.185/cennik_6090.csv'
 
         self.data = pd.read_csv(data_url, encoding_errors='ignore',
-                                sep=';', header=None, usecols=[0, 1, 2, 3, 5, 6, 7, 8], low_memory=False, skiprows=1, decimal=',')
-
+                                sep=';', header=None, usecols=[0, 1, 2, 3, 5, 6, 7, 8], low_memory=False, skiprows=1,
+                                decimal=',')
 
     def process(self):
         self.data.rename(columns=self.data_columns, inplace=True)
 
-        return (self.data)
+        return self.data

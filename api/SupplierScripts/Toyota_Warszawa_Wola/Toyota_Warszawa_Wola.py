@@ -48,7 +48,7 @@ def get_tww_data():
 
 class Toyota_warszawa_wola:
     def __init__(self):
-        self.path = '/suppliers/toyota_warszawa_wola/CENY (1).zip'
+        self.path = '/suppliers/toyota_warszawa_wola/CENY.zip'
 
         self.user = 'ph6802'
         self.host = '138.201.56.185'
@@ -72,9 +72,9 @@ class Toyota_warszawa_wola:
 
         ftp = FtpConnection(host=self.host, username=self.user, password=self.password)
         print(absolute_path)
-        ftp.download_file(self.path, absolute_path + r'\CENY (1).zip')
+        ftp.download_file(self.path, absolute_path + r'\CENY.zip')
         passw = 'tmp_asd_'
-        with zipfile.ZipFile(absolute_path + r'\CENY (1).zip', 'r') as zip_ref:
+        with zipfile.ZipFile(absolute_path + r'\CENY.zip', 'r') as zip_ref:
             zip_ref.extractall(absolute_path, pwd=passw.encode())
 
         if os.path.exists(absolute_path + r'\cennik.toy'):

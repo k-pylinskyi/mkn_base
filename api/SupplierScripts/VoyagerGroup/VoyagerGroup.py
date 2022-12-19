@@ -1,26 +1,24 @@
-from api.Services.Processors.DataFrameReader import *
-from api.Services.load_config import Config
-from api.Services.Loader.LoadController import LoadController
-import pandas as pd
+from Services.Processors.DataFrameReader import *
 from pandasql import sqldf
-
-from api.Services.Processors.DataFrameReader import DataFrameReader
+from Services.Processors.DataFrameReader import DataFrameReader
+import pandas as pd
+from SupplierScripts import *
 
 
 def voyagerGroup_to_db():
     table_name = 'voyager_group'
     print('Pushing {} to Data Base'.format(table_name))
-    data = get_VoyagerGroup_data()
-    print(data)
+    data, ftp_cred = get_VoyagerGroup_data() # eto dobavit
     DataFrameReader.dataframe_to_db(table_name, data)
+    return ftp_cred
 
 
 def get_VoyagerGroup_data():
     voyagerGroup = VoyagerGroup()
+    ftp_cred = parse_ftp(voyagerGroup)  # eto dobavit vezde
     dfs = voyagerGroup.process()
     data_5_days = dfs[0]
     data_3_days = dfs[1]
-
     query = '''
         SELECT
             'MAZDA' as manufacturer,
@@ -50,8 +48,7 @@ def get_VoyagerGroup_data():
         FROM
             data_3_days
         '''
-
-    return sqldf(query)
+    return sqldf(query), ftp_cred
 
 
 class VoyagerGroup:
@@ -78,7 +75,7 @@ class VoyagerGroup:
 
     def process(self):
         data_5_days = pd.read_csv(self.data_5_days_url, sep=';', header=None, decimal=',',
-                          skiprows=1, on_bad_lines='skip', encoding='latin1')
+                          skiprows=1, on_bad_lines='skip', encoding='latin1', low_memory=False)
         data_5_days.rename(columns=self.data_5_days_columns, inplace=True)
 
         data_3_days = pd.read_csv(self.data_3_days_url, sep=';', header=None, decimal=',',

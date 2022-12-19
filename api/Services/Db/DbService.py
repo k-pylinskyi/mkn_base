@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from Services.Db.DbContext import DbContext
 
+from Services.Db.DbContext import DbRatesContext
+
 
 class DbService:
     @staticmethod

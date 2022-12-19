@@ -4,13 +4,13 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 class EmailSender:
+    # 'k.pylinskyi@gmail.com',
+    # 'polinap5411@gmail.com',
     def __init__(self):
         self.port = 465
         self.login = "prices.mnk.group@gmail.com"
         self.password = "hrsvhqkajsdjtyzr"
         self.addresses = [
-            'k.pylinskyi@gmail.com',
-            'polinap5411@gmail.com',
             'mykyta.karant@gmail.com'
         ]
 

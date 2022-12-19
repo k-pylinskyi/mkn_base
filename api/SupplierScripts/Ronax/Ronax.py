@@ -3,18 +3,20 @@ from SupplierScripts import *
 def ronax_to_db():
     table_name = 'ronax'
     print('Pushing {} to Data Base'.format(table_name))
-    data = get_ronax_data()
+    data, ftp_cred = get_ronax_data()
     DataFrameReader.dataframe_to_db(table_name, data)
+    return ftp_cred
 
 def get_ronax_data():
     ronax = Ronax()
+    ftp_cred = parse_ftp(ronax)
     dfs = []
     for df in ronax.process():
         df['part_number'] = df['supplier_part_number']
         df['quantity'] = 999
         dfs.append(df)
 
-    return pd.concat(dfs, ignore_index=False)
+    return pd.concat(dfs, ignore_index=False), ftp_cred
 
 class Ronax:
     def __init__(self):

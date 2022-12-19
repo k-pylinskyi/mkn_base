@@ -1,4 +1,5 @@
 import numpy as np
+from SupplierScripts import *
 from Services.Processors.DataFrameReader import *
 import pandas as pd
 from pandasql import sqldf
@@ -9,12 +10,15 @@ from Services.Logger.wrapper import timeit
 def autopartner_to_db():
     table_name = 'autopartner'
     print('Pushing {} to Data Base'.format(table_name))
-    DataFrameReader.dataframe_to_db(table_name, get_autopartner_data())
+    data, ftp_cred = get_autopartner_data()
+    DataFrameReader.dataframe_to_db(table_name, data)
+    return ftp_cred
 
 
 @timeit
 def get_autopartner_data():
     autopartner = Autopartner()
+    ftp_cred = parse_ftp(autopartner)
     data = autopartner.process()
 
     query = '''
@@ -39,7 +43,7 @@ def get_autopartner_data():
     #                GROUP BY dat.filia;'''
     #
     # print(sqldf(quer))
-    return sqldf(query)
+    return sqldf(query), ftp_cred
 
 
 class Autopartner:

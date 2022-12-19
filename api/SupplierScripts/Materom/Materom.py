@@ -11,7 +11,6 @@ def materom_to_db():
     table_name = 'materom'
     print('Pushing {} to Data Base'.format(table_name))
     data = get_materom_data()
-    print(data)
     DataFrameReader.dataframe_to_db(table_name, data)
 
 

@@ -6,12 +6,14 @@ from pandasql import sqldf
 def autofrance_to_db():
     table_name = 'autofrance'
     print('Pushing {} to Data Base'.format(table_name))
-    DataFrameReader.dataframe_to_db(table_name, get_autofrance_data())
-    DataFrameReader.supplier_to_ftp(table_name)
+    data, ftp_cred = get_autofrance_data()
+    DataFrameReader.dataframe_to_db(table_name, data)
+    return ftp_cred
 
 
 def get_autofrance_data():
     autofrance = AutoFrance()
+    ftp_cred = parse_ftp(autofrance)
     dataframes = autofrance.process()
     data = dataframes
     data = data.fillna(0)
@@ -31,7 +33,7 @@ def get_autofrance_data():
             data
     '''
 
-    return sqldf(query)
+    return sqldf(query), ftp_cred
 
 
 class AutoFrance:
