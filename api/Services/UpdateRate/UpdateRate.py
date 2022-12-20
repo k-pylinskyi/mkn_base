@@ -26,13 +26,17 @@ def rate_update_manager():
     rates_source = rate_request(driver)
     rate_dict = rate_calc(rates_source)
     print(rate_dict)
-    # for key in rate_dict.keys():
-    #     update_rate(key, rate_dict[key], driver)
-    # update_client_uah(driver, rates_source["uah"])
+    for key in rate_dict.keys():
+        update_rate(key, rate_dict[key], driver)
+    update_client_uah(driver, rates_source["uah"])
 
-    # take_screenshot(driver)
-    # telegram_bot([f'rates_client_text_{datetime.date.today()}.png', f'rates_{datetime.date.today()}.png'])
-
+    take_screenshot(driver)
+    telegram_bot([f'rates_client_text_{datetime.date.today()}.png', f'rates_{datetime.date.today()}.png']) #
+    message = f'Курс источника:\nUSD: {rates_source["usd"]} \nEUR: {rates_source["eur"]}' \
+              f'\nGBP: {rates_source["gbp"]}\nUAH/EUR: {rates_source["uah"]}\n\n' \
+              f'Итоговый курс:\nUSD: {rate_dict["2"]} \nUAH: {rate_dict["3"]}' \
+              f'\nGBP: {rate_dict["9"]} \nPLN: {rate_dict["8"]}\n'
+    send_to_telegram(message)
 
 def login_maxi():
     options = Options()
@@ -133,7 +137,7 @@ def uah_parser(driver):
     # KF_rate = round_decimals_up((float(rate_kp[0]) + float(rate_kp[1])) / 2)
     KF_rate = round_decimals_up(float(rate_kp[1]))
     KF_yesterday = kf_yesterday()
-    delta = round_decimals_up(((KF_rate - KF_yesterday)/KF_rate) * 100, 2)
+    delta = round_decimals_up(((KF_rate - KF_yesterday) / KF_rate) * 100, 2)
     # print("KF_rate: " + str(KF_rate))
     # print("delta: " + str(delta))
 
@@ -141,7 +145,7 @@ def uah_parser(driver):
         add_delta = 0.5
     elif delta < 0.5:
         add_delta = 0.35
-    final_rate = round_decimals_up(KF_rate * (1 + add_delta/100), 2)
+    final_rate = round_decimals_up(KF_rate * (1 + add_delta / 100), 2)
     print(final_rate)
     DataFrameReader.rate_to_db(KF_rate, str((datetime.date.today())).replace("-", ""))
     return final_rate
@@ -268,13 +272,21 @@ def update_client_uah(driver, uah_rate):
 
 
 def telegram_bot(images):
-    # TOKEN = "5626443532:AAH6qUPbClJImsnpQIQ2PB_Bsk-oTAy2LBQ"
-    # url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
-    # print(requests.get(url).json())
-
     TOKEN = "5626443532:AAH6qUPbClJImsnpQIQ2PB_Bsk-oTAy2LBQ"
     url = f"https://api.telegram.org/bot{TOKEN}/"
-    chat_id = "161856757"
+    chat_id = "-1001457198887"
     for image in images:
         requests.post(url + 'sendPhoto', data={'chat_id': chat_id},
                       files={'photo': open(image, 'rb')})
+
+
+def send_to_telegram(message):
+    TOKEN = "5626443532:AAH6qUPbClJImsnpQIQ2PB_Bsk-oTAy2LBQ"
+    chatID = "-1001457198887"
+    apiURL = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+
+    try:
+        response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
+        print(response.text)
+    except Exception as e:
+        print(e)
