@@ -16,7 +16,7 @@ LOGIN_URL = "https://www.maxi.parts/admin/login/"
 RATE_URL = 'https://www.maxi.parts/admin/eshop/settings/rates.html?subj=EditTable_Form1&fn=add'
 UAH_RATE_URL = 'https://obmennovosti.info/city.php?city=42'
 CLIENT_RATE_URL = 'https://www.maxi.parts/admin/content/structure3.0.html?str_id=808&fn=edit'
-DRIVER_PATH = 'C:/Users/Dell/Documents/chromedriver_win32/chromedriver.exe'
+DRIVER_PATH = r'C:\Users\admino4ka\Documents/chromedriver.exe'
 LOGIN = 'nikitak_k'
 PASSWORD = '3sw3ar'
 
@@ -38,8 +38,7 @@ def login_maxi():
     options = Options()
     options.headless = True
     options.add_argument("--window-size=1920,1200")
-    # options=options,
-    driver = webdriver.Chrome(executable_path=DRIVER_PATH)
+    driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
     driver.get(LOGIN_URL)
 
     login_field = driver.find_element(By.NAME, "Login[username]")
@@ -131,7 +130,8 @@ def uah_parser(driver):
                                    '//*[@id="app"]/main/div/div/div/div/div/div/table/tbody/tr[3]')
 
     rate_kp = uah_euro.text.split(' ')[1].split('/')
-    KF_rate = round_decimals_up((float(rate_kp[0]) + float(rate_kp[1])) / 2)
+    # KF_rate = round_decimals_up((float(rate_kp[0]) + float(rate_kp[1])) / 2)
+    KF_rate = round_decimals_up(float(rate_kp[1]))
     KF_yesterday = kf_yesterday()
     delta = round_decimals_up(((KF_rate - KF_yesterday)/KF_rate) * 100, 2)
     # print("KF_rate: " + str(KF_rate))
