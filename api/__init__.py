@@ -27,6 +27,9 @@ from api.SupplierScripts.Rodon.Rodon import rodon_to_db
 from api.SupplierScripts.Vanking.Vanking import vanking_to_db
 from api.SupplierScripts.Zdunek.Zdunek import zdunek_to_db
 from Services.Email.EmailSender import EmailSender
+from api.SupplierScripts.Mapco.Mapco import mapco_to_db
+from api.SupplierScripts.Orap.Orap import orap_to_db
+from api.SupplierScripts.Plichta.Plichta import plichta_to_db
 from SupplierScripts.Ronax.Ronax import ronax_to_db
 from api.SupplierScripts.VoyagerGroup.VoyagerGroup import voyagerGroup_to_db
 from Services.Db.DbService import DbService

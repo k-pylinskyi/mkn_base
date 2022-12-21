@@ -3,6 +3,7 @@ from Services.Email.EmailSender import EmailSender
 import datetime
 
 from api.SupplierScripts.EbcBrackes.EbcBrackes import ebcbrackes_to_db
+from api.SupplierScripts.EuroCarParts.EuroCarParts import euro_car_parts_to_db
 from api.SupplierScripts.Jd_kulej.Jd_kulej import jd_kulej_to_db
 from api.SupplierScripts.Mapco.Mapco import mapco_to_db
 

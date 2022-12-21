@@ -2,14 +2,14 @@ import os
 import io
 import pandas as pd
 
-from SupplierScripts import *
+from api.SupplierScripts import *
 from ftplib import FTP
 from dateutil.parser import parse
 from urllib import request
 from pandasql import sqldf
 from zipfile import ZipFile
-from Services.Logger.wrapper import timeit
-from Services.Processors.DataFrameReader import *
+from api.Services.Logger.wrapper import timeit
+from api.Services.Processors.DataFrameReader import *
 
 
 
@@ -32,7 +32,7 @@ def orap_to_db():
     table_name = 'orap'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db_orap(table_name, get_orap_data())
-    # DataFrameReader.supplier_to_ftp(table_name)
+    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_orap_data():
