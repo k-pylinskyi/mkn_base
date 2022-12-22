@@ -73,4 +73,4 @@ class DataFrameReader:
         dataframe['part_number'] = format_column(dataframe['part_number'])
         dataframe['timestamp'] = datetime.datetime.today().strftime('%d-%m-%Y')
         dataframe.to_sql(table_name, connection, if_exists='replace', index=False)
-        # DataFrameReader.supplier_to_ftp_big(table_name, dataframe)
+        DataFrameReader.supplier_to_ftp_big(table_name, dataframe)

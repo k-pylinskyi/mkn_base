@@ -86,7 +86,7 @@ class Jd_kulej:
         ftp.download_file(self.path, absolute_path + r'\kulej.txt')
 
         indices = [0, 25, 33, 51, 85, 87, 111, 135, 141, 156, 161]
-        with open(absolute_path + r'\kulej.txt') as file:
+        with open(absolute_path + r'\kulej.txt', encoding='latin1') as file:
             lines = [[line[i:j] for i, j in zip(indices, indices[1:] + [None])] for line in file]
 
         df = pd.DataFrame(lines)
