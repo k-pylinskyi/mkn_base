@@ -32,7 +32,6 @@ def orap_to_db():
     table_name = 'orap'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db_orap(table_name, get_orap_data())
-    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_orap_data():

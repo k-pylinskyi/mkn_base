@@ -10,7 +10,6 @@ def intercars_to_db():
     table_name = 'intercars'
     print('Pushing {} to Data Base'.format(table_name))
     DataFrameReader.dataframe_to_db(table_name, get_intercars_data())
-    DataFrameReader.supplier_to_ftp(table_name)
 
 
 def get_intercars_data():
@@ -21,7 +20,7 @@ def get_intercars_data():
     price = dataframes[1]
     stock = dataframes[2]
     exclude = dataframes[3]
-
+    data['supplier_part_number'] = data.apply(f, axis=1)
     query = '''
         SELECT
             data.manufacturer,
@@ -55,7 +54,19 @@ def get_intercars_data():
             exclude.manufacturer is null
         
     '''
-    return sqldf(query)
+    table = sqldf(query)
+    return table
+
+
+def f(row):
+    if len(str(row['tec_doc'])) > 2:
+        if row['supplier_part_number'] != row['tec_doc']:
+            val = row['tec_doc']
+        else:
+            val = row['supplier_part_number']
+    else:
+        val = row['article_number']
+    return val
 
 
 def get_files():
