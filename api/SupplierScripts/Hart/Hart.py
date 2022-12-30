@@ -52,8 +52,10 @@ def get_hart_data():
             INNER JOIN stock
                 ON quantity.warehouse = stock.warehouse
             '''
+    df = sqldf(query)
+    df = df.drop_duplicates()
 
-    return sqldf(query)
+    return df
 
 
 class Hart:

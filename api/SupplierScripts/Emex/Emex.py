@@ -8,12 +8,12 @@ import patoolib
 
 def emex_to_db():
     emex = Emex()
-    # if os.path.exists(emex.save_dir):
-    #     shutil.rmtree(emex.save_dir)
-    # emex.load_makes()
-    # emex.load_48h()
-    # emex.load_emis()
-    # emex.load_emir()
+    if os.path.exists(emex.save_dir):
+        shutil.rmtree(emex.save_dir)
+    emex.load_makes()
+    emex.load_48h()
+    emex.load_emis()
+    emex.load_emir()
 
     makes = emex.process_makes()
     h48 = emex.process_48h()
@@ -23,12 +23,14 @@ def emex_to_db():
     emir = emex.process_emir()
     emex_emir_to_db(makes, emir)
 
+
 @timeit
 def emex_48h_to_db(makes, h48):
     table_name = 'emex_48h'
     print('Pushing {} to Data Base'.format(table_name))
     data = get_h48_data(makes, h48)
     DataFrameReader.dataframe_to_db(table_name, data)
+
 
 @timeit
 def emex_emir_to_db(makes, emir):
@@ -37,6 +39,7 @@ def emex_emir_to_db(makes, emir):
     data = get_emir_data(makes, emir)
     DataFrameReader.dataframe_to_db_big(table_name, data)
 
+
 @timeit
 def emex_emis_to_db(makes, emis):
     table_name = 'emex_emis'
@@ -44,19 +47,19 @@ def emex_emis_to_db(makes, emis):
     data = get_emis_data(makes, emis)
     DataFrameReader.dataframe_to_db_big(table_name, data)
 
-@timeit
+
 def get_h48_data(makes, h48):
     df = pd.merge(makes, h48, on=['MakeLogo'], how='inner')
     out = {'manufacturer': df.Brand,
-             'supplier_part_number': df.DetailNum,
-             'part_number': df.DetailNum,
-             'quantity': df.Quantity.fillna(5),
-             'price': round(np.multiply(df.DetailPrice, 0.93), 2),
-             'delivery': 20}
+           'supplier_part_number': df.DetailNum,
+           'part_number': df.DetailNum,
+           'quantity': df.Quantity.fillna(5),
+           'price': round(np.multiply(df.DetailPrice, 0.93), 2),
+           'delivery': 20}
 
     return pd.DataFrame(out)
 
-@timeit
+
 def get_emis_data(makes, emis):
     df = pd.merge(makes, emis, on=['MakeLogo'], how='inner')
     out = {'manufacturer': df.Brand,
@@ -68,7 +71,7 @@ def get_emis_data(makes, emis):
 
     return pd.DataFrame(out)
 
-@timeit
+
 def get_emir_data(makes, emir):
     df = pd.merge(makes, emir, on=['MakeLogo'], how='inner')
     out = {'manufacturer': df.Brand,
@@ -102,30 +105,25 @@ class Emex:
         self.emis = '../TemporaryStorage/MEX/EMIS.txt'
         self.emir = '../TemporaryStorage/MEX/EMIR.txt'
 
-    @timeit
     def load_makes(self):
         print('loading makes')
         get_file(self.urls['Makes'], 'Makes.rar')
 
-    @timeit
     def process_makes(self):
         print('processing makes')
         makes = pd.read_csv(self.makes, sep=",", header=None, engine='python', skiprows=1,
-                           on_bad_lines='skip', encoding='WINDOWS-1251', usecols=[0, 1])
+                            on_bad_lines='skip', encoding='WINDOWS-1251', usecols=[0, 1])
         makes.columns = ['MakeLogo', 'Brand']
         return makes
 
-    @timeit
     def load_48h(self):
         print('loading 48H')
         get_file(self.urls['48H'], '48H.rar')
 
-    @timeit
     def process_48h(self):
         print('processing 48H')
         return pd.read_csv(self.h48, delimiter="\t", low_memory=False, error_bad_lines=False, encoding='WINDOWS-1251')
 
-    @timeit
     def load_emis(self):
         print('loading EMIS')
         get_file(self.urls['EMIS'], 'EMIS.rar')
@@ -143,4 +141,12 @@ class Emex:
     @timeit
     def process_emir(self):
         print('processing EMIR')
-        return pd.read_csv(self.emir, delimiter="\t", low_memory=False, error_bad_lines=False, encoding='WINDOWS-1251')
+        mylist = []
+
+        for chunk in pd.read_csv(self.emir, sep="\t", low_memory=False,
+                                 error_bad_lines=False, encoding='WINDOWS-1251', chunksize=20000):
+            mylist.append(chunk)
+
+        emir = pd.concat(mylist, axis=0)
+        del mylist
+        return emir
