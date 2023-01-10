@@ -19,7 +19,7 @@ def get_autofrance_data():
 
     query = '''
         SELECT
-            data.part_number,
+            data.supplier_part_number as part_number,
             data.supplier_part_number,
             data.manufacturer,
             1 AS delivery,
@@ -39,8 +39,8 @@ class AutoFrance:
         self.data_url = "ftp://ph6802:z7lIh8iv10pLRt@138.201.56.185/suppliers/auto_france/OFERTA.txt"
 
         self.data_columns = {
-            0: 'part_number',
-            1: 'supplier_part_number',
+            0: 'supplier_part_number',
+            1: 'g1',
             2: 'manufacturer',
             3: 'comment',
             4: 'price',

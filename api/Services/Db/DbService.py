@@ -81,6 +81,8 @@ class DbService:
         i = 1
         for table in tables:
             supplier = table[0]
+            if supplier == 'EMIR' or supplier == 'EMIS' or supplier == '48h':
+                supplier = 'emex_' + supplier
             print(f'getting {supplier} ...')
             print(f'complited {i}/{len(tables)}')
             i = i+1
@@ -88,7 +90,7 @@ class DbService:
                                          ' manufacturer, supplier_part_number, '
                                          ' part_number, CAST(quantity AS INTEGER) as quantity, '
                                          ' ROUND(price, 2) as price '
-                                         ' FROM {} '.format(supplier, table[0]),
+                                         ' FROM {} '.format(supplier, supplier),
                                          connection)
             dfs.append(table_df)
         out = pd.concat(dfs, ignore_index=False)

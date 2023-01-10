@@ -2,13 +2,9 @@ from __init__ import *
 from Services.Email.EmailSender import EmailSender
 import datetime
 
-from api.SupplierScripts.EbcBrackes.EbcBrackes import ebcbrackes_to_db
-from api.SupplierScripts.EuroCarParts.EuroCarParts import euro_car_parts_to_db
-from api.SupplierScripts.Jd_kulej.Jd_kulej import jd_kulej_to_db
-from api.SupplierScripts.Mapco.Mapco import mapco_to_db
+
 
 funcs = [
-
     arher_to_db,
     autoeuro_to_db,
     autofrance_to_db,
@@ -21,8 +17,8 @@ funcs = [
     direct24_to_db,
     ebcbrackes_to_db,
     elit_to_db,
-    emex_to_db,
     emoto_to_db,
+    euro_car_parts_to_db,
     euroestcar_to_db,
     euro_kas_to_db,
     gordon_to_db,
@@ -46,13 +42,13 @@ funcs = [
     vanking_to_db,
     voyagerGroup_to_db,
     zdunek_to_db
-    ]
+    # emex_to_db
+]
+
 
 class Runner:
     @staticmethod
     def run():
-        # e = Emex()
-        # e.process()
         sender = EmailSender()
         start_total = datetime.datetime.now()
         html = '''
@@ -134,4 +130,3 @@ class Runner:
         html = f'{html}</body></html>'
         sender.send(html)
         print(f'database update took {end_total - start_total}')
-

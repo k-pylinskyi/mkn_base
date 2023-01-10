@@ -42,3 +42,7 @@ from SupplierScripts.Plichta.Plichta import *
 from SupplierScripts.EuroKas.EuroKas import *
 from api.SupplierScripts.Caffaro.Caffaro import caffaro_to_db
 from SupplierScripts.Emex.Emex import *
+from api.SupplierScripts.EbcBrackes.EbcBrackes import *
+from api.SupplierScripts.Jd_kulej.Jd_kulej import *
+from api.SupplierScripts.Mapco.Mapco import *
+from api.SupplierScripts.EuroCarParts.EuroCarParts import *
