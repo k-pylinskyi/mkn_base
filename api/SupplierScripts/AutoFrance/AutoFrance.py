@@ -19,8 +19,8 @@ def get_autofrance_data():
 
     query = '''
         SELECT
-            data.supplier_part_number as part_number,
-            data.supplier_part_number,
+            data.part_number,
+            data.part_number as supplier_part_number,
             data.manufacturer,
             1 AS delivery,
             data.comment,
@@ -29,6 +29,7 @@ def get_autofrance_data():
             CAST(TRIM(data.quantity) AS INTEGER) as quantity
         FROM
             data
+        WHERE CAST(TRIM(data.quantity) AS INTEGER) > 0
     '''
 
     return sqldf(query)
@@ -40,7 +41,7 @@ class AutoFrance:
 
         self.data_columns = {
             0: 'supplier_part_number',
-            1: 'g1',
+            1: 'part_number',
             2: 'manufacturer',
             3: 'comment',
             4: 'price',
